@@ -13,11 +13,11 @@
       "path": "src/components/lsl/navigation/site-shell.jsx",
       "type": "registry:component",
       "target": "src/components/lsl/navigation/site-shell.jsx",
-      "content": "// @lsl/site-shell 0.1.0 · managed by loystudiolab-ui · change upstream, not here.\nimport { cn } from \"@/lib/utils\"\n\n// First focusable element on every page (rule A6).\nexport function SkipLink({ href = \"#main\", children = \"Skip to content\" }) {\n  return (\n    <a href={href} className=\"skip-link\">\n      {children}\n    </a>\n  )\n}\n\n/*\n  Page frame with landmarks: skip link, header, <main id=\"main\">, footer.\n  With react-router, render it as a layout route and pass <Outlet /> as children.\n*/\nexport function SiteShell({ header, footer, children, className }) {\n  return (\n    <div className={cn(\"surface-paper flex min-h-screen flex-col\", className)}>\n      <SkipLink />\n      {header}\n      <main id=\"main\" tabIndex={-1} className=\"flex-1 focus:outline-none\">\n        {children}\n      </main>\n      {footer}\n    </div>\n  )\n}\n"
+      "content": "// @lsl/site-shell 0.1.1 · managed by loystudiolab-ui · change upstream, not here.\nimport { cn } from \"@/lib/utils\"\n\n// First focusable element on every page (rule A6).\nexport function SkipLink({ href = \"#main\", children = \"Skip to content\" }) {\n  return (\n    <a href={href} className=\"skip-link\">\n      {children}\n    </a>\n  )\n}\n\n/*\n  Page frame with landmarks: skip link, header, <main id=\"main\">, footer.\n  With react-router, render it as a layout route and pass <Outlet /> as children.\n*/\nexport function SiteShell({ header, footer, children, className }) {\n  return (\n    <div className={cn(\"surface-paper flex min-h-screen flex-col\", className)}>\n      <SkipLink />\n      {header}\n      <main id=\"main\" tabIndex={-1} className=\"flex-1 focus:outline-none\">\n        {children}\n      </main>\n      {footer}\n    </div>\n  )\n}\n"
     }
   ],
   "meta": {
-    "version": "0.1.0",
+    "version": "0.1.1",
     "layer": "L3",
     "status": "stable",
     "category": "navigation",

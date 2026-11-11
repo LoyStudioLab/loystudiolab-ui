@@ -3,6 +3,11 @@
 All notable changes to loystudiolab-ui. Versions follow SemVer; `0.x` until 1.0.
 Breaking changes get a **Migration** note.
 
+## 0.1.1 · 2026-11-12
+
+- MetaList: long terms and values wrap instead of overflowing narrow screens (found by CI at 375px on Linux).
+- Grid: `align` prop. Skill: About recipe, router note, accent placement, local manifest flag for lsl-doctor.
+
 ## 0.1.0 · 2026-11-11
 
 Phase 1: foundation, harvest and the agent loop.

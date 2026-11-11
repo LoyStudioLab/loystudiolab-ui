@@ -16,11 +16,11 @@
       "path": "src/components/ui/label.jsx",
       "type": "registry:ui",
       "target": "src/components/ui/label.jsx",
-      "content": "// @lsl/label 0.1.0 · managed by loystudiolab-ui · change upstream, not here.\nimport * as React from \"react\"\nimport * as LabelPrimitive from \"@radix-ui/react-label\"\nimport { cva } from \"class-variance-authority\"\n\nimport { cn } from \"@/lib/utils\"\n\nconst labelVariants = cva(\n  \"font-body text-xs font-semibold uppercase tracking-[0.08em] text-fg peer-disabled:cursor-not-allowed peer-disabled:opacity-70\"\n)\n\nconst Label = React.forwardRef(({ className, ...props }, ref) => (\n  <LabelPrimitive.Root ref={ref} className={cn(labelVariants(), className)} {...props} />\n))\nLabel.displayName = LabelPrimitive.Root.displayName\n\nexport { Label, labelVariants }\n"
+      "content": "// @lsl/label 0.1.1 · managed by loystudiolab-ui · change upstream, not here.\nimport * as React from \"react\"\nimport * as LabelPrimitive from \"@radix-ui/react-label\"\nimport { cva } from \"class-variance-authority\"\n\nimport { cn } from \"@/lib/utils\"\n\nconst labelVariants = cva(\n  \"font-body text-xs font-semibold uppercase tracking-[0.08em] text-fg peer-disabled:cursor-not-allowed peer-disabled:opacity-70\"\n)\n\nconst Label = React.forwardRef(({ className, ...props }, ref) => (\n  <LabelPrimitive.Root ref={ref} className={cn(labelVariants(), className)} {...props} />\n))\nLabel.displayName = LabelPrimitive.Root.displayName\n\nexport { Label, labelVariants }\n"
     }
   ],
   "meta": {
-    "version": "0.1.0",
+    "version": "0.1.1",
     "layer": "L1",
     "status": "stable",
     "category": "forms",

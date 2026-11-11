@@ -13,11 +13,11 @@
       "path": "src/components/ui/skeleton.jsx",
       "type": "registry:ui",
       "target": "src/components/ui/skeleton.jsx",
-      "content": "// @lsl/skeleton 0.1.0 · managed by loystudiolab-ui · change upstream, not here.\nimport { cn } from \"@/lib/utils\"\n\n// Flat block that pulses opacity. No shimmer gradient (rule G4). Still under reduced motion.\nfunction Skeleton({ className, ...props }) {\n  return <div aria-hidden=\"true\" className={cn(\"animate-lsl-pulse bg-tint motion-reduce:animate-none\", className)} {...props} />\n}\n\nexport { Skeleton }\n"
+      "content": "// @lsl/skeleton 0.1.1 · managed by loystudiolab-ui · change upstream, not here.\nimport { cn } from \"@/lib/utils\"\n\n// Flat block that pulses opacity. No shimmer gradient (rule G4). Still under reduced motion.\nfunction Skeleton({ className, ...props }) {\n  return <div aria-hidden=\"true\" className={cn(\"animate-lsl-pulse bg-tint motion-reduce:animate-none\", className)} {...props} />\n}\n\nexport { Skeleton }\n"
     }
   ],
   "meta": {
-    "version": "0.1.0",
+    "version": "0.1.1",
     "layer": "L1",
     "status": "stable",
     "category": "feedback",

@@ -23,9 +23,9 @@ export function MetaList({ items, cols = 2, className }) {
   return (
     <dl className={cn("grid gap-4 text-sm", cols === 3 ? "grid-cols-2 sm:grid-cols-3" : cols === 1 ? "grid-cols-1" : "grid-cols-2", className)}>
       {items.map((it) => (
-        <div key={it.term}>
-          <dt className="label-caps text-fg-2">{it.term}</dt>
-          <dd className="mt-1 font-medium text-fg">{it.detail}</dd>
+        <div key={it.term} className="min-w-0">
+          <dt className="label-caps text-fg-2 [overflow-wrap:anywhere]">{it.term}</dt>
+          <dd className="mt-1 font-medium text-fg [overflow-wrap:anywhere]">{it.detail}</dd>
         </div>
       ))}
     </dl>

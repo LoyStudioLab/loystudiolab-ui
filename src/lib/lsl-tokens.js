@@ -1,4 +1,4 @@
-// @lsl/tokens 0.1.0 · managed by loystudiolab-ui · change upstream, not here.
+// @lsl/tokens 0.1.1 · managed by loystudiolab-ui · change upstream, not here.
 // GENERATED from tokens/tokens.json. Plain values for SVG, charts and docs.
 export const colors = {
   "paper": "#F4EFE4",

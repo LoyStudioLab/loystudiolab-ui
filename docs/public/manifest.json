@@ -1,7 +1,7 @@
 {
   "$schema": "https://loystudiolab.github.io/loystudiolab-ui/manifest.schema.json",
   "name": "loystudiolab-ui",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "registry": "https://loystudiolab.github.io/loystudiolab-ui/r/{name}.json",
   "generated": "2026-11-11",
   "layers": {
@@ -496,7 +496,7 @@
           "path": "styles/lsl-preset.cjs",
           "type": "registry:file",
           "target": "src/styles/lsl-preset.cjs",
-          "hash": "be8a6d611fe84131"
+          "hash": "8ca89aff4004866a"
         },
         {
           "path": "lib/lsl-tokens.js",
@@ -3115,7 +3115,7 @@
           "path": "components/lsl/data-display/data-display.jsx",
           "type": "registry:component",
           "target": "src/components/lsl/data-display/data-display.jsx",
-          "hash": "43f5e26b5ee1f034"
+          "hash": "4ccf89898d692662"
         }
       ],
       "dependencies": [],

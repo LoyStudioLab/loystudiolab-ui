@@ -15,11 +15,11 @@
       "path": "src/components/ui/switch.jsx",
       "type": "registry:ui",
       "target": "src/components/ui/switch.jsx",
-      "content": "// @lsl/switch 0.1.0 · managed by loystudiolab-ui · change upstream, not here.\nimport * as React from \"react\"\nimport * as SwitchPrimitives from \"@radix-ui/react-switch\"\n\nimport { cn } from \"@/lib/utils\"\n\nconst Switch = React.forwardRef(({ className, ...props }, ref) => (\n  <SwitchPrimitives.Root\n    className={cn(\n      \"peer inline-flex h-7 w-12 shrink-0 cursor-pointer items-center border-2 border-line bg-surface p-0.5 transition-colors duration-fast disabled:cursor-not-allowed disabled:opacity-60 data-[state=checked]:bg-fg\",\n      className\n    )}\n    {...props}\n    ref={ref}\n  >\n    <SwitchPrimitives.Thumb className=\"pointer-events-none block size-5 bg-fg transition-transform duration-fast ease-lsl data-[state=checked]:translate-x-5 data-[state=checked]:bg-surface\" />\n  </SwitchPrimitives.Root>\n))\nSwitch.displayName = SwitchPrimitives.Root.displayName\n\nexport { Switch }\n"
+      "content": "// @lsl/switch 0.1.1 · managed by loystudiolab-ui · change upstream, not here.\nimport * as React from \"react\"\nimport * as SwitchPrimitives from \"@radix-ui/react-switch\"\n\nimport { cn } from \"@/lib/utils\"\n\nconst Switch = React.forwardRef(({ className, ...props }, ref) => (\n  <SwitchPrimitives.Root\n    className={cn(\n      \"peer inline-flex h-7 w-12 shrink-0 cursor-pointer items-center border-2 border-line bg-surface p-0.5 transition-colors duration-fast disabled:cursor-not-allowed disabled:opacity-60 data-[state=checked]:bg-fg\",\n      className\n    )}\n    {...props}\n    ref={ref}\n  >\n    <SwitchPrimitives.Thumb className=\"pointer-events-none block size-5 bg-fg transition-transform duration-fast ease-lsl data-[state=checked]:translate-x-5 data-[state=checked]:bg-surface\" />\n  </SwitchPrimitives.Root>\n))\nSwitch.displayName = SwitchPrimitives.Root.displayName\n\nexport { Switch }\n"
     }
   ],
   "meta": {
-    "version": "0.1.0",
+    "version": "0.1.1",
     "layer": "L1",
     "status": "stable",
     "category": "forms",

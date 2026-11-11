@@ -13,11 +13,11 @@
       "path": "src/lib/field-context.js",
       "type": "registry:lib",
       "target": "src/lib/field-context.js",
-      "content": "// @lsl/field-context 0.1.0 · managed by loystudiolab-ui · change upstream, not here.\nimport { createContext, useContext } from \"react\"\n\n/*\n  Field publishes its wiring (id, aria-describedby, aria-invalid, aria-required) here,\n  so controls that Field cannot clone directly (e.g. a Radix SelectTrigger nested inside\n  <Select>) can pick it up.\n*/\nexport const FieldContext = createContext(null)\nexport const useFieldContext = () => useContext(FieldContext)\n"
+      "content": "// @lsl/field-context 0.1.1 · managed by loystudiolab-ui · change upstream, not here.\nimport { createContext, useContext } from \"react\"\n\n/*\n  Field publishes its wiring (id, aria-describedby, aria-invalid, aria-required) here,\n  so controls that Field cannot clone directly (e.g. a Radix SelectTrigger nested inside\n  <Select>) can pick it up.\n*/\nexport const FieldContext = createContext(null)\nexport const useFieldContext = () => useContext(FieldContext)\n"
     }
   ],
   "meta": {
-    "version": "0.1.0",
+    "version": "0.1.1",
     "layer": "L0",
     "status": "stable",
     "category": "hooks",
