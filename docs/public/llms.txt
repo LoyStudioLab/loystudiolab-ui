@@ -1,4 +1,4 @@
-# LoyStudioLab UI 0.1.1
+# LoyStudioLab UI 0.1.2
 
 > Component library for LoyStudioLab's own sites and Lab products (Snapticket, Kine OS). React + Tailwind 3.4 + shadcn/ui (JSX), distributed as a shadcn registry. Not for client brands.
 

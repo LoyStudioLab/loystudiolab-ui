@@ -13,11 +13,11 @@
       "path": "src/components/ui/input.jsx",
       "type": "registry:ui",
       "target": "src/components/ui/input.jsx",
-      "content": "// @lsl/input 0.1.1 · managed by loystudiolab-ui · change upstream, not here.\nimport * as React from \"react\"\n\nimport { cn } from \"@/lib/utils\"\n\nconst Input = React.forwardRef(({ className, type, ...props }, ref) => {\n  return (\n    <input\n      type={type}\n      className={cn(\n        \"flex min-h-12 w-full border-2 border-line bg-surface px-4 py-3 font-body text-base text-fg transition-colors duration-fast placeholder:text-fg-2/70 hover:bg-tint disabled:cursor-not-allowed disabled:opacity-60 aria-[invalid=true]:border-danger file:border-0 file:bg-transparent file:font-semibold file:text-fg\",\n        className\n      )}\n      ref={ref}\n      {...props}\n    />\n  )\n})\nInput.displayName = \"Input\"\n\nexport { Input }\n"
+      "content": "// @lsl/input 0.1.2 · managed by loystudiolab-ui · change upstream, not here.\nimport * as React from \"react\"\n\nimport { cn } from \"@/lib/utils\"\n\nconst Input = React.forwardRef(({ className, type, ...props }, ref) => {\n  return (\n    <input\n      type={type}\n      className={cn(\n        \"flex min-h-12 w-full border-2 border-line bg-surface px-4 py-3 font-body text-base text-fg transition-colors duration-fast placeholder:text-fg-2/70 hover:bg-tint disabled:cursor-not-allowed disabled:opacity-60 aria-[invalid=true]:border-danger file:border-0 file:bg-transparent file:font-semibold file:text-fg\",\n        className\n      )}\n      ref={ref}\n      {...props}\n    />\n  )\n})\nInput.displayName = \"Input\"\n\nexport { Input }\n"
     }
   ],
   "meta": {
-    "version": "0.1.1",
+    "version": "0.1.2",
     "layer": "L1",
     "status": "stable",
     "category": "forms",

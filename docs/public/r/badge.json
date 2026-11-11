@@ -15,11 +15,11 @@
       "path": "src/components/ui/badge.jsx",
       "type": "registry:ui",
       "target": "src/components/ui/badge.jsx",
-      "content": "// @lsl/badge 0.1.1 · managed by loystudiolab-ui · change upstream, not here.\nimport * as React from \"react\"\nimport { cva } from \"class-variance-authority\"\n\nimport { cn } from \"@/lib/utils\"\n\nconst badgeVariants = cva(\n  \"inline-flex items-center gap-2 border-2 px-2.5 py-1 font-body text-xs font-semibold uppercase leading-none tracking-[0.08em]\",\n  {\n    variants: {\n      variant: {\n        default: \"border-line bg-surface text-fg\",\n        solid: \"border-fg bg-fg text-surface\",\n        danger: \"border-danger bg-surface text-danger\",\n        // Signal: only for AI or computing states (rule C4).\n        signal: \"border-signal bg-surface text-signal-fg\",\n      },\n    },\n    defaultVariants: {\n      variant: \"default\",\n    },\n  }\n)\n\nfunction Badge({ className, variant, ...props }) {\n  return <span className={cn(badgeVariants({ variant }), className)} {...props} />\n}\n\nexport { Badge, badgeVariants }\n"
+      "content": "// @lsl/badge 0.1.2 · managed by loystudiolab-ui · change upstream, not here.\nimport * as React from \"react\"\nimport { cva } from \"class-variance-authority\"\n\nimport { cn } from \"@/lib/utils\"\n\nconst badgeVariants = cva(\n  \"inline-flex items-center gap-2 border-2 px-2.5 py-1 font-body text-xs font-semibold uppercase leading-none tracking-[0.08em]\",\n  {\n    variants: {\n      variant: {\n        default: \"border-line bg-surface text-fg\",\n        solid: \"border-fg bg-fg text-surface\",\n        danger: \"border-danger bg-surface text-danger\",\n        // Signal: only for AI or computing states (rule C4).\n        signal: \"border-signal bg-surface text-signal-fg\",\n      },\n    },\n    defaultVariants: {\n      variant: \"default\",\n    },\n  }\n)\n\nfunction Badge({ className, variant, ...props }) {\n  return <span className={cn(badgeVariants({ variant }), className)} {...props} />\n}\n\nexport { Badge, badgeVariants }\n"
     }
   ],
   "meta": {
-    "version": "0.1.1",
+    "version": "0.1.2",
     "layer": "L1",
     "status": "stable",
     "category": "data-display",

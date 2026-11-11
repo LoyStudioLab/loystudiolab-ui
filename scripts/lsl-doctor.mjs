@@ -6,18 +6,24 @@
     node scripts/lsl-doctor.mjs            # scans ./src, ./index.html, tailwind config
     node scripts/lsl-doctor.mjs src --json # machine-readable, for agents
     node scripts/lsl-doctor.mjs --manifest ../loystudiolab-ui/docs/public/manifest.json
+    node scripts/lsl-doctor.mjs src --write-baseline   # record existing findings once
+  Baseline: when lsl-doctor.baseline.json exists in the app root, findings recorded there
+  (same rule, file and message) are not reported again, so only new problems show.
+  Use it once when adopting the library in an existing app (template code you did not
+  write). Never re-baseline to hide findings in code you wrote.
   Exit code 1 when any error is found; warnings alone exit 0.
   Rule texts: https://loystudiolab.github.io/loystudiolab-ui/manifest.json (rules)
 */
-import { readFileSync, readdirSync, statSync, existsSync } from "node:fs"
+import { readFileSync, readdirSync, statSync, existsSync, writeFileSync } from "node:fs"
 import { createHash } from "node:crypto"
 import { join, relative, resolve, extname } from "node:path"
 
 const args = process.argv.slice(2)
 const json = args.includes("--json")
+const writeBaseline = args.includes("--write-baseline")
 const mIdx = args.indexOf("--manifest")
 const manifestArg = mIdx >= 0 ? args[mIdx + 1] : null
-const dirs = args.filter((a, i) => !a.startsWith("--") && i !== mIdx + 1)
+const dirs = args.filter((a, i) => !a.startsWith("--") && (mIdx < 0 || i !== mIdx + 1))
 const cwd = process.cwd()
 const scanRoots = (dirs.length ? dirs : ["src"]).map((d) => resolve(cwd, d))
 const DEFAULT_MANIFEST = "https://loystudiolab.github.io/loystudiolab-ui/manifest.json"
@@ -131,8 +137,10 @@ if (existsSync(indexHtml)) {
   if (!/fonts\.googleapis\.com\/css2\?[^"']*Jost[^"']*|fonts\.googleapis\.com\/css2\?[^"']*Archivo/.test(html)) add("T3", "error", indexHtml, 0, "Jost and Archivo <link> missing from index.html <head>.")
   if (!/<html[^>]*lang=/.test(html)) add("A6", "error", indexHtml, 0, "<html> needs a lang attribute.")
 }
-const twConfig = ["tailwind.config.cjs", "tailwind.config.js"].map((f) => resolve(cwd, f)).find(existsSync)
-if (twConfig && !/lsl-preset/.test(readFileSync(twConfig, "utf8"))) add("G1", "error", twConfig, 0, "tailwind config does not use the LoyStudioLab preset (src/styles/lsl-preset.cjs).")
+// Tailwind 3 reads the first of these that exists; a second one is silently ignored.
+const twConfigs = ["tailwind.config.js", "tailwind.config.cjs", "tailwind.config.mjs", "tailwind.config.ts"].map((f) => resolve(cwd, f)).filter(existsSync)
+if (twConfigs.length && !/lsl-preset/.test(readFileSync(twConfigs[0], "utf8"))) add("G1", "error", twConfigs[0], 0, `Tailwind reads ${relative(cwd, twConfigs[0])}, which does not load the LoyStudioLab preset (src/styles/lsl-preset.cjs).`)
+if (twConfigs.length > 1) add("G1", "warning", twConfigs[1], 0, `Second Tailwind config is ignored (Tailwind reads ${relative(cwd, twConfigs[0])}). Delete it.`)
 
 // Drift: compare managed files against the manifest
 async function loadManifest() {
@@ -174,10 +182,30 @@ else if (manifest) {
   }
 }
 
+// Baseline: record or subtract known findings (matched by rule, file and message).
+const baselineFile = resolve(cwd, "lsl-doctor.baseline.json")
+const keyOf = (f) => `${f.rule}|${f.file}|${f.message}`
+if (writeBaseline) {
+  const keys = [...new Set(findings.filter((f) => f.rule !== "DRIFT").map(keyOf))].sort()
+  writeFileSync(baselineFile, JSON.stringify({ note: "Known findings recorded by lsl-doctor --write-baseline. Only for code you did not write. Fix and remove entries over time.", created: new Date().toISOString().slice(0, 10), findings: keys }, null, 2) + "\n")
+  console.log(`lsl-doctor: baseline written with ${keys.length} finding(s) to ${relative(cwd, baselineFile)}.`)
+  process.exit(0)
+}
+let baselined = 0
+if (existsSync(baselineFile)) {
+  const known = new Set(JSON.parse(readFileSync(baselineFile, "utf8")).findings ?? [])
+  for (let i = findings.length - 1; i >= 0; i--) {
+    if (known.has(keyOf(findings[i]))) {
+      findings.splice(i, 1)
+      baselined++
+    }
+  }
+}
+
 const errors = findings.filter((f) => f.severity === "error")
 const warnings = findings.filter((f) => f.severity === "warning")
 if (json) {
-  console.log(JSON.stringify({ ok: errors.length === 0, errors: errors.length, warnings: warnings.length, managedFiles: managed.length, driftNote, findings }, null, 2))
+  console.log(JSON.stringify({ ok: errors.length === 0, errors: errors.length, warnings: warnings.length, baselined, managedFiles: managed.length, driftNote, findings }, null, 2))
 } else {
   const byRule = {}
   for (const f of findings) (byRule[f.rule] ??= []).push(f)
@@ -185,7 +213,7 @@ if (json) {
     console.log(`\n${rule}  (${list.length})`)
     for (const f of list) console.log(`  ${f.severity === "error" ? "✗" : "!"} ${f.file}${f.line ? `:${f.line}` : ""}  ${f.message}`)
   }
-  console.log(`\nlsl-doctor: ${errors.length} error(s), ${warnings.length} warning(s), ${files.length} files scanned, ${managed.length} managed.`)
+  console.log(`\nlsl-doctor: ${errors.length} error(s), ${warnings.length} warning(s), ${files.length} files scanned, ${managed.length} managed${baselined ? `, ${baselined} known finding(s) hidden by lsl-doctor.baseline.json` : ""}.`)
   if (driftNote) console.log(driftNote)
   if (!findings.length) console.log("All clear.")
 }

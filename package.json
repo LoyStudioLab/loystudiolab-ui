@@ -1,7 +1,7 @@
 {
   "name": "loystudiolab-ui",
   "private": true,
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "LoyStudioLab component library: tokens, components and page patterns for the studio's sites and Lab products, distributed as a shadcn-compatible registry.",
   "type": "module",
   "license": "UNLICENSED",

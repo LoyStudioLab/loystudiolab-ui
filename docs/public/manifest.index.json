@@ -1,6 +1,6 @@
 {
   "name": "loystudiolab-ui",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "registry": "https://loystudiolab.github.io/loystudiolab-ui/r/{name}.json",
   "manifest": "https://loystudiolab.github.io/loystudiolab-ui/manifest.json",
   "howToUse": "1) Find your intent below. 2) Read that item in manifest.json (props, do/don't, example). 3) Install with the registry. 4) Run lsl-doctor.",

@@ -19,7 +19,7 @@
 `npx shadcn@latest add @lsl/<name>` fetches the item JSON, resolves `registryDependencies`
 (other `@lsl/...` items), writes every `files[].content` to `files[].target`, and runs the
 package manager for `dependencies`. `--overwrite` replaces existing files without asking;
-use it for `@lsl/foundation` (it replaces `tailwind.config.cjs`) and for updates.
+use it for `@lsl/foundation` (it replaces `tailwind.config.js`) and for updates.
 `npx shadcn@latest add @lsl/<name> --diff` shows how an installed file differs from the
 registry.
 
@@ -29,7 +29,7 @@ the library repo installs all items and builds).
 ## Targets
 
 - `src/...` targets land at that path in the app.
-- `~/...` targets land relative to the app root (`~/tailwind.config.cjs`, `~/scripts/lsl-doctor.mjs`).
+- `~/...` targets land relative to the app root (`~/tailwind.config.js`, `~/scripts/lsl-doctor.mjs`).
 
 ## Foundation setup (once per app)
 
@@ -45,7 +45,9 @@ the library repo installs all items and builds).
    (delete the stock shadcn `:root` and `.dark` blocks; the preset defines all variables).
 4. Root component: render `<AccentBudget />` and `<Toaster />` once.
 5. Layout route: `<SiteShell header={<SiteHeader … />} footer={<SiteFooter … />}><Outlet /></SiteShell>`.
-6. Run `node scripts/lsl-doctor.mjs src`.
+6. Base44 template: swap the ring spinner in `App.jsx` for `<LinearLoader>`, mount `<AccentBudget />`.
+7. Existing app: `node scripts/lsl-doctor.mjs src --write-baseline` once, commit the baseline.
+8. Run `node scripts/lsl-doctor.mjs src`.
 
 ## No-CLI install (Base44 MCP)
 
@@ -53,7 +55,10 @@ For each item, depth-first through `registryDependencies`:
 1. Read the JSON (`docs/public/r/<name>.json` locally, or fetch the URL).
 2. For each file: `write_file(appId, path: target without "~/", content)`.
 3. Merge `dependencies` into `package.json` (`^` latest compatible; Base44 already ships most).
-4. Build-check with the node command from `base44-workflow` §6.
+4. Build-check with `timeout 200 npx vite build --logLevel warn` via `run_command`.
+
+Tested 2026-11-12 on a fresh Base44 app (Vite template): path B (shadcn CLI in the sandbox)
+and path C (write_file from the public registry JSON) both install and build.
 
 ## Updating
 

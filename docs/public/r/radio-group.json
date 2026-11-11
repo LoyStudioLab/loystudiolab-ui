@@ -15,11 +15,11 @@
       "path": "src/components/ui/radio-group.jsx",
       "type": "registry:ui",
       "target": "src/components/ui/radio-group.jsx",
-      "content": "// @lsl/radio-group 0.1.1 · managed by loystudiolab-ui · change upstream, not here.\nimport * as React from \"react\"\nimport * as RadioGroupPrimitive from \"@radix-ui/react-radio-group\"\n\nimport { cn } from \"@/lib/utils\"\n\n// Square, not round: circles mean Loy and nothing else (rule S2).\nconst RadioGroup = React.forwardRef(({ className, ...props }, ref) => (\n  <RadioGroupPrimitive.Root className={cn(\"grid gap-3\", className)} {...props} ref={ref} />\n))\nRadioGroup.displayName = RadioGroupPrimitive.Root.displayName\n\nconst RadioGroupItem = React.forwardRef(({ className, ...props }, ref) => (\n  <RadioGroupPrimitive.Item\n    ref={ref}\n    className={cn(\n      \"grid size-6 shrink-0 place-items-center border-2 border-line bg-surface transition-colors duration-fast hover:bg-tint disabled:cursor-not-allowed disabled:opacity-60 aria-[invalid=true]:border-danger\",\n      className\n    )}\n    {...props}\n  >\n    <RadioGroupPrimitive.Indicator className=\"block size-2.5 bg-fg\" />\n  </RadioGroupPrimitive.Item>\n))\nRadioGroupItem.displayName = RadioGroupPrimitive.Item.displayName\n\nexport { RadioGroup, RadioGroupItem }\n"
+      "content": "// @lsl/radio-group 0.1.2 · managed by loystudiolab-ui · change upstream, not here.\nimport * as React from \"react\"\nimport * as RadioGroupPrimitive from \"@radix-ui/react-radio-group\"\n\nimport { cn } from \"@/lib/utils\"\n\n// Square, not round: circles mean Loy and nothing else (rule S2).\nconst RadioGroup = React.forwardRef(({ className, ...props }, ref) => (\n  <RadioGroupPrimitive.Root className={cn(\"grid gap-3\", className)} {...props} ref={ref} />\n))\nRadioGroup.displayName = RadioGroupPrimitive.Root.displayName\n\nconst RadioGroupItem = React.forwardRef(({ className, ...props }, ref) => (\n  <RadioGroupPrimitive.Item\n    ref={ref}\n    className={cn(\n      \"grid size-6 shrink-0 place-items-center border-2 border-line bg-surface transition-colors duration-fast hover:bg-tint disabled:cursor-not-allowed disabled:opacity-60 aria-[invalid=true]:border-danger\",\n      className\n    )}\n    {...props}\n  >\n    <RadioGroupPrimitive.Indicator className=\"block size-2.5 bg-fg\" />\n  </RadioGroupPrimitive.Item>\n))\nRadioGroupItem.displayName = RadioGroupPrimitive.Item.displayName\n\nexport { RadioGroup, RadioGroupItem }\n"
     }
   ],
   "meta": {
-    "version": "0.1.1",
+    "version": "0.1.2",
     "layer": "L1",
     "status": "stable",
     "category": "forms",

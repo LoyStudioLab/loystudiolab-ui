@@ -1,4 +1,4 @@
-# Rules (generated from registry/rules.js, library 0.1.1)
+# Rules (generated from registry/rules.js, library 0.1.2)
 
 Every rule has an ID. lsl-doctor, the manifest and the docs use the same IDs.
 Rationale sections (§) refer to `LoyStudioLab/Website/AESTHETIC_PHILOSOPHY.md`.

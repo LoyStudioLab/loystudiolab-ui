@@ -72,7 +72,7 @@ Pick the path that matches where the app lives (details and edge cases in `refer
 ```json
 "registries": { "@lsl": "https://loystudiolab.github.io/loystudiolab-ui/r/{name}.json" }
 ```
-New app or first install (overwrites the stock tailwind config with the preset one):
+New app or first install (writes `tailwind.config.js` with the preset; delete any old `tailwind.config.cjs`):
 ```bash
 npx shadcn@latest add @lsl/foundation @lsl/doctor @lsl/accent-budget --overwrite --yes
 ```
@@ -91,14 +91,23 @@ If the public registry is not reachable yet, serve the local build:
 `node <lib>/scripts/serve-static.mjs 4873` (after `npm run build:manifest && npm run build:registry` there) and use
 `http://127.0.0.1:4873/r/{name}.json` as the registry URL.
 
-**B. Base44 sandbox via MCP** (`base44-workflow` skill): run the same `npx shadcn` commands
-with `run_command` if the sandbox can reach the registry URL. Build-check with the node
-command from `base44-workflow` §6, never `npm run build` in the sandbox.
+**B. Base44 sandbox via MCP** (`base44-workflow` skill): run the same `npx shadcn ... --yes`
+commands with `run_command` (tested: the sandbox reaches the public registry). Build-check
+with `timeout 200 npx vite build --logLevel warn` (tested, about 10s). The `node -e
+"...build()"` one-liner from base44-workflow §6 skips the Tailwind config in "type":
+"module" apps and fails with a misleading `border-border` error.
 
 **C. No CLI.** Read `r/<name>.json` (local `docs/public/r/` or the URL). For each entry in
 `files`, write `content` to `target` (`~/` means the app root) with `write_file`. Repeat for
 every `registryDependencies` item. Add `dependencies` to `package.json`. Then do the
 foundation setup above.
+
+**Adopting the library in an existing Base44 app:** its template code (stock shadcn
+files you have not replaced, auth pages, the ring spinner in App.jsx) breaks many rules.
+Replace the spinner with `LinearLoader`, then run
+`node scripts/lsl-doctor.mjs src --write-baseline` once and commit
+`lsl-doctor.baseline.json`. Later runs show only new findings. Never re-baseline to hide
+findings in code you wrote.
 
 ## Verify
 
@@ -125,7 +134,9 @@ inside an app.
 ## Base44 notes
 
 - Base44 apps are Vite + React + Tailwind 3.4 + shadcn new-york in JSX: the registry fits
-  them as they are. Their stock `src/components/ui/*` files get replaced by the LSL
+  them as they are (tested on a fresh Base44 app, paths B and C, 2026-11-12). Newer
+  templates use `tailwind.config.js`, older ones `tailwind.config.cjs`: the foundation
+  writes `.js`, which Tailwind reads first; delete the `.cjs`. Their stock `src/components/ui/*` files get replaced by the LSL
   versions with the same names and APIs, so existing imports keep working.
 - Writing files only changes the sandbox. Publishing is always Mariana's step in the
   Base44 editor. Say so in your report.

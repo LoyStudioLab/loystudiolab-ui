@@ -24,9 +24,9 @@
           "target": "src/lib/lsl-tokens.js"
         },
         {
-          "path": "templates/tailwind.config.cjs",
+          "path": "templates/tailwind.config.js",
           "type": "registry:file",
-          "target": "~/tailwind.config.cjs"
+          "target": "~/tailwind.config.js"
         }
       ]
     },

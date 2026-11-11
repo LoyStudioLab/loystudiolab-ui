@@ -15,11 +15,11 @@
       "path": "src/components/ui/separator.jsx",
       "type": "registry:ui",
       "target": "src/components/ui/separator.jsx",
-      "content": "// @lsl/separator 0.1.1 · managed by loystudiolab-ui · change upstream, not here.\nimport * as React from \"react\"\nimport * as SeparatorPrimitive from \"@radix-ui/react-separator\"\n\nimport { cn } from \"@/lib/utils\"\n\n// `strong` (2px, follows the surface's line color) separates meaningful regions.\n// `subtle` (rule color) is decoration only (rule G2).\nconst Separator = React.forwardRef(\n  ({ className, orientation = \"horizontal\", decorative = true, tone = \"strong\", ...props }, ref) => (\n    <SeparatorPrimitive.Root\n      ref={ref}\n      decorative={decorative}\n      orientation={orientation}\n      className={cn(\n        \"shrink-0\",\n        tone === \"subtle\" ? \"bg-divider\" : \"bg-line\",\n        orientation === \"horizontal\" ? \"h-[2px] w-full\" : \"h-full w-[2px]\",\n        className\n      )}\n      {...props}\n    />\n  )\n)\nSeparator.displayName = SeparatorPrimitive.Root.displayName\n\nexport { Separator }\n"
+      "content": "// @lsl/separator 0.1.2 · managed by loystudiolab-ui · change upstream, not here.\nimport * as React from \"react\"\nimport * as SeparatorPrimitive from \"@radix-ui/react-separator\"\n\nimport { cn } from \"@/lib/utils\"\n\n// `strong` (2px, follows the surface's line color) separates meaningful regions.\n// `subtle` (rule color) is decoration only (rule G2).\nconst Separator = React.forwardRef(\n  ({ className, orientation = \"horizontal\", decorative = true, tone = \"strong\", ...props }, ref) => (\n    <SeparatorPrimitive.Root\n      ref={ref}\n      decorative={decorative}\n      orientation={orientation}\n      className={cn(\n        \"shrink-0\",\n        tone === \"subtle\" ? \"bg-divider\" : \"bg-line\",\n        orientation === \"horizontal\" ? \"h-[2px] w-full\" : \"h-full w-[2px]\",\n        className\n      )}\n      {...props}\n    />\n  )\n)\nSeparator.displayName = SeparatorPrimitive.Root.displayName\n\nexport { Separator }\n"
     }
   ],
   "meta": {
-    "version": "0.1.1",
+    "version": "0.1.2",
     "layer": "L1",
     "status": "stable",
     "category": "layout",

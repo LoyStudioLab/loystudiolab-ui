@@ -10,7 +10,7 @@ export default [
     files: [
       { path: "styles/lsl-preset.cjs", type: "registry:file", target: "src/styles/lsl-preset.cjs" },
       { path: "lib/lsl-tokens.js", type: "registry:lib", target: "src/lib/lsl-tokens.js" },
-      { path: "../templates/tailwind.config.cjs", type: "registry:file", target: "~/tailwind.config.cjs" },
+      { path: "../templates/tailwind.config.js", type: "registry:file", target: "~/tailwind.config.js" },
     ],
     dependencies: ["tailwindcss-animate"],
     registryDependencies: [],
@@ -28,12 +28,14 @@ export default [
       "All animation and transition collapses under prefers-reduced-motion.",
     ],
     setup: [
-      "tailwind.config.cjs is replaced by a 6-line config that loads the preset (pass --overwrite). Re-add any app-specific theme.extend entries.",
+      "tailwind.config.js is replaced by a short config that loads the preset (pass --overwrite). Delete any tailwind.config.cjs (older Base44 templates): Tailwind would otherwise read only one of them. Re-add app-specific theme.extend entries.",
       'Add the font <link> from `fontLink` to index.html <head> with preconnect to fonts.googleapis.com and fonts.gstatic.com (rule T3). Remove any CSS @import of fonts.',
       "Keep src/index.css to the three @tailwind directives; delete the stock shadcn :root and .dark variable blocks (the preset defines them).",
       "Wrap page bands in a surface: <Section surface=\"paper|alt|ink\"> or className=\"surface-ink\".",
+      "Base44 template: replace the ring spinner in App.jsx (and auth pages) with <LinearLoader>; mount <AccentBudget /> next to <ScrollToTop />.",
+      "Existing app: run `node scripts/lsl-doctor.mjs src --write-baseline` once so template code you did not write is recorded; later runs report only new findings. Commit lsl-doctor.baseline.json. Never re-baseline to hide your own findings.",
     ],
-    example: `// tailwind.config.cjs
+    example: `// tailwind.config.js
 module.exports = {
   presets: [require("./src/styles/lsl-preset.cjs")],
   content: ["./index.html", "./src/**/*.{js,jsx,ts,tsx}"],
@@ -65,7 +67,7 @@ module.exports = {
     dontUseWhen: [],
     rules: ["C1", "C2", "C4", "C6", "G1", "G3", "G4", "S2", "S3", "T1", "T2", "T3", "M2", "W2", "W3", "A8"],
     a11y: ["Static checks only. Still run axe and a keyboard pass."],
-    example: "node scripts/lsl-doctor.mjs src            # human-readable\nnode scripts/lsl-doctor.mjs src --json     # for agents",
+    example: "node scripts/lsl-doctor.mjs src                  # human-readable\nnode scripts/lsl-doctor.mjs src --json           # for agents\nnode scripts/lsl-doctor.mjs src --write-baseline # once, when adopting the library in an existing app",
   },
   {
     name: "accent-budget",
