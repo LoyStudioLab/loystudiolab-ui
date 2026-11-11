@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Docs-only: code blocks. Everything else comes from the preset. */
+@layer components {
+  .docs-code {
+    @apply overflow-x-auto border-2 border-ink bg-ink p-4 font-mono text-[0.8125rem] leading-relaxed text-paper;
+  }
+}

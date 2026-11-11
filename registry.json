@@ -1,0 +1,713 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "lsl",
+  "homepage": "https://loystudiolab.github.io/loystudiolab-ui",
+  "items": [
+    {
+      "name": "foundation",
+      "type": "registry:style",
+      "title": "Foundation",
+      "description": "Tokens, global base styles, surfaces, focus ring, type classes and motion for every LoyStudioLab app. Install first.",
+      "dependencies": [
+        "tailwindcss-animate"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/styles/lsl-preset.cjs",
+          "type": "registry:file",
+          "target": "src/styles/lsl-preset.cjs"
+        },
+        {
+          "path": "src/lib/lsl-tokens.js",
+          "type": "registry:lib",
+          "target": "src/lib/lsl-tokens.js"
+        },
+        {
+          "path": "templates/tailwind.config.cjs",
+          "type": "registry:file",
+          "target": "~/tailwind.config.cjs"
+        }
+      ]
+    },
+    {
+      "name": "doctor",
+      "type": "registry:file",
+      "title": "lsl-doctor",
+      "description": "Checks an app against the LoyStudioLab rules and reports violations by rule ID. Run it before you finish any UI task.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "scripts/lsl-doctor.mjs",
+          "type": "registry:file",
+          "target": "~/scripts/lsl-doctor.mjs"
+        }
+      ]
+    },
+    {
+      "name": "accent-budget",
+      "type": "registry:component",
+      "title": "AccentBudget",
+      "description": "Dev-only console warning when a page renders more than one accent (butter) CTA.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/components/lsl/dev/accent-budget.jsx",
+          "type": "registry:component",
+          "target": "src/components/lsl/dev/accent-budget.jsx"
+        }
+      ]
+    },
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "Trigger an action, or style a link as a button with asChild.",
+      "dependencies": [
+        "@radix-ui/react-slot",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/button.jsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/button.jsx"
+        }
+      ]
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "title": "Input",
+      "description": "Single-line text entry. Always inside a Field.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/input.jsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/input.jsx"
+        }
+      ]
+    },
+    {
+      "name": "textarea",
+      "type": "registry:ui",
+      "title": "Textarea",
+      "description": "Multi-line text entry. Always inside a Field; pass maxLength and count to Field for a counter.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/textarea.jsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/textarea.jsx"
+        }
+      ]
+    },
+    {
+      "name": "label",
+      "type": "registry:ui",
+      "title": "Label",
+      "description": "Uppercase UI label for a control. Field renders it for you.",
+      "dependencies": [
+        "@radix-ui/react-label",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/label.jsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/label.jsx"
+        }
+      ]
+    },
+    {
+      "name": "select",
+      "type": "registry:ui",
+      "title": "Select",
+      "description": "Choose one option from a list of five or more.",
+      "dependencies": [
+        "@radix-ui/react-select",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@lsl/field-context"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/select.jsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/select.jsx"
+        }
+      ]
+    },
+    {
+      "name": "checkbox",
+      "type": "registry:ui",
+      "title": "Checkbox",
+      "description": "A yes or no choice, or several independent choices.",
+      "dependencies": [
+        "@radix-ui/react-checkbox",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/checkbox.jsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/checkbox.jsx"
+        }
+      ]
+    },
+    {
+      "name": "radio-group",
+      "type": "registry:ui",
+      "title": "RadioGroup",
+      "description": "One choice from a short list, as square radios (circles mean Loy, rule S2).",
+      "dependencies": [
+        "@radix-ui/react-radio-group"
+      ],
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/radio-group.jsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/radio-group.jsx"
+        }
+      ]
+    },
+    {
+      "name": "switch",
+      "type": "registry:ui",
+      "title": "Switch",
+      "description": "Turn a setting on or off, applied immediately.",
+      "dependencies": [
+        "@radix-ui/react-switch"
+      ],
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/switch.jsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/switch.jsx"
+        }
+      ]
+    },
+    {
+      "name": "badge",
+      "type": "registry:ui",
+      "title": "Badge",
+      "description": "A short uppercase tag: category, count, state.",
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/badge.jsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/badge.jsx"
+        }
+      ]
+    },
+    {
+      "name": "card",
+      "type": "registry:ui",
+      "title": "Card",
+      "description": "A flat 2px-ruled container for one item: a case, a person, a setting group.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/card.jsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/card.jsx"
+        }
+      ]
+    },
+    {
+      "name": "sheet",
+      "type": "registry:ui",
+      "title": "Sheet",
+      "description": "A panel that slides in from an edge: mobile menu, filters, details.",
+      "dependencies": [
+        "@radix-ui/react-dialog",
+        "class-variance-authority",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/sheet.jsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/sheet.jsx"
+        }
+      ]
+    },
+    {
+      "name": "separator",
+      "type": "registry:ui",
+      "title": "Separator",
+      "description": "A 2px rule between regions.",
+      "dependencies": [
+        "@radix-ui/react-separator"
+      ],
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/separator.jsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/separator.jsx"
+        }
+      ]
+    },
+    {
+      "name": "sonner",
+      "type": "registry:ui",
+      "title": "Toaster",
+      "description": "Short, transient confirmation messages (toast). Mount <Toaster /> once.",
+      "dependencies": [
+        "sonner"
+      ],
+      "registryDependencies": [
+        "@lsl/status-icon"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/sonner.jsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/sonner.jsx"
+        }
+      ]
+    },
+    {
+      "name": "skeleton",
+      "type": "registry:ui",
+      "title": "Skeleton",
+      "description": "Placeholder block while content loads. Pulses opacity, no shimmer.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/skeleton.jsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/skeleton.jsx"
+        }
+      ]
+    },
+    {
+      "name": "tooltip",
+      "type": "registry:ui",
+      "title": "Tooltip",
+      "description": "A short hint on hover or focus for an icon or abbreviation.",
+      "dependencies": [
+        "@radix-ui/react-tooltip"
+      ],
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/tooltip.jsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/tooltip.jsx"
+        }
+      ]
+    },
+    {
+      "name": "mark",
+      "type": "registry:component",
+      "title": "Mark, AssemblingMark, Logo",
+      "description": "The LoyStudioLab mark and wordmark lockups. INTERIM geometry until the final logo is delivered.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "files": [
+        {
+          "path": "src/components/lsl/brand/mark.jsx",
+          "type": "registry:component",
+          "target": "src/components/lsl/brand/mark.jsx"
+        }
+      ]
+    },
+    {
+      "name": "glyph",
+      "type": "registry:component",
+      "title": "Glyph, LayerTag, LayerLegend, FounderMonogram",
+      "description": "The three layer marks (Loy circle, Studio square, Lab hollow triangle) and the tags, legend and founder monogram built from them.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "files": [
+        {
+          "path": "src/components/lsl/brand/glyph.jsx",
+          "type": "registry:component",
+          "target": "src/components/lsl/brand/glyph.jsx"
+        }
+      ]
+    },
+    {
+      "name": "layout",
+      "type": "registry:component",
+      "title": "Layout: Container, Section, Stack, Cluster, Grid, RuledGrid, TitleBlock, Divider",
+      "description": "Page bands with surfaces, base-8 spacing stacks, responsive grids and the exposed ruled grid.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "files": [
+        {
+          "path": "src/components/lsl/layout/layout.jsx",
+          "type": "registry:component",
+          "target": "src/components/lsl/layout/layout.jsx"
+        }
+      ]
+    },
+    {
+      "name": "typography",
+      "type": "registry:component",
+      "title": "Typography: Heading, Display, Eyebrow, Lead, Text, TextLink",
+      "description": "The type scale as components. Heading level (semantics) and size (looks) are separate.",
+      "dependencies": [
+        "@radix-ui/react-slot"
+      ],
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "files": [
+        {
+          "path": "src/components/lsl/typography/typography.jsx",
+          "type": "registry:component",
+          "target": "src/components/lsl/typography/typography.jsx"
+        }
+      ]
+    },
+    {
+      "name": "icon-button",
+      "type": "registry:component",
+      "title": "IconButton, ButtonGroup",
+      "description": "An icon-only button with a required accessible label, and a row of buttons.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@lsl/foundation",
+        "@lsl/button"
+      ],
+      "files": [
+        {
+          "path": "src/components/lsl/actions/icon-button.jsx",
+          "type": "registry:component",
+          "target": "src/components/lsl/actions/icon-button.jsx"
+        }
+      ]
+    },
+    {
+      "name": "field",
+      "type": "registry:component",
+      "title": "Field, FieldError, FormAlert, FormSuccess, Honeypot",
+      "description": "Wires label, hint, error and character count to a control, plus form-level error, success and anti-bot pieces.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@lsl/foundation",
+        "@lsl/label",
+        "@lsl/status-icon",
+        "@lsl/field-context"
+      ],
+      "files": [
+        {
+          "path": "src/components/lsl/forms/field.jsx",
+          "type": "registry:component",
+          "target": "src/components/lsl/forms/field.jsx"
+        }
+      ]
+    },
+    {
+      "name": "radio-tiles",
+      "type": "registry:component",
+      "title": "RadioTiles",
+      "description": "Two to four options drawn as ruled tiles with a hint each. The selected tile inverts to ink.",
+      "dependencies": [
+        "@radix-ui/react-radio-group"
+      ],
+      "registryDependencies": [
+        "@lsl/foundation",
+        "@lsl/field"
+      ],
+      "files": [
+        {
+          "path": "src/components/lsl/forms/radio-tiles.jsx",
+          "type": "registry:component",
+          "target": "src/components/lsl/forms/radio-tiles.jsx"
+        }
+      ]
+    },
+    {
+      "name": "site-header",
+      "type": "registry:component",
+      "title": "SiteHeader",
+      "description": "Sticky site header: logo, section or page links with the butter active underline, a plain CTA, and a full-height mobile menu.",
+      "dependencies": [
+        "react-router-dom",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@lsl/foundation",
+        "@lsl/mark",
+        "@lsl/glyph",
+        "@lsl/button",
+        "@lsl/sheet",
+        "@lsl/section-nav"
+      ],
+      "files": [
+        {
+          "path": "src/components/lsl/navigation/site-header.jsx",
+          "type": "registry:component",
+          "target": "src/components/lsl/navigation/site-header.jsx"
+        }
+      ]
+    },
+    {
+      "name": "site-footer",
+      "type": "registry:component",
+      "title": "SiteFooter",
+      "description": "Footer on paper-alt with logo, tagline, email, site links and the marks legend. Needs react-router (inside <BrowserRouter>).",
+      "dependencies": [
+        "react-router-dom"
+      ],
+      "registryDependencies": [
+        "@lsl/foundation",
+        "@lsl/mark",
+        "@lsl/glyph"
+      ],
+      "files": [
+        {
+          "path": "src/components/lsl/navigation/site-footer.jsx",
+          "type": "registry:component",
+          "target": "src/components/lsl/navigation/site-footer.jsx"
+        }
+      ]
+    },
+    {
+      "name": "site-shell",
+      "type": "registry:component",
+      "title": "SiteShell, SkipLink",
+      "description": "Page frame with landmarks: skip link, header, <main id=\"main\">, footer.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "files": [
+        {
+          "path": "src/components/lsl/navigation/site-shell.jsx",
+          "type": "registry:component",
+          "target": "src/components/lsl/navigation/site-shell.jsx"
+        }
+      ]
+    },
+    {
+      "name": "breadcrumbs",
+      "type": "registry:component",
+      "title": "Breadcrumbs, NavLink",
+      "description": "Where-am-I trail for nested pages, and a standalone nav link with the butter active underline. Needs react-router.",
+      "dependencies": [
+        "react-router-dom"
+      ],
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "files": [
+        {
+          "path": "src/components/lsl/navigation/breadcrumbs.jsx",
+          "type": "registry:component",
+          "target": "src/components/lsl/navigation/breadcrumbs.jsx"
+        }
+      ]
+    },
+    {
+      "name": "data-display",
+      "type": "registry:component",
+      "title": "TopRuleCard, MetaList, StatusBadge, Avatar",
+      "description": "Small display patterns: parallel items with a top rule, term/detail lists, workflow status, square avatars.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@lsl/foundation",
+        "@lsl/badge",
+        "@lsl/status-icon"
+      ],
+      "files": [
+        {
+          "path": "src/components/lsl/data-display/data-display.jsx",
+          "type": "registry:component",
+          "target": "src/components/lsl/data-display/data-display.jsx"
+        }
+      ]
+    },
+    {
+      "name": "status-icon",
+      "type": "registry:component",
+      "title": "StatusIcon",
+      "description": "Square-framed status marks: info, success, warning, error, pending.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "files": [
+        {
+          "path": "src/components/lsl/feedback/status-icon.jsx",
+          "type": "registry:component",
+          "target": "src/components/lsl/feedback/status-icon.jsx"
+        }
+      ]
+    },
+    {
+      "name": "feedback",
+      "type": "registry:component",
+      "title": "Callout, LinearLoader, EmptyState, ErrorState, NotFound",
+      "description": "Inline messages, progress, and the empty, error and not-found states.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@lsl/foundation",
+        "@lsl/status-icon"
+      ],
+      "files": [
+        {
+          "path": "src/components/lsl/feedback/feedback.jsx",
+          "type": "registry:component",
+          "target": "src/components/lsl/feedback/feedback.jsx"
+        }
+      ]
+    },
+    {
+      "name": "reveal",
+      "type": "registry:component",
+      "title": "Reveal, Rise",
+      "description": "The two motion primitives: a fail-safe scroll reveal and a one-time hero entrance. CSS only.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "files": [
+        {
+          "path": "src/components/lsl/motion/reveal.jsx",
+          "type": "registry:component",
+          "target": "src/components/lsl/motion/reveal.jsx"
+        }
+      ]
+    },
+    {
+      "name": "section-nav",
+      "type": "registry:hook",
+      "title": "useGoToSection, useActiveSection",
+      "description": "In-page navigation: smooth jump that moves focus to the section heading, and active-section tracking for the header.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "files": [
+        {
+          "path": "src/hooks/use-section-nav.js",
+          "type": "registry:hook",
+          "target": "src/hooks/use-section-nav.js"
+        }
+      ]
+    },
+    {
+      "name": "use-document-title",
+      "type": "registry:hook",
+      "title": "useDocumentTitle",
+      "description": "Sets the browser title as \"Page · LoyStudioLab\".",
+      "dependencies": [],
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "files": [
+        {
+          "path": "src/hooks/use-document-title.js",
+          "type": "registry:hook",
+          "target": "src/hooks/use-document-title.js"
+        }
+      ]
+    },
+    {
+      "name": "use-reduced-motion",
+      "type": "registry:hook",
+      "title": "useReducedMotion",
+      "description": "True when the user asked for reduced motion; updates live.",
+      "dependencies": [],
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "files": [
+        {
+          "path": "src/hooks/use-reduced-motion.js",
+          "type": "registry:hook",
+          "target": "src/hooks/use-reduced-motion.js"
+        }
+      ]
+    },
+    {
+      "name": "field-context",
+      "type": "registry:lib",
+      "title": "FieldContext",
+      "description": "Lets Field pass its id and aria wiring to controls nested deeper than its direct child (SelectTrigger).",
+      "dependencies": [],
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "files": [
+        {
+          "path": "src/lib/field-context.js",
+          "type": "registry:lib",
+          "target": "src/lib/field-context.js"
+        }
+      ]
+    },
+    {
+      "name": "format",
+      "type": "registry:lib",
+      "title": "formatNOK, formatNumber, formatDate",
+      "description": "Money, number and date formatting: English copy, Norwegian conventions (2 500 kr, 1 234,5, 11.11.2026).",
+      "dependencies": [],
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "files": [
+        {
+          "path": "src/lib/format.js",
+          "type": "registry:lib",
+          "target": "src/lib/format.js"
+        }
+      ]
+    }
+  ]
+}

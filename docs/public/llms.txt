@@ -1,0 +1,146 @@
+# LoyStudioLab UI 0.1.0
+
+> Component library for LoyStudioLab's own sites and Lab products (Snapticket, Kine OS). React + Tailwind 3.4 + shadcn/ui (JSX), distributed as a shadcn registry. Not for client brands.
+
+Before building UI: read the intents and rules, pick a template, then sections, then components. Install from the registry, put copy in src/data/content.js, run lsl-doctor.
+
+- Registry: https://loystudiolab.github.io/loystudiolab-ui/r/{name}.json  (components.json: "registries": { "@lsl": "https://loystudiolab.github.io/loystudiolab-ui/r/{name}.json" })
+- Manifest (full): https://loystudiolab.github.io/loystudiolab-ui/manifest.json
+- Manifest (index): https://loystudiolab.github.io/loystudiolab-ui/manifest.index.json
+- Full text: https://loystudiolab.github.io/loystudiolab-ui/llms-full.txt
+
+## Intents
+- Start a new app or add the library to an existing one: @lsl/foundation, @lsl/doctor, @lsl/accent-budget
+- Page frame with header, footer, skip link: SiteShell, SiteHeader, SiteFooter
+- A page band / section: Section (surface paper | alt | ink)
+- Numbered section heading (01 What we do): TitleBlock + Heading
+- Hero title and intro: Eyebrow, Display, Lead, Rise
+- The single most important call to action on the page: Button variant="accent" (once per page)
+- Any other action: Button (default | outline | ghost), IconButton
+- Inline link in text: TextLink
+- Parallel items (services, values, steps): RuledGrid + RuledCell, TopRuleCard
+- A self-contained item (a case, a person): Card
+- Mark work as Studio or Lab, people as Loy: LayerTag, Glyph
+- Explain the three marks: LayerLegend, AssemblingMark
+- Founder avatar: FounderMonogram
+- Person avatar in a product: Avatar (square)
+- Facts about a project (client, year, status): MetaList
+- A workflow status: StatusBadge
+- A category tag: Badge
+- A form field: Field + Input | Textarea | Select
+- Choose one of 2 to 4 options with hints: RadioTiles
+- Choose one of 5+ options: Select
+- Yes/no or opt-in: Checkbox, Switch (applies immediately)
+- Form error / success: FieldError (via Field), FormAlert, FormSuccess
+- Stop form spam: Honeypot
+- Inline note or warning in content: Callout
+- Transient confirmation: Toaster + toast()
+- Loading: Skeleton (known shape), LinearLoader (progress or long wait)
+- Nothing to show yet / failed to load / 404: EmptyState, ErrorState, NotFound
+- Status icon: StatusIcon
+- Side panel or mobile menu: Sheet
+- Hint on an icon: Tooltip
+- Breadcrumb trail: Breadcrumbs
+- Scroll-in motion: Reveal
+- Money and dates: formatNOK, formatDate
+- In-page section links: useGoToSection, useActiveSection
+
+## Rules
+- C1 One accent (butter) CTA per page, maximum.
+- C2 Butter is never a surface. Allowed only for: the accent CTA, the Studio glyph/square in the mark, hover underlines, focus rings, text selection.
+- C3 Petrol marks the Loy layer only (founder monograms, Loy tags).
+- C4 Signal teal only where something is computing or AI-generated. Never decoration.
+- C5 Text must pass WCAG AA (4.5:1). Concrete, butter, ochre and signal are never text on paper. Use ink-2 for secondary text, brick-deep for errors on paper-alt, signal-ink for Signal text.
+- C6 No raw hex or arbitrary color classes in app code. Tokens only.
+- S1 Solid circle = Loy, solid square = Studio, hollow triangle = Lab. These shapes mean nothing else.
+- S2 No circular or triangular UI chrome: square avatars (except founders), square radios, linear loaders instead of ring spinners, no pie or donut charts.
+- S3 Status icons are square-framed (StatusIcon). Never lucide CircleCheck, AlertTriangle, Info or XCircle.
+- G1 Radius 0 everywhere.
+- G2 Meaningful boundaries are 2px ink (or the surface's line color). The rule color #D8D2C2 is for decorative inner dividers only.
+- G3 No shadows. Overlays use a 2px border and an ink scrim.
+- G4 No gradients (including skeleton shimmer).
+- G5 Base-8 spacing. Use Stack/Cluster/Grid gap steps; half-steps (4px, 12px) only in tight UI.
+- T1 Jost for display and headings, Archivo for body and UI. No other families.
+- T2 Heading levels are semantic and sequential (one h1, no skips). Visual size is a separate prop.
+- T3 Fonts load via <link> in index.html with preconnect, never CSS @import.
+- T4 Use the fluid type scale (display, h1, h2, h3, lead, body, small, eyebrow, label). No ad-hoc font sizes for headings.
+- A1 AA contrast for all text and UI boundaries.
+- A2 Visible focus: butter ring hugging the element plus an ink (or paper) outline. Never remove focus styles.
+- A3 Everything works with a keyboard; icon-only controls have labels.
+- A4 Respect prefers-reduced-motion.
+- A5 Every control has a visible label; errors are linked with aria-describedby; focus moves to the first invalid field, the error alert or the success heading.
+- A6 Skip link, landmarks (header, main, footer, nav labels) and a unique document title on every page.
+- A7 Touch targets at least 44px.
+- A8 Every image has alt text; alt="" only when purely decorative.
+- M1 Motion explains (assembly, state change, reveal). It never decorates or loops, except the Signal computing indicator.
+- M2 CSS only, durations 150/250/550ms, easing cubic-bezier(0.2,0.7,0.2,1). No framer-motion.
+- M3 Reveals are fail-safe: content is visible unless an IntersectionObserver has proven it runs.
+- W1 All UI copy in English.
+- W2 No em dashes. Use periods, commas or colons.
+- W3 No superlatives or hype (best, leading, revolutionary, cutting-edge, seamless, world-class, game-changing).
+- W4 No stats as flex, no invented numbers.
+- W5 Real assets over recreations: real screenshots, real quotes, real clients only.
+- W6 Copy lives in a data file (src/data/content.js), not inside components.
+
+## Items
+### foundation
+- @lsl/foundation (lsl-preset.cjs, colors, surfaces, type, motion, fontLink): Tokens, global base styles, surfaces, focus ring, type classes and motion for every LoyStudioLab app. Install first.
+- @lsl/doctor (lsl-doctor.mjs): Checks an app against the LoyStudioLab rules and reports violations by rule ID. Run it before you finish any UI task.
+- @lsl/accent-budget (AccentBudget): Dev-only console warning when a page renders more than one accent (butter) CTA.
+
+### actions
+- @lsl/button (Button): Trigger an action, or style a link as a button with asChild.
+- @lsl/icon-button (IconButton, ButtonGroup): An icon-only button with a required accessible label, and a row of buttons.
+
+### forms
+- @lsl/input (Input): Single-line text entry. Always inside a Field.
+- @lsl/textarea (Textarea): Multi-line text entry. Always inside a Field; pass maxLength and count to Field for a counter.
+- @lsl/label (Label): Uppercase UI label for a control. Field renders it for you.
+- @lsl/select (Select, SelectTrigger, SelectValue, SelectContent, SelectItem, SelectGroup, SelectLabel, SelectSeparator): Choose one option from a list of five or more.
+- @lsl/checkbox (Checkbox): A yes or no choice, or several independent choices.
+- @lsl/radio-group (RadioGroup, RadioGroupItem): One choice from a short list, as square radios (circles mean Loy, rule S2).
+- @lsl/switch (Switch): Turn a setting on or off, applied immediately.
+- @lsl/field (Field, FieldError, FormAlert, FormSuccess, Honeypot): Wires label, hint, error and character count to a control, plus form-level error, success and anti-bot pieces.
+- @lsl/radio-tiles (RadioTiles): Two to four options drawn as ruled tiles with a hint each. The selected tile inverts to ink.
+
+### data-display
+- @lsl/badge (Badge): A short uppercase tag: category, count, state.
+- @lsl/card (Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter): A flat 2px-ruled container for one item: a case, a person, a setting group.
+- @lsl/data-display (TopRuleCard, MetaList, StatusBadge, Avatar): Small display patterns: parallel items with a top rule, term/detail lists, workflow status, square avatars.
+
+### overlays
+- @lsl/sheet (Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetFooter, SheetClose): A panel that slides in from an edge: mobile menu, filters, details.
+- @lsl/tooltip (TooltipProvider, Tooltip, TooltipTrigger, TooltipContent): A short hint on hover or focus for an icon or abbreviation.
+
+### layout
+- @lsl/separator (Separator): A 2px rule between regions.
+- @lsl/layout (Container, Section, Stack, Cluster, Grid, RuledGrid, RuledCell, TitleBlock, Divider): Page bands with surfaces, base-8 spacing stacks, responsive grids and the exposed ruled grid.
+
+### feedback
+- @lsl/sonner (Toaster): Short, transient confirmation messages (toast). Mount <Toaster /> once.
+- @lsl/skeleton (Skeleton): Placeholder block while content loads. Pulses opacity, no shimmer.
+- @lsl/status-icon (StatusIcon): Square-framed status marks: info, success, warning, error, pending.
+- @lsl/feedback (Callout, LinearLoader, EmptyState, ErrorState, NotFound): Inline messages, progress, and the empty, error and not-found states.
+
+### brand
+- @lsl/mark (Mark, AssemblingMark, Logo, MARK_GEOMETRY): The LoyStudioLab mark and wordmark lockups. INTERIM geometry until the final logo is delivered.
+- @lsl/glyph (Glyph, LayerTag, LayerLegend, FounderMonogram, LAYERS): The three layer marks (Loy circle, Studio square, Lab hollow triangle) and the tags, legend and founder monogram built from them.
+
+### typography
+- @lsl/typography (Heading, Display, Eyebrow, Lead, Text, TextLink): The type scale as components. Heading level (semantics) and size (looks) are separate.
+
+### navigation
+- @lsl/site-header (SiteHeader): Sticky site header: logo, section or page links with the butter active underline, a plain CTA, and a full-height mobile menu.
+- @lsl/site-footer (SiteFooter): Footer on paper-alt with logo, tagline, email, site links and the marks legend. Needs react-router (inside <BrowserRouter>).
+- @lsl/site-shell (SiteShell, SkipLink): Page frame with landmarks: skip link, header, <main id="main">, footer.
+- @lsl/breadcrumbs (Breadcrumbs, NavLink): Where-am-I trail for nested pages, and a standalone nav link with the butter active underline. Needs react-router.
+
+### motion
+- @lsl/reveal (Reveal, Rise): The two motion primitives: a fail-safe scroll reveal and a one-time hero entrance. CSS only.
+
+### hooks
+- @lsl/section-nav (useGoToSection, useActiveSection): In-page navigation: smooth jump that moves focus to the section heading, and active-section tracking for the header.
+- @lsl/use-document-title (useDocumentTitle): Sets the browser title as "Page · LoyStudioLab".
+- @lsl/use-reduced-motion (useReducedMotion): True when the user asked for reduced motion; updates live.
+- @lsl/field-context (FieldContext, useFieldContext): Lets Field pass its id and aria wiring to controls nested deeper than its direct child (SelectTrigger).
+- @lsl/format (formatNOK, formatNumber, formatDate): Money, number and date formatting: English copy, Norwegian conventions (2 500 kr, 1 234,5, 11.11.2026).

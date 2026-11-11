@@ -1,0 +1,43 @@
+name: CI
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm }
+      - run: npm ci
+      - name: Tokens, contrast, manifest (fails on drift between meta and source), registry
+        run: |
+          npm run build:tokens
+          git diff --exit-code src/styles/lsl-preset.cjs src/lib/lsl-tokens.js || (echo "Generated token files are stale: run npm run build:tokens" && exit 1)
+          npm run check:contrast
+          npm run build:manifest
+          npm run build:registry
+      - run: npm test
+      - run: npm run doctor
+      - name: Install every item into the Base44 fixture and build
+        run: npm run smoke
+      - run: npx playwright install --with-deps chromium
+      - name: Browser axe and keyboard tests
+        run: npx playwright test --grep-invert @visual
+      - name: Visual regression (only where baselines for this platform exist)
+        run: |
+          if [ -d tests/visual/__screenshots__/linux ]; then npx playwright test --grep @visual; else echo "No linux baselines yet: run the 'Update linux baselines' workflow."; fi
+
+  update-linux-baselines:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm }
+      - run: npm ci && npx playwright install --with-deps chromium
+      - run: npx playwright test --grep @visual --update-snapshots
+      - uses: actions/upload-artifact@v4
+        with: { name: linux-baselines, path: tests/visual/__screenshots__/linux }

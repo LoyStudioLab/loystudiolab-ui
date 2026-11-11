@@ -1,0 +1,32 @@
+/* LoyStudioLab tokens 0.1.0. GENERATED from tokens/tokens.json. */
+:root {
+  --paper: #F4EFE4;
+  --paper-alt: #EDE6D6;
+  --ink: #1B1A17;
+  --ink-2: #4A463E;
+  --concrete: #A39B8B;
+  --rule: #D8D2C2;
+  --butter: #FFB400;
+  --petrol: #2E5C68;
+  --petrol-light: #7FA9B4;
+  --brick: #AE4B32;
+  --brick-deep: #9E4129;
+  --brick-light: #E08A72;
+  --ochre: #C99A3B;
+  --signal: #17B8A6;
+  --signal-ink: #0E6E64;
+  --font-display: "Jost", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Archivo", ui-sans-serif, system-ui, sans-serif;
+  --type-display: clamp(2.5rem, 1.25rem + 3.75vw, 4rem);
+  --type-h1: clamp(2rem, 1.4rem + 1.5vw, 2.5rem);
+  --type-h2: clamp(1.5rem, 1.25rem + 0.6vw, 1.75rem);
+  --type-h3: 1.25rem;
+  --type-lead: clamp(1.0625rem, 1rem + 0.35vw, 1.25rem);
+  --type-body: 1rem;
+  --type-small: 0.875rem;
+  --type-eyebrow: 0.8125rem;
+  --type-label: 0.75rem;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --border: 2px solid var(--ink);
+  --radius: 0;
+}

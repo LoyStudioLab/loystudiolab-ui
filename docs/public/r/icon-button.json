@@ -1,0 +1,31 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "icon-button",
+  "type": "registry:component",
+  "title": "IconButton, ButtonGroup",
+  "description": "An icon-only button with a required accessible label, and a row of buttons.",
+  "dependencies": [],
+  "registryDependencies": [
+    "@lsl/foundation",
+    "@lsl/button"
+  ],
+  "files": [
+    {
+      "path": "src/components/lsl/actions/icon-button.jsx",
+      "type": "registry:component",
+      "target": "src/components/lsl/actions/icon-button.jsx",
+      "content": "// @lsl/icon-button 0.1.0 · managed by loystudiolab-ui · change upstream, not here.\nimport * as React from \"react\"\n\nimport { Button } from \"@/components/ui/button\"\nimport { cn } from \"@/lib/utils\"\n\n// Icon-only button. `label` is required: it becomes the accessible name.\nexport const IconButton = React.forwardRef(function IconButton({ label, variant = \"outline\", children, ...props }, ref) {\n  if (import.meta.env?.DEV && !label) console.warn(\"[LSL-A3] IconButton needs a `label` for screen readers.\")\n  return (\n    <Button ref={ref} variant={variant} size=\"icon\" aria-label={label} title={label} {...props}>\n      {children}\n    </Button>\n  )\n})\n\n// A row of buttons. `attached` joins them into one ruled bar.\nexport function ButtonGroup({ attached = false, className, ...props }) {\n  return (\n    <div\n      role=\"group\"\n      className={cn(\n        \"flex\",\n        attached ? \"[&>*+*]:-ml-[2px]\" : \"flex-wrap gap-3\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n"
+    }
+  ],
+  "meta": {
+    "version": "0.1.0",
+    "layer": "L2",
+    "status": "stable",
+    "category": "actions",
+    "rules": [
+      "A3",
+      "A7",
+      "S3"
+    ]
+  }
+}

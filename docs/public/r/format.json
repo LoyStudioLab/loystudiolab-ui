@@ -1,0 +1,28 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "format",
+  "type": "registry:lib",
+  "title": "formatNOK, formatNumber, formatDate",
+  "description": "Money, number and date formatting: English copy, Norwegian conventions (2 500 kr, 1 234,5, 11.11.2026).",
+  "dependencies": [],
+  "registryDependencies": [
+    "@lsl/foundation"
+  ],
+  "files": [
+    {
+      "path": "src/lib/format.js",
+      "type": "registry:lib",
+      "target": "src/lib/format.js",
+      "content": "// @lsl/format 0.1.0 · managed by loystudiolab-ui · change upstream, not here.\n/*\n  Number and date formatting. Copy is English, but money and dates follow Norwegian\n  conventions by default, since our users are in Norway.\n*/\nexport function formatNOK(amount, { decimals = 0, locale = \"nb-NO\" } = {}) {\n  if (amount == null || Number.isNaN(Number(amount))) return \"\"\n  return new Intl.NumberFormat(locale, {\n    style: \"currency\",\n    currency: \"NOK\",\n    minimumFractionDigits: decimals,\n    maximumFractionDigits: decimals,\n  }).format(Number(amount))\n}\n\nexport function formatNumber(value, { decimals = 0, locale = \"nb-NO\" } = {}) {\n  if (value == null || Number.isNaN(Number(value))) return \"\"\n  return new Intl.NumberFormat(locale, { minimumFractionDigits: decimals, maximumFractionDigits: decimals }).format(Number(value))\n}\n\n// style: \"long\" (11 November 2026), \"short\" (11 Nov 2026), \"numeric\" (11.11.2026)\nexport function formatDate(value, { style = \"long\", locale = \"en-GB\" } = {}) {\n  if (!value) return \"\"\n  const d = value instanceof Date ? value : new Date(value)\n  if (Number.isNaN(d.getTime())) return \"\"\n  if (style === \"numeric\") return new Intl.DateTimeFormat(\"nb-NO\", { day: \"2-digit\", month: \"2-digit\", year: \"numeric\" }).format(d)\n  return new Intl.DateTimeFormat(locale, { day: \"numeric\", month: style === \"short\" ? \"short\" : \"long\", year: \"numeric\" }).format(d)\n}\n"
+    }
+  ],
+  "meta": {
+    "version": "0.1.0",
+    "layer": "L0",
+    "status": "stable",
+    "category": "hooks",
+    "rules": [
+      "W1"
+    ]
+  }
+}

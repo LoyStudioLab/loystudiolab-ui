@@ -1,0 +1,28 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-document-title",
+  "type": "registry:hook",
+  "title": "useDocumentTitle",
+  "description": "Sets the browser title as \"Page · LoyStudioLab\".",
+  "dependencies": [],
+  "registryDependencies": [
+    "@lsl/foundation"
+  ],
+  "files": [
+    {
+      "path": "src/hooks/use-document-title.js",
+      "type": "registry:hook",
+      "target": "src/hooks/use-document-title.js",
+      "content": "// @lsl/use-document-title 0.1.0 · managed by loystudiolab-ui · change upstream, not here.\nimport { useEffect } from \"react\"\n\n// Sets \"<title> · LoyStudioLab\" (or just the site name when title is empty).\nexport function useDocumentTitle(title, site = \"LoyStudioLab\") {\n  useEffect(() => {\n    document.title = title ? `${title} · ${site}` : site\n  }, [title, site])\n}\n"
+    }
+  ],
+  "meta": {
+    "version": "0.1.0",
+    "layer": "L0",
+    "status": "stable",
+    "category": "hooks",
+    "rules": [
+      "A6"
+    ]
+  }
+}

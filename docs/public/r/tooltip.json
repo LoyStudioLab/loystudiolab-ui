@@ -1,0 +1,30 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tooltip",
+  "type": "registry:ui",
+  "title": "Tooltip",
+  "description": "A short hint on hover or focus for an icon or abbreviation.",
+  "dependencies": [
+    "@radix-ui/react-tooltip"
+  ],
+  "registryDependencies": [
+    "@lsl/foundation"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/tooltip.jsx",
+      "type": "registry:ui",
+      "target": "src/components/ui/tooltip.jsx",
+      "content": "// @lsl/tooltip 0.1.0 · managed by loystudiolab-ui · change upstream, not here.\nimport * as React from \"react\"\nimport * as TooltipPrimitive from \"@radix-ui/react-tooltip\"\n\nimport { cn } from \"@/lib/utils\"\n\nconst TooltipProvider = TooltipPrimitive.Provider\nconst Tooltip = TooltipPrimitive.Root\nconst TooltipTrigger = TooltipPrimitive.Trigger\n\nconst TooltipContent = React.forwardRef(({ className, sideOffset = 6, ...props }, ref) => (\n  <TooltipPrimitive.Portal>\n    <TooltipPrimitive.Content\n      ref={ref}\n      sideOffset={sideOffset}\n      className={cn(\n        \"z-overlay max-w-xs border-2 border-ink bg-ink px-3 py-2 font-body text-sm text-paper animate-in fade-in-0 data-[state=closed]:animate-out data-[state=closed]:fade-out-0\",\n        className\n      )}\n      {...props}\n    />\n  </TooltipPrimitive.Portal>\n))\nTooltipContent.displayName = TooltipPrimitive.Content.displayName\n\nexport { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider }\n"
+    }
+  ],
+  "meta": {
+    "version": "0.1.0",
+    "layer": "L1",
+    "status": "stable",
+    "category": "overlays",
+    "rules": [
+      "A3"
+    ]
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "section-nav",
+  "type": "registry:hook",
+  "title": "useGoToSection, useActiveSection",
+  "description": "In-page navigation: smooth jump that moves focus to the section heading, and active-section tracking for the header.",
+  "dependencies": [],
+  "registryDependencies": [
+    "@lsl/foundation"
+  ],
+  "files": [
+    {
+      "path": "src/hooks/use-section-nav.js",
+      "type": "registry:hook",
+      "target": "src/hooks/use-section-nav.js",
+      "content": "// @lsl/section-nav 0.1.0 · managed by loystudiolab-ui · change upstream, not here.\nimport { useCallback, useEffect, useState } from \"react\"\n\nconst prefersReduced = () =>\n  typeof window !== \"undefined\" && window.matchMedia?.(\"(prefers-reduced-motion: reduce)\").matches\n\n/*\n  In-page jump: scrolls to a section, updates the hash, and moves focus to the\n  section's heading (mark it with data-section-heading and tabIndex={-1}).\n  Pass `enabled = false` on pages where the target is not rendered (the link then\n  navigates normally).\n*/\nexport function useGoToSection(enabled = true) {\n  return useCallback(\n    (id, event) => {\n      if (!enabled) return\n      const el = document.getElementById(id)\n      if (!el) return\n      event?.preventDefault()\n      el.scrollIntoView({ behavior: prefersReduced() ? \"auto\" : \"smooth\", block: \"start\" })\n      window.history.replaceState(null, \"\", `#${id}`)\n      el.querySelector(\"[data-section-heading]\")?.focus({ preventScroll: true })\n    },\n    [enabled]\n  )\n}\n\n// Which of `ids` is currently in the reading zone (for nav highlighting).\nexport function useActiveSection(ids, enabled = true) {\n  const [active, setActive] = useState(null)\n  const key = ids.join(\"|\")\n  useEffect(() => {\n    if (!enabled || typeof IntersectionObserver === \"undefined\") {\n      setActive(null)\n      return undefined\n    }\n    const list = key.split(\"|\")\n    const els = list.map((id) => document.getElementById(id)).filter(Boolean)\n    if (!els.length) return undefined\n    const visible = new Set()\n    const io = new IntersectionObserver(\n      (entries) => {\n        entries.forEach((e) => (e.isIntersecting ? visible.add(e.target.id) : visible.delete(e.target.id)))\n        setActive(list.find((id) => visible.has(id)) || null)\n      },\n      { rootMargin: \"-35% 0px -60% 0px\", threshold: 0 }\n    )\n    els.forEach((el) => io.observe(el))\n    return () => io.disconnect()\n  }, [key, enabled])\n  return active\n}\n"
+    }
+  ],
+  "meta": {
+    "version": "0.1.0",
+    "layer": "L0",
+    "status": "stable",
+    "category": "hooks",
+    "rules": [
+      "A3",
+      "A4"
+    ]
+  }
+}

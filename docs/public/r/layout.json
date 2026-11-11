@@ -1,0 +1,30 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "layout",
+  "type": "registry:component",
+  "title": "Layout: Container, Section, Stack, Cluster, Grid, RuledGrid, TitleBlock, Divider",
+  "description": "Page bands with surfaces, base-8 spacing stacks, responsive grids and the exposed ruled grid.",
+  "dependencies": [],
+  "registryDependencies": [
+    "@lsl/foundation"
+  ],
+  "files": [
+    {
+      "path": "src/components/lsl/layout/layout.jsx",
+      "type": "registry:component",
+      "target": "src/components/lsl/layout/layout.jsx",
+      "content": "// @lsl/layout 0.1.0 · managed by loystudiolab-ui · change upstream, not here.\nimport * as React from \"react\"\n\nimport { cn } from \"@/lib/utils\"\n\n/*\n  Layout primitives on the base-8 grid (rule G5). Spacing props take grid steps:\n  1 = 8px, 2 = 16px, 3 = 24px, 4 = 32px, 6 = 48px, 8 = 64px.\n  Class strings are written out in full so Tailwind can see them.\n*/\nconst GAP = { 0: \"gap-0\", 1: \"gap-2\", 2: \"gap-4\", 3: \"gap-6\", 4: \"gap-8\", 6: \"gap-12\", 8: \"gap-16\" }\nconst ALIGN = { start: \"items-start\", center: \"items-center\", end: \"items-end\", baseline: \"items-baseline\", stretch: \"items-stretch\" }\nconst JUSTIFY = { start: \"justify-start\", center: \"justify-center\", end: \"justify-end\", between: \"justify-between\" }\n\nexport function Container({ as: Tag = \"div\", width = \"site\", className, ...props }) {\n  return <Tag className={cn(width === \"prose\" ? \"mx-auto w-full max-w-prose px-4 sm:px-6\" : \"container-site\", className)} {...props} />\n}\n\nconst SURFACE = { paper: \"surface-paper\", alt: \"surface-alt\", ink: \"surface-ink\" }\n\nconst SECTION_SPACE = {\n  sm: \"py-10 md:py-12\",\n  md: \"py-16 md:py-24\",\n  lg: \"py-20 md:py-32\",\n}\n\n// A page band. `surface` sets colors for everything inside (paper, alt or ink).\nexport const Section = React.forwardRef(function Section(\n  { as: Tag = \"section\", surface = \"paper\", space = \"md\", bordered = true, contained = true, className, children, ...props },\n  ref\n) {\n  return (\n    <Tag ref={ref} className={cn(SURFACE[surface], SECTION_SPACE[space], bordered && \"border-t-2 border-ink\", className)} {...props}>\n      {contained ? <div className=\"container-site\">{children}</div> : children}\n    </Tag>\n  )\n})\n\nexport function Stack({ as: Tag = \"div\", gap = 3, align = \"stretch\", className, ...props }) {\n  return <Tag className={cn(\"flex flex-col\", GAP[gap], ALIGN[align], className)} {...props} />\n}\n\nexport function Cluster({ as: Tag = \"div\", gap = 2, align = \"center\", justify = \"start\", wrap = true, className, ...props }) {\n  return <Tag className={cn(\"flex\", wrap && \"flex-wrap\", GAP[gap], ALIGN[align], JUSTIFY[justify], className)} {...props} />\n}\n\nconst COLS = {\n  1: \"grid-cols-1\",\n  2: \"grid-cols-1 md:grid-cols-2\",\n  3: \"grid-cols-1 md:grid-cols-2 lg:grid-cols-3\",\n  4: \"grid-cols-1 sm:grid-cols-2 lg:grid-cols-4\",\n  6: \"grid-cols-2 md:grid-cols-3 lg:grid-cols-6\",\n  12: \"grid-cols-4 md:grid-cols-12\",\n}\n\n// Responsive grid: collapses to one column on small screens.\nexport function Grid({ as: Tag = \"div\", cols = 3, gap = 4, align = \"stretch\", className, ...props }) {\n  return <Tag className={cn(\"grid\", COLS[cols], GAP[gap], ALIGN[align], className)} {...props} />\n}\n\n// Exposed grid: cells share 2px rules instead of floating as separate cards.\nexport function RuledGrid({ as: Tag = \"div\", cols = 3, className, ...props }) {\n  return <Tag className={cn(\"grid-ruled grid\", COLS[cols], className)} {...props} />\n}\n\nexport function RuledCell({ as: Tag = \"div\", className, ...props }) {\n  return <Tag className={cn(\"flex flex-col gap-3 p-6 lg:p-8\", className)} {...props} />\n}\n\n/*\n  Title block: an index number and label in a left column, content on the right.\n  Like a drawing sheet's title block: the reader always knows where they are.\n*/\nexport function TitleBlock({ index, label, children, className }) {\n  return (\n    <div className={cn(\"grid gap-6 lg:grid-cols-12 lg:gap-10\", className)}>\n      <div className=\"lg:col-span-3\">\n        {(index != null || label) && (\n          <p className=\"eyebrow flex items-center gap-3\">\n            {index != null && (\n              <span className=\"inline-flex h-8 min-w-8 items-center justify-center border-2 border-line px-1.5 font-body text-xs tracking-normal text-fg\">\n                {index}\n              </span>\n            )}\n            {label}\n          </p>\n        )}\n      </div>\n      <div className=\"lg:col-span-9\">{children}</div>\n    </div>\n  )\n}\n\nexport function Divider({ tone = \"strong\", className, ...props }) {\n  return <hr className={cn(\"h-[2px] w-full border-0\", tone === \"subtle\" ? \"bg-divider\" : \"bg-line\", className)} {...props} />\n}\n"
+    }
+  ],
+  "meta": {
+    "version": "0.1.0",
+    "layer": "L2",
+    "status": "stable",
+    "category": "layout",
+    "rules": [
+      "G2",
+      "G5",
+      "C2"
+    ]
+  }
+}

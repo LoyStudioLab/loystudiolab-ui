@@ -1,0 +1,30 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "mark",
+  "type": "registry:component",
+  "title": "Mark, AssemblingMark, Logo",
+  "description": "The LoyStudioLab mark and wordmark lockups. INTERIM geometry until the final logo is delivered.",
+  "dependencies": [],
+  "registryDependencies": [
+    "@lsl/foundation"
+  ],
+  "files": [
+    {
+      "path": "src/components/lsl/brand/mark.jsx",
+      "type": "registry:component",
+      "target": "src/components/lsl/brand/mark.jsx",
+      "content": "// @lsl/mark 0.1.0 · managed by loystudiolab-ui · change upstream, not here.\nimport { cn } from \"@/lib/utils\"\n\n/*\n  The LoyStudioLab mark, built from the three shapes of the system (rule S1).\n  Solid circle = Loy (the founders). Solid butter square = Studio (client work).\n  Hollow triangle = Lab: the open space where the other two overlap.\n  INTERIM: the final logo is still being drawn. All geometry lives in MARK_GEOMETRY,\n  so the final mark replaces it in one place. Colors follow the surface, so the mark\n  reads on paper, paper-alt and ink.\n*/\nexport const MARK_GEOMETRY = {\n  viewBox: \"0 0 120 120\",\n  circle: { cx: 46, cy: 46, r: 34 },\n  square: { x: 52, y: 52, width: 56, height: 56 },\n  triangle: \"68,44 92,88 44,88\",\n  trianglePath: \"M68 44 L92 88 L44 88 Z\",\n}\n\nconst FG = \"rgb(var(--lsl-fg))\"\nconst SURFACE = \"rgb(var(--lsl-surface))\"\nconst BUTTER = \"rgb(var(--lsl-butter))\"\n\nexport function Mark({ size = 40, title, className }) {\n  const g = MARK_GEOMETRY\n  return (\n    <svg\n      viewBox={g.viewBox}\n      width={size}\n      height={size}\n      className={cn(\"shrink-0\", className)}\n      role={title ? \"img\" : undefined}\n      aria-label={title}\n      aria-hidden={title ? undefined : true}\n      focusable=\"false\"\n    >\n      <circle {...g.circle} fill={FG} />\n      <rect {...g.square} fill={BUTTER} />\n      <polygon points={g.triangle} fill={SURFACE} stroke={FG} strokeWidth=\"4\" strokeLinejoin=\"miter\" />\n    </svg>\n  )\n}\n\n/*\n  Animated, explorable mark for a hero. Shapes assemble once on load (CSS, off under\n  reduced motion). `focus` (\"loy\" | \"studio\" | \"lab\") dims the other two so a legend\n  can point at one layer at a time.\n*/\nexport function AssemblingMark({ focus = null, className }) {\n  const g = MARK_GEOMETRY\n  const dim = (key, low = 0.16) => ({\n    opacity: focus && focus !== key ? low : 1,\n    transition: \"opacity var(--lsl-dur-base) ease\",\n  })\n  return (\n    <svg viewBox={g.viewBox} className={className} aria-hidden=\"true\" focusable=\"false\">\n      <g style={dim(\"loy\")}>\n        <circle {...g.circle} fill={FG} className=\"lsl-in-tl\" />\n      </g>\n      <g style={dim(\"studio\")}>\n        <rect {...g.square} fill={BUTTER} className=\"lsl-in-br\" />\n      </g>\n      <polygon points={g.triangle} fill={SURFACE} className=\"lsl-fade\" />\n      <path\n        d={g.trianglePath}\n        pathLength=\"1\"\n        fill=\"none\"\n        stroke={FG}\n        strokeWidth=\"4\"\n        strokeLinejoin=\"miter\"\n        className=\"lsl-draw\"\n        style={dim(\"lab\", 0.25)}\n      />\n    </svg>\n  )\n}\n\n/*\n  Wordmark lockups.\n  - horizontal: mark + \"LoyStudioLab\" (headers, footers)\n  - stacked:    LOY / STUDIO / LAB, as in the original sketch (posters, covers)\n  - mark:       mark only (favicons, tight spaces); needs `title` if it stands alone\n*/\nexport function Logo({ variant = \"horizontal\", size, title = \"LoyStudioLab\", className }) {\n  if (variant === \"mark\") return <Mark size={size ?? 40} title={title} className={className} />\n  if (variant === \"stacked\") {\n    return (\n      <span className={cn(\"inline-flex items-end gap-4\", className)}>\n        <Mark size={size ?? 72} />\n        <span className=\"font-display text-[2rem] font-bold uppercase leading-[0.95] tracking-[0.04em] text-fg\">\n          Loy\n          <br />\n          Studio\n          <br />\n          Lab\n        </span>\n      </span>\n    )\n  }\n  return (\n    <span className={cn(\"inline-flex items-center gap-3\", className)}>\n      <Mark size={size ?? 36} />\n      <span className=\"font-display text-[1.1875rem] font-semibold leading-none tracking-[-0.01em] text-fg\">LoyStudioLab</span>\n    </span>\n  )\n}\n"
+    }
+  ],
+  "meta": {
+    "version": "0.1.0",
+    "layer": "L2",
+    "status": "stable",
+    "category": "brand",
+    "rules": [
+      "S1",
+      "C2",
+      "W5"
+    ]
+  }
+}

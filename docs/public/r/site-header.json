@@ -1,0 +1,40 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "site-header",
+  "type": "registry:component",
+  "title": "SiteHeader",
+  "description": "Sticky site header: logo, section or page links with the butter active underline, a plain CTA, and a full-height mobile menu.",
+  "dependencies": [
+    "react-router-dom",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "@lsl/foundation",
+    "@lsl/mark",
+    "@lsl/glyph",
+    "@lsl/button",
+    "@lsl/sheet",
+    "@lsl/section-nav"
+  ],
+  "files": [
+    {
+      "path": "src/components/lsl/navigation/site-header.jsx",
+      "type": "registry:component",
+      "target": "src/components/lsl/navigation/site-header.jsx",
+      "content": "// @lsl/site-header 0.1.0 · managed by loystudiolab-ui · change upstream, not here.\nimport * as React from \"react\"\nimport { Link, useLocation, useNavigate } from \"react-router-dom\"\nimport { Menu } from \"lucide-react\"\n\nimport { Logo } from \"@/components/lsl/brand/mark\"\nimport { LayerLegend } from \"@/components/lsl/brand/glyph\"\nimport { Button } from \"@/components/ui/button\"\nimport { Sheet, SheetContent, SheetTitle, SheetTrigger, SheetHeader } from \"@/components/ui/sheet\"\nimport { useActiveSection, useGoToSection } from \"@/hooks/use-section-nav\"\nimport { cn } from \"@/lib/utils\"\n\n/*\n  Sticky site header with a ruled bottom edge, active-section underline (butter), a\n  plain CTA (never `accent`: the page's one accent CTA lives in the content, rule C1),\n  and a full-height mobile menu.\n  items: [{ label, id }] for sections on the home page, or [{ label, href }] for pages.\n*/\nexport function SiteHeader({ items = [], cta, homePath = \"/\", showLegend = true, className }) {\n  const { pathname } = useLocation()\n  const navigate = useNavigate()\n  const isHome = pathname === homePath\n  const ids = items.filter((i) => i.id).map((i) => i.id)\n  const active = useActiveSection(ids, isHome)\n  const go = useGoToSection(isHome)\n  const [open, setOpen] = React.useState(false)\n\n  const hrefOf = (item) => item.href ?? `${homePath}#${item.id}`\n\n  const onLogo = (e) => {\n    if (!isHome) return\n    e.preventDefault()\n    const reduce = window.matchMedia?.(\"(prefers-reduced-motion: reduce)\").matches\n    window.scrollTo({ top: 0, behavior: reduce ? \"auto\" : \"smooth\" })\n    window.history.replaceState(null, \"\", homePath)\n  }\n\n  return (\n    <header className={cn(\"surface-paper sticky top-0 z-header border-b-2 border-ink\", className)}>\n      <div className=\"container-site flex h-[var(--lsl-header-h)] items-center justify-between gap-6\">\n        <Link to={homePath} onClick={onLogo} className=\"-m-1 p-1\" aria-label=\"LoyStudioLab, home\">\n          <Logo />\n        </Link>\n\n        <nav aria-label=\"Main\" className=\"hidden lg:block\">\n          <ul className=\"flex items-center gap-8\">\n            {items.map((item) => {\n              const isActive = item.id ? active === item.id : pathname === item.href\n              return (\n                <li key={item.id ?? item.href}>\n                  <Link\n                    to={hrefOf(item)}\n                    onClick={item.id ? (e) => go(item.id, e) : undefined}\n                    aria-current={isActive ? (item.id ? \"location\" : \"page\") : undefined}\n                    className=\"group relative inline-block py-2 font-body text-[0.9375rem] font-semibold text-fg\"\n                  >\n                    {item.label}\n                    <span\n                      aria-hidden=\"true\"\n                      className={cn(\n                        \"absolute inset-x-0 -bottom-0.5 h-[3px] origin-left bg-butter transition-transform duration-base group-hover:scale-x-100\",\n                        isActive ? \"scale-x-100\" : \"scale-x-0\"\n                      )}\n                    />\n                  </Link>\n                </li>\n              )\n            })}\n          </ul>\n        </nav>\n\n        <div className=\"flex items-center gap-3\">\n          {cta && (\n            <Button asChild size=\"sm\" className=\"hidden sm:inline-flex\">\n              <Link to={cta.href} onClick={cta.id ? (e) => go(cta.id, e) : undefined}>\n                {cta.label}\n              </Link>\n            </Button>\n          )}\n          <Sheet open={open} onOpenChange={setOpen}>\n            <SheetTrigger asChild>\n              <Button variant=\"outline\" size=\"icon\" className=\"lg:hidden\" aria-label=\"Open menu\">\n                <Menu className=\"!size-5\" aria-hidden=\"true\" />\n              </Button>\n            </SheetTrigger>\n            <SheetContent side=\"right\" aria-describedby={undefined} closeLabel=\"Close menu\">\n              <SheetHeader>\n                <SheetTitle>Menu</SheetTitle>\n              </SheetHeader>\n              <nav aria-label=\"Mobile\" className=\"flex-1 overflow-y-auto\">\n                <ul className=\"border-b-2 border-ink\">\n                  {[...items, ...(cta ? [cta] : [])].map((item, i) => (\n                    <li key={item.id ?? item.href} className=\"border-t-2 border-ink first:border-t-0\">\n                      <Link\n                        to={hrefOf(item)}\n                        onClick={(e) => {\n                          // Let the sheet close (and release its scroll lock) before moving.\n                          e.preventDefault()\n                          setOpen(false)\n                          setTimeout(() => (item.id && isHome ? go(item.id) : navigate(hrefOf(item))), 320)\n                        }}\n                        className=\"flex min-h-11 items-baseline gap-4 px-4 py-5 font-display text-[1.75rem] font-semibold leading-none text-fg hover:bg-tint sm:px-6\"\n                      >\n                        <span className=\"font-body text-xs font-semibold tracking-[0.08em] text-fg-2\">{String(i + 1).padStart(2, \"0\")}</span>\n                        {item.label}\n                      </Link>\n                    </li>\n                  ))}\n                </ul>\n                {showLegend && <LayerLegend className=\"px-4 py-6 sm:px-6\" />}\n              </nav>\n            </SheetContent>\n          </Sheet>\n        </div>\n      </div>\n    </header>\n  )\n}\n"
+    }
+  ],
+  "meta": {
+    "version": "0.1.0",
+    "layer": "L3",
+    "status": "stable",
+    "category": "navigation",
+    "rules": [
+      "C1",
+      "A3",
+      "A6",
+      "A7"
+    ]
+  },
+  "docs": "Needs react-router: render inside <BrowserRouter> (Base44 apps already have one in App.jsx).\nFor section items ({ id }): put the id on the <Section>, and give that section's heading tabIndex={-1} and data-section-heading so focus lands on it after the jump."
+}

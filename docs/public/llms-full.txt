@@ -1,0 +1,1064 @@
+# LoyStudioLab UI 0.1.0
+
+> Component library for LoyStudioLab's own sites and Lab products (Snapticket, Kine OS). React + Tailwind 3.4 + shadcn/ui (JSX), distributed as a shadcn registry. Not for client brands.
+
+Before building UI: read the intents and rules, pick a template, then sections, then components. Install from the registry, put copy in src/data/content.js, run lsl-doctor.
+
+- Registry: https://loystudiolab.github.io/loystudiolab-ui/r/{name}.json  (components.json: "registries": { "@lsl": "https://loystudiolab.github.io/loystudiolab-ui/r/{name}.json" })
+- Manifest (full): https://loystudiolab.github.io/loystudiolab-ui/manifest.json
+- Manifest (index): https://loystudiolab.github.io/loystudiolab-ui/manifest.index.json
+- Full text: https://loystudiolab.github.io/loystudiolab-ui/llms-full.txt
+
+## Intents
+- Start a new app or add the library to an existing one: @lsl/foundation, @lsl/doctor, @lsl/accent-budget
+- Page frame with header, footer, skip link: SiteShell, SiteHeader, SiteFooter
+- A page band / section: Section (surface paper | alt | ink)
+- Numbered section heading (01 What we do): TitleBlock + Heading
+- Hero title and intro: Eyebrow, Display, Lead, Rise
+- The single most important call to action on the page: Button variant="accent" (once per page)
+- Any other action: Button (default | outline | ghost), IconButton
+- Inline link in text: TextLink
+- Parallel items (services, values, steps): RuledGrid + RuledCell, TopRuleCard
+- A self-contained item (a case, a person): Card
+- Mark work as Studio or Lab, people as Loy: LayerTag, Glyph
+- Explain the three marks: LayerLegend, AssemblingMark
+- Founder avatar: FounderMonogram
+- Person avatar in a product: Avatar (square)
+- Facts about a project (client, year, status): MetaList
+- A workflow status: StatusBadge
+- A category tag: Badge
+- A form field: Field + Input | Textarea | Select
+- Choose one of 2 to 4 options with hints: RadioTiles
+- Choose one of 5+ options: Select
+- Yes/no or opt-in: Checkbox, Switch (applies immediately)
+- Form error / success: FieldError (via Field), FormAlert, FormSuccess
+- Stop form spam: Honeypot
+- Inline note or warning in content: Callout
+- Transient confirmation: Toaster + toast()
+- Loading: Skeleton (known shape), LinearLoader (progress or long wait)
+- Nothing to show yet / failed to load / 404: EmptyState, ErrorState, NotFound
+- Status icon: StatusIcon
+- Side panel or mobile menu: Sheet
+- Hint on an icon: Tooltip
+- Breadcrumb trail: Breadcrumbs
+- Scroll-in motion: Reveal
+- Money and dates: formatNOK, formatDate
+- In-page section links: useGoToSection, useActiveSection
+
+## Rules
+- C1 One accent (butter) CTA per page, maximum.
+- C2 Butter is never a surface. Allowed only for: the accent CTA, the Studio glyph/square in the mark, hover underlines, focus rings, text selection.
+- C3 Petrol marks the Loy layer only (founder monograms, Loy tags).
+- C4 Signal teal only where something is computing or AI-generated. Never decoration.
+- C5 Text must pass WCAG AA (4.5:1). Concrete, butter, ochre and signal are never text on paper. Use ink-2 for secondary text, brick-deep for errors on paper-alt, signal-ink for Signal text.
+- C6 No raw hex or arbitrary color classes in app code. Tokens only.
+- S1 Solid circle = Loy, solid square = Studio, hollow triangle = Lab. These shapes mean nothing else.
+- S2 No circular or triangular UI chrome: square avatars (except founders), square radios, linear loaders instead of ring spinners, no pie or donut charts.
+- S3 Status icons are square-framed (StatusIcon). Never lucide CircleCheck, AlertTriangle, Info or XCircle.
+- G1 Radius 0 everywhere.
+- G2 Meaningful boundaries are 2px ink (or the surface's line color). The rule color #D8D2C2 is for decorative inner dividers only.
+- G3 No shadows. Overlays use a 2px border and an ink scrim.
+- G4 No gradients (including skeleton shimmer).
+- G5 Base-8 spacing. Use Stack/Cluster/Grid gap steps; half-steps (4px, 12px) only in tight UI.
+- T1 Jost for display and headings, Archivo for body and UI. No other families.
+- T2 Heading levels are semantic and sequential (one h1, no skips). Visual size is a separate prop.
+- T3 Fonts load via <link> in index.html with preconnect, never CSS @import.
+- T4 Use the fluid type scale (display, h1, h2, h3, lead, body, small, eyebrow, label). No ad-hoc font sizes for headings.
+- A1 AA contrast for all text and UI boundaries.
+- A2 Visible focus: butter ring hugging the element plus an ink (or paper) outline. Never remove focus styles.
+- A3 Everything works with a keyboard; icon-only controls have labels.
+- A4 Respect prefers-reduced-motion.
+- A5 Every control has a visible label; errors are linked with aria-describedby; focus moves to the first invalid field, the error alert or the success heading.
+- A6 Skip link, landmarks (header, main, footer, nav labels) and a unique document title on every page.
+- A7 Touch targets at least 44px.
+- A8 Every image has alt text; alt="" only when purely decorative.
+- M1 Motion explains (assembly, state change, reveal). It never decorates or loops, except the Signal computing indicator.
+- M2 CSS only, durations 150/250/550ms, easing cubic-bezier(0.2,0.7,0.2,1). No framer-motion.
+- M3 Reveals are fail-safe: content is visible unless an IntersectionObserver has proven it runs.
+- W1 All UI copy in English.
+- W2 No em dashes. Use periods, commas or colons.
+- W3 No superlatives or hype (best, leading, revolutionary, cutting-edge, seamless, world-class, game-changing).
+- W4 No stats as flex, no invented numbers.
+- W5 Real assets over recreations: real screenshots, real quotes, real clients only.
+- W6 Copy lives in a data file (src/data/content.js), not inside components.
+
+## Items
+### foundation
+- @lsl/foundation (lsl-preset.cjs, colors, surfaces, type, motion, fontLink): Tokens, global base styles, surfaces, focus ring, type classes and motion for every LoyStudioLab app. Install first.
+- @lsl/doctor (lsl-doctor.mjs): Checks an app against the LoyStudioLab rules and reports violations by rule ID. Run it before you finish any UI task.
+- @lsl/accent-budget (AccentBudget): Dev-only console warning when a page renders more than one accent (butter) CTA.
+
+### actions
+- @lsl/button (Button): Trigger an action, or style a link as a button with asChild.
+- @lsl/icon-button (IconButton, ButtonGroup): An icon-only button with a required accessible label, and a row of buttons.
+
+### forms
+- @lsl/input (Input): Single-line text entry. Always inside a Field.
+- @lsl/textarea (Textarea): Multi-line text entry. Always inside a Field; pass maxLength and count to Field for a counter.
+- @lsl/label (Label): Uppercase UI label for a control. Field renders it for you.
+- @lsl/select (Select, SelectTrigger, SelectValue, SelectContent, SelectItem, SelectGroup, SelectLabel, SelectSeparator): Choose one option from a list of five or more.
+- @lsl/checkbox (Checkbox): A yes or no choice, or several independent choices.
+- @lsl/radio-group (RadioGroup, RadioGroupItem): One choice from a short list, as square radios (circles mean Loy, rule S2).
+- @lsl/switch (Switch): Turn a setting on or off, applied immediately.
+- @lsl/field (Field, FieldError, FormAlert, FormSuccess, Honeypot): Wires label, hint, error and character count to a control, plus form-level error, success and anti-bot pieces.
+- @lsl/radio-tiles (RadioTiles): Two to four options drawn as ruled tiles with a hint each. The selected tile inverts to ink.
+
+### data-display
+- @lsl/badge (Badge): A short uppercase tag: category, count, state.
+- @lsl/card (Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter): A flat 2px-ruled container for one item: a case, a person, a setting group.
+- @lsl/data-display (TopRuleCard, MetaList, StatusBadge, Avatar): Small display patterns: parallel items with a top rule, term/detail lists, workflow status, square avatars.
+
+### overlays
+- @lsl/sheet (Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetFooter, SheetClose): A panel that slides in from an edge: mobile menu, filters, details.
+- @lsl/tooltip (TooltipProvider, Tooltip, TooltipTrigger, TooltipContent): A short hint on hover or focus for an icon or abbreviation.
+
+### layout
+- @lsl/separator (Separator): A 2px rule between regions.
+- @lsl/layout (Container, Section, Stack, Cluster, Grid, RuledGrid, RuledCell, TitleBlock, Divider): Page bands with surfaces, base-8 spacing stacks, responsive grids and the exposed ruled grid.
+
+### feedback
+- @lsl/sonner (Toaster): Short, transient confirmation messages (toast). Mount <Toaster /> once.
+- @lsl/skeleton (Skeleton): Placeholder block while content loads. Pulses opacity, no shimmer.
+- @lsl/status-icon (StatusIcon): Square-framed status marks: info, success, warning, error, pending.
+- @lsl/feedback (Callout, LinearLoader, EmptyState, ErrorState, NotFound): Inline messages, progress, and the empty, error and not-found states.
+
+### brand
+- @lsl/mark (Mark, AssemblingMark, Logo, MARK_GEOMETRY): The LoyStudioLab mark and wordmark lockups. INTERIM geometry until the final logo is delivered.
+- @lsl/glyph (Glyph, LayerTag, LayerLegend, FounderMonogram, LAYERS): The three layer marks (Loy circle, Studio square, Lab hollow triangle) and the tags, legend and founder monogram built from them.
+
+### typography
+- @lsl/typography (Heading, Display, Eyebrow, Lead, Text, TextLink): The type scale as components. Heading level (semantics) and size (looks) are separate.
+
+### navigation
+- @lsl/site-header (SiteHeader): Sticky site header: logo, section or page links with the butter active underline, a plain CTA, and a full-height mobile menu.
+- @lsl/site-footer (SiteFooter): Footer on paper-alt with logo, tagline, email, site links and the marks legend. Needs react-router (inside <BrowserRouter>).
+- @lsl/site-shell (SiteShell, SkipLink): Page frame with landmarks: skip link, header, <main id="main">, footer.
+- @lsl/breadcrumbs (Breadcrumbs, NavLink): Where-am-I trail for nested pages, and a standalone nav link with the butter active underline. Needs react-router.
+
+### motion
+- @lsl/reveal (Reveal, Rise): The two motion primitives: a fail-safe scroll reveal and a one-time hero entrance. CSS only.
+
+### hooks
+- @lsl/section-nav (useGoToSection, useActiveSection): In-page navigation: smooth jump that moves focus to the section heading, and active-section tracking for the header.
+- @lsl/use-document-title (useDocumentTitle): Sets the browser title as "Page · LoyStudioLab".
+- @lsl/use-reduced-motion (useReducedMotion): True when the user asked for reduced motion; updates live.
+- @lsl/field-context (FieldContext, useFieldContext): Lets Field pass its id and aria wiring to controls nested deeper than its direct child (SelectTrigger).
+- @lsl/format (formatNOK, formatNumber, formatDate): Money, number and date formatting: English copy, Norwegian conventions (2 500 kr, 1 234,5, 11.11.2026).
+
+
+## Item details
+
+### @lsl/foundation · Foundation
+Tokens, global base styles, surfaces, focus ring, type classes and motion for every LoyStudioLab app. Install first.
+Layer L0 · stable · install: npx shadcn@latest add @lsl/foundation
+Files: src/styles/lsl-preset.cjs, src/lib/lsl-tokens.js, ~/tailwind.config.cjs
+- lsl-preset.cjs
+- colors, surfaces, type, motion, fontLink
+Use when: Always, once per app, before any other @lsl item.
+Do not use when: Client brands (OSF HUB, Casa Clean) (use Their own UI. This library is LoyStudioLab-only.)
+Rules: G1, G3, G4, A2, A4, T1, T3, C5
+Accessibility: Dual focus ring on every focusable element: butter ring plus ink (or paper) outline. All animation and transition collapses under prefers-reduced-motion.
+Setup:
+- tailwind.config.cjs is replaced by a 6-line config that loads the preset (pass --overwrite). Re-add any app-specific theme.extend entries.
+- Add the font <link> from `fontLink` to index.html <head> with preconnect to fonts.googleapis.com and fonts.gstatic.com (rule T3). Remove any CSS @import of fonts.
+- Keep src/index.css to the three @tailwind directives; delete the stock shadcn :root and .dark variable blocks (the preset defines them).
+- Wrap page bands in a surface: <Section surface="paper|alt|ink"> or className="surface-ink".
+Example:
+```jsx
+// tailwind.config.cjs
+module.exports = {
+  presets: [require("./src/styles/lsl-preset.cjs")],
+  content: ["./index.html", "./src/**/*.{js,jsx,ts,tsx}"],
+}
+```
+
+### @lsl/doctor · lsl-doctor
+Checks an app against the LoyStudioLab rules and reports violations by rule ID. Run it before you finish any UI task.
+Layer L0 · beta · install: npx shadcn@latest add @lsl/doctor
+Files: ~/scripts/lsl-doctor.mjs
+- lsl-doctor.mjs
+Use when: After building or changing UI in any app that uses the library. In CI for apps that use the library.
+
+Rules: C1, C2, C4, C6, G1, G3, G4, S2, S3, T1, T2, T3, M2, W2, W3, A8
+Accessibility: Static checks only. Still run axe and a keyboard pass.
+
+Example:
+```jsx
+node scripts/lsl-doctor.mjs src            # human-readable
+node scripts/lsl-doctor.mjs src --json     # for agents
+```
+
+### @lsl/accent-budget · AccentBudget
+Dev-only console warning when a page renders more than one accent (butter) CTA.
+Layer L0 · stable · install: npx shadcn@latest add @lsl/accent-budget
+Files: src/components/lsl/dev/accent-budget.jsx
+- AccentBudget
+    - max: number = 1. Allowed accent CTAs per page.
+Use when: Mount once near the app root, next to the router.
+
+Rules: C1
+
+
+Example:
+```jsx
+<AccentBudget />
+```
+
+### @lsl/button · Button
+Trigger an action, or style a link as a button with asChild.
+Layer L1 · stable · install: npx shadcn@latest add @lsl/button
+Files: src/components/ui/button.jsx
+- Button
+    - variant: 'default' | 'accent' | 'outline' | 'ghost' | 'link' | 'destructive' = default. accent = the page's one highest-priority CTA (C1). default = solid, follows the surface. outline = secondary. ghost = tertiary. destructive = delete or remove.
+    - size: 'default' | 'sm' | 'lg' | 'icon' = default. All sizes are at least 44px tall (A7).
+    - asChild: boolean = false. Render the child (e.g. a router <Link>) with button styles.
+Use when: Any action: submit, open, save, start. Primary page CTA: variant="accent", once per page. A link that should look like a button: asChild around <Link>.
+Do not use when: Inline link inside text (use TextLink); Icon-only control (use IconButton); A second accent on the same page (use variant default or outline)
+Rules: C1, C2, A2, A7, W1
+Accessibility: Busy state: set disabled and aria-busy while sending. Label is the visible text; keep it a verb phrase ("Send message").
+
+Example:
+```jsx
+<Button variant="accent" size="lg">Send message</Button>
+<Button variant="outline">See the work</Button>
+<Button asChild><Link to="/contact">Contact</Link></Button>
+```
+
+### @lsl/input · Input
+Single-line text entry. Always inside a Field.
+Layer L1 · stable · install: npx shadcn@latest add @lsl/input
+Files: src/components/ui/input.jsx
+- Input
+    - type: string = text. Native input type. Use type, inputMode and autoComplete for good mobile keyboards.
+Use when: Names, emails, short answers.
+Do not use when: More than one line (use Textarea); Choosing from a list (use Select or RadioTiles)
+Rules: A5, G2
+Accessibility: Wrap in Field so label, hint and error are wired. aria-invalid turns the border to the danger color.
+
+Example:
+```jsx
+<Field label="Email" required error={errors.email?.message}>
+  <Input type="email" autoComplete="email" {...register("email")} />
+</Field>
+```
+
+### @lsl/textarea · Textarea
+Multi-line text entry. Always inside a Field; pass maxLength and count to Field for a counter.
+Layer L1 · stable · install: npx shadcn@latest add @lsl/textarea
+Files: src/components/ui/textarea.jsx
+- Textarea
+Use when: Messages, descriptions, notes.
+Do not use when: One line (use Input)
+Rules: A5
+Accessibility: Field links the character count with aria-describedby.
+
+Example:
+```jsx
+<Field label="Message" required maxLength={2000} count={message.length}>
+  <Textarea rows={6} {...register("message")} />
+</Field>
+```
+
+### @lsl/label · Label
+Uppercase UI label for a control. Field renders it for you.
+Layer L1 · stable · install: npx shadcn@latest add @lsl/label
+Files: src/components/ui/label.jsx
+- Label
+Use when: Only when building a control outside Field.
+Do not use when: Normal form fields (use Field)
+Rules: A5, T1
+Accessibility: Always set htmlFor.
+
+Example:
+```jsx
+<Label htmlFor="q">Search</Label>
+```
+
+### @lsl/select · Select
+Choose one option from a list of five or more.
+Layer L1 · stable · install: npx shadcn@latest add @lsl/select
+Files: src/components/ui/select.jsx
+- Select
+- SelectTrigger
+- SelectValue
+- SelectContent
+    - position: 'popper' | 'item-aligned' = popper. Radix positioning mode.
+- SelectItem
+- SelectGroup
+- SelectLabel
+- SelectSeparator
+Use when: Five or more options, or options that do not need explanation.
+Do not use when: Two to four options with hints (use RadioTiles)
+Rules: A3, A5, G3
+Accessibility: Wrap <Select> in Field: SelectTrigger reads the Field's id and aria wiring through FieldContext, so the label and errors apply.
+
+Example:
+```jsx
+<Field label="Topic">
+  <Select onValueChange={setTopic}>
+    <SelectTrigger><SelectValue placeholder="Choose a topic" /></SelectTrigger>
+    <SelectContent>
+      <SelectItem value="web">Website</SelectItem>
+      <SelectItem value="app">App or internal tool</SelectItem>
+    </SelectContent>
+  </Select>
+</Field>
+```
+
+### @lsl/checkbox · Checkbox
+A yes or no choice, or several independent choices.
+Layer L1 · stable · install: npx shadcn@latest add @lsl/checkbox
+Files: src/components/ui/checkbox.jsx
+- Checkbox
+Use when: Consent, opt-ins, multi-select lists.
+Do not use when: A setting that applies immediately (use Switch)
+Rules: S2, A5
+Accessibility: Pair with a <Label htmlFor> next to it; the label is the click target.
+
+Example:
+```jsx
+<div className="flex items-center gap-3">
+  <Checkbox id="news" />
+  <Label htmlFor="news" className="normal-case tracking-normal text-base font-normal">Send me the occasional update</Label>
+</div>
+```
+
+### @lsl/radio-group · RadioGroup
+One choice from a short list, as square radios (circles mean Loy, rule S2).
+Layer L1 · stable · install: npx shadcn@latest add @lsl/radio-group
+Files: src/components/ui/radio-group.jsx
+- RadioGroup
+- RadioGroupItem
+Use when: Compact one-of-many choice in dense forms.
+Do not use when: Two to four options that need hints (use RadioTiles)
+Rules: S2, A5
+Accessibility: Give the group aria-labelledby pointing at a visible legend.
+
+Example:
+```jsx
+<RadioGroup defaultValue="email" aria-label="Reply by">
+  <div className="flex items-center gap-3"><RadioGroupItem value="email" id="r1" /><Label htmlFor="r1">Email</Label></div>
+  <div className="flex items-center gap-3"><RadioGroupItem value="phone" id="r2" /><Label htmlFor="r2">Phone</Label></div>
+</RadioGroup>
+```
+
+### @lsl/switch · Switch
+Turn a setting on or off, applied immediately.
+Layer L1 · stable · install: npx shadcn@latest add @lsl/switch
+Files: src/components/ui/switch.jsx
+- Switch
+Use when: Settings that take effect at once.
+Do not use when: A choice submitted with a form (use Checkbox)
+Rules: G1, A5
+Accessibility: Needs a label via <Label htmlFor> or aria-label.
+
+Example:
+```jsx
+<div className="flex items-center gap-3"><Switch id="notify" /><Label htmlFor="notify">Notifications</Label></div>
+```
+
+### @lsl/badge · Badge
+A short uppercase tag: category, count, state.
+Layer L1 · stable · install: npx shadcn@latest add @lsl/badge
+Files: src/components/ui/badge.jsx
+- Badge
+    - variant: 'default' | 'solid' | 'danger' | 'signal' = default. signal is only for AI or computing states (C4).
+Use when: Categories, short states, counts.
+Do not use when: Loy / Studio / Lab (use LayerTag); A workflow status (use StatusBadge)
+Rules: C4, S1
+Accessibility: Text must carry the meaning; color is never the only cue.
+
+Example:
+```jsx
+<Badge>Case study</Badge> <Badge variant="solid">New</Badge>
+```
+
+### @lsl/card · Card
+A flat 2px-ruled container for one item: a case, a person, a setting group.
+Layer L1 · stable · install: npx shadcn@latest add @lsl/card
+Files: src/components/ui/card.jsx
+- Card
+- CardHeader
+- CardTitle
+    - as: 'h2' | 'h3' | 'h4' = h3. Heading level; keep levels sequential (T2).
+- CardDescription
+- CardContent
+- CardFooter
+Use when: Separate, clickable or self-contained items.
+Do not use when: A set of parallel items in one block (use RuledGrid (shared rules) or TopRuleCard)
+Rules: G1, G2, G3, T2
+Accessibility: If the whole card is a link, put the <a> on the title and stretch it (after:absolute after:inset-0).
+
+Example:
+```jsx
+<Card>
+  <CardHeader>
+    <CardTitle>Oslo Skatehall</CardTitle>
+    <CardDescription>An operations system for a community-run skatepark.</CardDescription>
+  </CardHeader>
+</Card>
+```
+
+### @lsl/sheet · Sheet
+A panel that slides in from an edge: mobile menu, filters, details.
+Layer L1 · stable · install: npx shadcn@latest add @lsl/sheet
+Files: src/components/ui/sheet.jsx
+- Sheet
+- SheetTrigger
+- SheetContent
+    - side: 'top' | 'right' | 'bottom' | 'left' = right
+    - closeLabel: string = Close. Accessible name of the close button.
+- SheetHeader
+- SheetTitle
+- SheetDescription
+- SheetFooter
+- SheetClose
+Use when: Mobile navigation (SiteHeader uses it). Secondary panels that keep the page visible behind them.
+Do not use when: A blocking question (use AlertDialog (phase 3))
+Rules: G3, A3
+Accessibility: Always render a SheetTitle (visually hidden is fine). Focus is trapped and Escape closes.
+
+Example:
+```jsx
+<Sheet>
+  <SheetTrigger asChild><Button variant="outline">Filters</Button></SheetTrigger>
+  <SheetContent side="right">
+    <SheetHeader><SheetTitle>Filters</SheetTitle></SheetHeader>
+  </SheetContent>
+</Sheet>
+```
+
+### @lsl/separator · Separator
+A 2px rule between regions.
+Layer L1 · stable · install: npx shadcn@latest add @lsl/separator
+Files: src/components/ui/separator.jsx
+- Separator
+    - orientation: 'horizontal' | 'vertical' = horizontal
+    - decorative: boolean = true
+    - tone: 'strong' | 'subtle' = strong. subtle is decoration only (G2).
+Use when: Between groups in a panel or list.
+Do not use when: Between page bands (use Section (has its own top border))
+Rules: G2
+
+
+Example:
+```jsx
+<Separator />
+```
+
+### @lsl/sonner · Toaster
+Short, transient confirmation messages (toast). Mount <Toaster /> once.
+Layer L1 · stable · install: npx shadcn@latest add @lsl/sonner
+Files: src/components/ui/sonner.jsx
+- Toaster
+Use when: Confirming a background action: saved, copied, sent.
+Do not use when: Errors the user must fix (use FieldError or FormAlert); Persistent information (use Callout)
+Rules: S3, G3
+Accessibility: Toasts disappear: never put the only copy of important information in one.
+
+Example:
+```jsx
+import { toast } from "sonner"
+<Toaster />
+toast.success("Saved")
+```
+
+### @lsl/skeleton · Skeleton
+Placeholder block while content loads. Pulses opacity, no shimmer.
+Layer L1 · stable · install: npx shadcn@latest add @lsl/skeleton
+Files: src/components/ui/skeleton.jsx
+- Skeleton
+Use when: Content with a known shape that loads in under a few seconds.
+Do not use when: Long or unknown waits (use LinearLoader with a label)
+Rules: G4, A4
+Accessibility: Hidden from screen readers; announce loading elsewhere (aria-busy on the region).
+
+Example:
+```jsx
+<Skeleton className="h-6 w-40" />
+```
+
+### @lsl/tooltip · Tooltip
+A short hint on hover or focus for an icon or abbreviation.
+Layer L1 · stable · install: npx shadcn@latest add @lsl/tooltip
+Files: src/components/ui/tooltip.jsx
+- TooltipProvider
+- Tooltip
+- TooltipTrigger
+- TooltipContent
+    - sideOffset: number = 6
+Use when: Naming an icon-only control (in addition to its aria-label).
+Do not use when: Information people need to finish a task (use Field hint or Callout)
+Rules: A3
+Accessibility: Not reachable on touch: never the only place for important text.
+
+Example:
+```jsx
+<TooltipProvider><Tooltip><TooltipTrigger asChild><IconButton label="Copy link"><Copy /></IconButton></TooltipTrigger><TooltipContent>Copy link</TooltipContent></Tooltip></TooltipProvider>
+```
+
+### @lsl/mark · Mark, AssemblingMark, Logo
+The LoyStudioLab mark and wordmark lockups. INTERIM geometry until the final logo is delivered.
+Layer L2 · stable · install: npx shadcn@latest add @lsl/mark
+Files: src/components/lsl/brand/mark.jsx
+- Mark
+    - size: number = 40. Pixel size.
+    - title: string. Accessible name; omit when decorative (e.g. next to the wordmark).
+    - className: string. Extra classes for spacing or placement only. Never colors, radius or shadows.
+- AssemblingMark
+    - focus: 'loy' | 'studio' | 'lab' | null = null. Dims the other two shapes, for a legend that points at one layer.
+    - className: string. Set the width here: w-40 sm:w-56 lg:w-72 in a hero; it scales from its viewBox.
+- Logo
+    - variant: 'horizontal' | 'stacked' | 'mark' = horizontal. horizontal for headers and footers; stacked LOY/STUDIO/LAB for covers; mark alone for tight spaces.
+    - size: number. Mark size override.
+    - title: string = LoyStudioLab. Accessible name when variant is mark.
+    - className: string. Extra classes for spacing or placement only. Never colors, radius or shadows.
+- MARK_GEOMETRY
+Use when: Site header and footer (Logo). Hero diagrams explaining the name (AssemblingMark). Favicons and covers (Mark, Logo stacked).
+Do not use when: Decorating a section (use Nothing. The mark is a signature, not an ornament (M1).); Redrawing the shapes by hand (use Glyph or MARK_GEOMETRY)
+Rules: S1, C2, W5
+Accessibility: Logo inside a link: give the link aria-label="LoyStudioLab, home".
+
+Example:
+```jsx
+<Logo />
+<Logo variant="stacked" />
+<AssemblingMark focus={hovered} className="w-64" />
+```
+
+### @lsl/glyph · Glyph, LayerTag, LayerLegend, FounderMonogram
+The three layer marks (Loy circle, Studio square, Lab hollow triangle) and the tags, legend and founder monogram built from them.
+Layer L2 · stable · install: npx shadcn@latest add @lsl/glyph
+Files: src/components/lsl/brand/glyph.jsx
+- Glyph
+    - layer (required): 'loy' | 'studio' | 'lab'. Which layer.
+    - size: number = 14
+    - className: string. Extra classes for spacing or placement only. Never colors, radius or shadows.
+- LayerTag
+    - layer (required): 'loy' | 'studio' | 'lab'
+    - children: node = layer name. Label, e.g. "Studio · Website".
+    - className: string. Extra classes for spacing or placement only. Never colors, radius or shadows.
+- LayerLegend
+    - layers: object = LAYERS. Override copy per layer. LAYERS is canonical brand copy and the one allowed exception to W6; pass content.js copy here when a page explains the layers in its own words.
+    - detail: 'short' | 'line' = short. Short label or full sentence. A compact key: for a full section explaining the layers, compose Glyph + Heading in RuledCells instead.
+    - className: string. Extra classes for spacing or placement only. Never colors, radius or shadows.
+- FounderMonogram
+    - initials (required): string
+    - name: string. Accessible name; omit when the name is printed next to it.
+    - size: number = 56
+    - className: string. Extra classes for spacing or placement only. Never colors, radius or shadows.
+- LAYERS
+Use when: Tagging work as Studio or Lab, people as Loy. Explaining the three marks (footer, menu, about page). Founder avatars.
+Do not use when: Any other meaning (steps, features, Props/People/Process) (use Numbers or words, never shapes (S1)); Avatars for anyone who is not a founder (use Avatar (square)); Generic category tags (use Badge)
+Rules: S1, S2, C3
+Accessibility: Glyphs are decorative; the layer name is always printed next to them.
+
+Example:
+```jsx
+// work: "<Layer> · <kind>"; people: layer="loy", label "Loy · Founder"
+<LayerTag layer="studio">Studio · Website</LayerTag>
+<LayerTag layer="loy">Loy · Founder</LayerTag>
+<LayerTag layer="lab" />
+<FounderMonogram initials="ML" />
+```
+
+### @lsl/layout · Layout: Container, Section, Stack, Cluster, Grid, RuledGrid, TitleBlock, Divider
+Page bands with surfaces, base-8 spacing stacks, responsive grids and the exposed ruled grid.
+Layer L2 · stable · install: npx shadcn@latest add @lsl/layout
+Files: src/components/lsl/layout/layout.jsx
+- Container
+    - as: element type = varies. Rendered element.
+    - width: 'site' | 'prose' = site. 1280px column or a ~65ch reading column.
+    - className: string. Extra classes for spacing or placement only. Never colors, radius or shadows.
+- Section
+    - as: element type = varies. Rendered element.
+    - surface: 'paper' | 'alt' | 'ink' = paper. Sets colors for everything inside. Alternate paper and alt; use ink for one emphasis band (e.g. the closing CTA).
+    - space: 'sm' | 'md' | 'lg' = md. Vertical padding.
+    - bordered: boolean = true. 2px ink rule on top.
+    - contained: boolean = true. Wrap children in container-site.
+    - className: string. Extra classes for spacing or placement only. Never colors, radius or shadows.
+- Stack
+    - as: element type = varies. Rendered element.
+    - gap: 0 | 1 | 2 | 3 | 4 | 6 | 8 = 3. Grid steps: 1 = 8px … 8 = 64px.
+    - align: 'start' | 'center' | 'end' | 'baseline' | 'stretch' = stretch
+    - className: string. Extra classes for spacing or placement only. Never colors, radius or shadows.
+- Cluster
+    - as: element type = varies. Rendered element.
+    - gap: 0 | 1 | 2 | 3 | 4 | 6 | 8 = 2
+    - align: 'start' | 'center' | 'end' | 'baseline' | 'stretch' = center
+    - justify: 'start' | 'center' | 'end' | 'between' = start
+    - wrap: boolean = true
+    - className: string. Extra classes for spacing or placement only. Never colors, radius or shadows.
+- Grid
+    - as: element type = varies. Rendered element.
+    - cols: 1 | 2 | 3 | 4 | 6 | 12 = 3. Columns at full width; collapses on small screens.
+    - gap: 0 | 1 | 2 | 3 | 4 | 6 | 8 = 4
+    - align: 'start' | 'center' | 'end' | 'baseline' | 'stretch' = stretch. Vertical alignment of cells.
+    - className: string. Extra classes for spacing or placement only. Never colors, radius or shadows.
+- RuledGrid
+    - as: element type = varies. Rendered element.
+    - cols: 1 | 2 | 3 | 4 | 6 | 12 = 3
+    - className: string. Extra classes for spacing or placement only. Never colors, radius or shadows.
+- RuledCell
+    - as: element type = varies. Rendered element.
+    - className: string. Extra classes for spacing or placement only. Never colors, radius or shadows.
+- TitleBlock
+    - index: string | number. Section number, e.g. "01".
+    - label: string. Section label (eyebrow).
+    - children: node. Heading, lead, content.
+    - className: string. Extra classes for spacing or placement only. Never colors, radius or shadows.
+- Divider
+    - tone: 'strong' | 'subtle' = strong
+    - className: string. Extra classes for spacing or placement only. Never colors, radius or shadows.
+Use when: Every page: Sections stacked, each with a surface. Parallel items that belong together: RuledGrid + RuledCell. Numbered page sections: TitleBlock.
+Do not use when: Arbitrary margins and paddings (use Stack / Cluster gaps on the base-8 scale (G5))
+Rules: G2, G5, C2
+Accessibility: Section renders <section>; give it aria-labelledby pointing at its heading id.
+
+Example:
+```jsx
+<Section surface="alt" aria-labelledby="work-h">
+  <TitleBlock index="03" label="Work">
+    <Heading level={2} id="work-h">Projects we can show</Heading>
+  </TitleBlock>
+  <RuledGrid cols={3} className="mt-12">
+    <RuledCell><Heading level={3}>Digitalization</Heading><Text tone="muted">…</Text></RuledCell>
+  </RuledGrid>
+</Section>
+```
+
+### @lsl/typography · Typography: Heading, Display, Eyebrow, Lead, Text, TextLink
+The type scale as components. Heading level (semantics) and size (looks) are separate.
+Layer L2 · stable · install: npx shadcn@latest add @lsl/typography
+Files: src/components/lsl/typography/typography.jsx
+- Heading
+    - level: 1 | 2 | 3 | 4 | 5 | 6 = 2. Semantic level. One h1 per page; never skip levels (T2).
+    - size: 'display' | 1 | 2 | 3 | 4 = matches level. Visual size.
+    - className: string. Extra classes for spacing or placement only. Never colors, radius or shadows.
+- Display
+    - level: 1 | 2 = 1
+    - className: string. Extra classes for spacing or placement only. Never colors, radius or shadows.
+- Eyebrow
+    - as: element type = varies. Rendered element.
+    - className: string. Extra classes for spacing or placement only. Never colors, radius or shadows.
+- Lead
+    - as: element type = varies. Rendered element.
+    - className: string. Extra classes for spacing or placement only. Never colors, radius or shadows.
+- Text
+    - as: element type = varies. Rendered element.
+    - size: 'body' | 'small' | 'label' = body
+    - tone: 'default' | 'muted' | 'danger' = default. muted = ink-2 (passes AA).
+    - className: string. Extra classes for spacing or placement only. Never colors, radius or shadows.
+- TextLink
+    - asChild: boolean = false. Wrap a router <Link>.
+    - className: string. Extra classes for spacing or placement only. Never colors, radius or shadows.
+Use when: All text. Prefer these over raw classes so levels and sizes stay consistent.
+Do not use when: Muted gray text in concrete (#A39B8B) (use Text tone="muted" (concrete fails AA, C5))
+Rules: T1, T2, T4, C5, W1, W2
+Accessibility: Hero title is the page's only h1. A section heading that receives focus from in-page nav needs tabIndex={-1} and data-section-heading.
+
+Example:
+```jsx
+<Eyebrow>Design and technology studio in Oslo</Eyebrow>
+<Display>We design and build the digital tools small organizations run on.</Display>
+<Lead>We help community organizations and local businesses …</Lead>
+<Text tone="muted">Read the <TextLink href="/work/osf-hub">OSF HUB case</TextLink>.</Text>
+```
+
+### @lsl/icon-button · IconButton, ButtonGroup
+An icon-only button with a required accessible label, and a row of buttons.
+Layer L2 · stable · install: npx shadcn@latest add @lsl/icon-button
+Files: src/components/lsl/actions/icon-button.jsx
+- IconButton
+    - label (required): string. Accessible name and tooltip.
+    - variant: Button variant = outline
+- ButtonGroup
+    - attached: boolean = false. Join buttons into one ruled bar.
+    - className: string. Extra classes for spacing or placement only. Never colors, radius or shadows.
+Use when: Toolbar actions, menu toggles, close buttons. Primary + secondary action pairs (ButtonGroup).
+Do not use when: An action people need to discover (use Button with a text label)
+Rules: A3, A7, S3
+Accessibility: Lucide icons inside must have aria-hidden="true".
+
+Example:
+```jsx
+<IconButton label="Open menu"><Menu aria-hidden="true" /></IconButton>
+<ButtonGroup><Button variant="accent">Start a project</Button><Button variant="outline">See the work</Button></ButtonGroup>
+```
+
+### @lsl/field · Field, FieldError, FormAlert, FormSuccess, Honeypot
+Wires label, hint, error and character count to a control, plus form-level error, success and anti-bot pieces.
+Layer L2 · stable · install: npx shadcn@latest add @lsl/field
+Files: src/components/lsl/forms/field.jsx
+- Field
+    - label (required): node. Visible label.
+    - hint: node. Help text under the label.
+    - error: string. Error message; sets aria-invalid.
+    - required: boolean = false. Adds * and aria-required.
+    - optional: boolean = false. Adds "(optional)".
+    - id: string = auto
+    - count: number. Current length, for the counter.
+    - maxLength: number. Shows a counter.
+    - children (required): element. Exactly one control: Input, Textarea or SelectTrigger wrapper.
+    - className: string. Extra classes for spacing or placement only. Never colors, radius or shadows.
+- FieldError
+    - id: string
+    - message: string
+    - className: string. Extra classes for spacing or placement only. Never colors, radius or shadows.
+- FormAlert
+    - tone: 'error' | 'success' | 'info' = error
+    - title: node
+    - children: node
+    - className: string. Extra classes for spacing or placement only. Never colors, radius or shadows.
+- FormSuccess
+    - title (required): node. Focused on mount.
+    - children: node
+    - action: node. E.g. "Send another message".
+    - className: string. Extra classes for spacing or placement only. Never colors, radius or shadows.
+- Honeypot
+    - name: string = website. Field name; spread register(name) on it.
+Use when: Every form control. Form-level errors (FormAlert) and success (FormSuccess).
+Do not use when: Bare Input with a placeholder as the label (use Field with a visible label (A5))
+Rules: A5, S3, W1, W3
+Accessibility: On submit errors, focus the first invalid field (react-hook-form shouldFocusError does this). On server errors, focus the FormAlert. Keep the user's text. Error copy says what to do: "Please add your email, so we can reply."
+
+Example:
+```jsx
+<form noValidate onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-7">
+  {failed && <FormAlert ref={alertRef} title="Your message was not sent.">Your text is still here. Try again, or email us.</FormAlert>}
+  <Field label="Name" required error={errors.name?.message}>
+    <Input autoComplete="name" {...register("name")} />
+  </Field>
+  <Honeypot {...register("website")} />
+</form>
+```
+
+### @lsl/radio-tiles · RadioTiles
+Two to four options drawn as ruled tiles with a hint each. The selected tile inverts to ink.
+Layer L2 · stable · install: npx shadcn@latest add @lsl/radio-tiles
+Files: src/components/lsl/forms/radio-tiles.jsx
+- RadioTiles
+    - legend (required): node. Question shown above the tiles.
+    - options (required): { value, label?, hint? }[]
+    - value: string. Controlled value.
+    - onValueChange: (value) => void
+    - onBlur: () => void
+    - error: string
+    - required: boolean = false
+    - name: string
+    - className: string. Extra classes for spacing or placement only. Never colors, radius or shadows.
+Use when: "What is this about?" style choices with short explanations.
+Do not use when: Five or more options (use Select)
+Rules: S2, A5
+Accessibility: Arrow keys move between tiles (Radix). With react-hook-form, use a Controller.
+
+Example:
+```jsx
+<Controller name="reason" control={control} render={({ field }) => (
+  <RadioTiles legend="What is this about?" required error={errors.reason?.message}
+    value={field.value} onValueChange={field.onChange} onBlur={field.onBlur}
+    options={[{ value: "New project", hint: "You have something to build." }, { value: "Collaboration" }, { value: "General question" }]} />
+)} />
+```
+
+### @lsl/site-header · SiteHeader
+Sticky site header: logo, section or page links with the butter active underline, a plain CTA, and a full-height mobile menu.
+Layer L3 · stable · install: npx shadcn@latest add @lsl/site-header
+Files: src/components/lsl/navigation/site-header.jsx
+- SiteHeader
+    - items: { label, id? , href? }[] = []. id = section on the home page; href = another page.
+    - cta: { label, href, id? }. Shown as a default (ink) button. Never accent: the page's accent CTA lives in the content (C1).
+    - homePath: string = /
+    - showLegend: boolean = true. Show the marks legend in the mobile menu.
+    - className: string. Extra classes for spacing or placement only. Never colors, radius or shadows.
+Use when: Every marketing site and case-study page.
+Do not use when: Product / app screens (use AppShell (phase 3))
+Rules: C1, A3, A6, A7
+Accessibility: Active section uses aria-current="location"; active page aria-current="page". Mobile menu traps focus and closes with Escape.
+Setup:
+- Needs react-router: render inside <BrowserRouter> (Base44 apps already have one in App.jsx).
+- For section items ({ id }): put the id on the <Section>, and give that section's heading tabIndex={-1} and data-section-heading so focus lands on it after the jump.
+Example:
+```jsx
+<SiteHeader
+  items={[{ id: "what-we-do", label: "What we do" }, { id: "work", label: "Work" }, { id: "about", label: "About" }]}
+  cta={{ label: "Contact", href: "/#contact", id: "contact" }}
+/>
+```
+
+### @lsl/site-footer · SiteFooter
+Footer on paper-alt with logo, tagline, email, site links and the marks legend. Needs react-router (inside <BrowserRouter>).
+Layer L3 · stable · install: npx shadcn@latest add @lsl/site-footer
+Files: src/components/lsl/navigation/site-footer.jsx
+- SiteFooter
+    - tagline: string = Design and technology studio. Oslo, Norway.
+    - email: string
+    - links: { label, href }[] = []
+    - showLegend: boolean = true
+    - note: string = Built by us, with the same process we use for clients.. Right side of the bottom line; pass null to hide.
+    - className: string. Extra classes for spacing or placement only. Never colors, radius or shadows.
+Use when: Every marketing site page.
+
+Rules: W3, W4
+Accessibility: Footer nav is labelled "Footer".
+
+Example:
+```jsx
+<SiteFooter email="hello@loystudiolab.com" links={[{ label: "Work", href: "/#work" }]} />
+```
+
+### @lsl/site-shell · SiteShell, SkipLink
+Page frame with landmarks: skip link, header, <main id="main">, footer.
+Layer L3 · stable · install: npx shadcn@latest add @lsl/site-shell
+Files: src/components/lsl/navigation/site-shell.jsx
+- SiteShell
+    - header: node. Usually <SiteHeader />.
+    - footer: node. Usually <SiteFooter />.
+    - children: node. Page content or <Outlet />.
+    - className: string. Extra classes for spacing or placement only. Never colors, radius or shadows.
+- SkipLink
+    - href: string = #main
+    - children: node = Skip to content
+Use when: As the layout route of every site.
+
+Rules: A6
+Accessibility: Provides the skip link and the main landmark; do not add a second <main>.
+
+Example:
+```jsx
+<Route element={<SiteShell header={<SiteHeader … />} footer={<SiteFooter … />}><Outlet /></SiteShell>}>
+```
+
+### @lsl/breadcrumbs · Breadcrumbs, NavLink
+Where-am-I trail for nested pages, and a standalone nav link with the butter active underline. Needs react-router.
+Layer L2 · stable · install: npx shadcn@latest add @lsl/breadcrumbs
+Files: src/components/lsl/navigation/breadcrumbs.jsx
+- Breadcrumbs
+    - items (required): { label, href }[]. Last item is the current page.
+    - className: string. Extra classes for spacing or placement only. Never colors, radius or shadows.
+- NavLink
+    - to (required): string
+    - active: boolean = false. Sets aria-current="page" and shows the underline.
+    - className: string. Extra classes for spacing or placement only. Never colors, radius or shadows.
+Use when: Case-study and article pages (Breadcrumbs). Custom navs outside SiteHeader (NavLink).
+Do not use when: One-level sites (use Nothing; the header is enough)
+Rules: A3
+Accessibility: Breadcrumbs is a labelled nav with an ordered list.
+
+Example:
+```jsx
+<Breadcrumbs items={[{ label: "Work", href: "/#work" }, { label: "OSF HUB" }]} />
+```
+
+### @lsl/data-display · TopRuleCard, MetaList, StatusBadge, Avatar
+Small display patterns: parallel items with a top rule, term/detail lists, workflow status, square avatars.
+Layer L2 · stable · install: npx shadcn@latest add @lsl/data-display
+Files: src/components/lsl/data-display/data-display.jsx
+- TopRuleCard
+    - title (required): node
+    - as: 'h2' | 'h3' | 'h4' = h3. Heading element.
+    - bar: 'ink' | 'brick' | 'ochre' | 'petrol' | 'concrete' = ink. Rule color. Values cards may use the muted palette; never butter (C2).
+    - children: node
+    - className: string. Extra classes for spacing or placement only. Never colors, radius or shadows.
+- MetaList
+    - items (required): { term, detail }[]
+    - cols: 1 | 2 | 3 = 2
+    - className: string. Extra classes for spacing or placement only. Never colors, radius or shadows.
+- StatusBadge
+    - status: 'draft' | 'active' | 'done' | 'paused' | 'error' | 'ai' = draft. ai is only for AI-generated content (C4).
+    - children: node = status label. Override the label.
+    - className: string. Extra classes for spacing or placement only. Never colors, radius or shadows.
+- Avatar
+    - src: string
+    - name: string. Alt text and initials source.
+    - initials: string
+    - size: 'sm' | 'md' | 'lg' = md
+    - className: string. Extra classes for spacing or placement only. Never colors, radius or shadows.
+Use when: Services or values in a row (TopRuleCard). Case facts (MetaList). Lists of things with a state (StatusBadge). People in products (Avatar).
+Do not use when: Founders (use FounderMonogram); Loy / Studio / Lab (use LayerTag)
+Rules: S2, S3, C2, C4
+Accessibility: StatusBadge always shows text; the icon is decorative.
+
+Example:
+```jsx
+<TopRuleCard title="Digitalization">One real system instead of spreadsheets, chat threads and paper.</TopRuleCard>
+<MetaList items={[{ term: "Client", detail: "Oslo Skateboardforening" }, { term: "Status", detail: "In use" }]} />
+<StatusBadge status="done" />
+```
+
+### @lsl/status-icon · StatusIcon
+Square-framed status marks: info, success, warning, error, pending.
+Layer L2 · stable · install: npx shadcn@latest add @lsl/status-icon
+Files: src/components/lsl/feedback/status-icon.jsx
+- StatusIcon
+    - status: 'info' | 'success' | 'warning' | 'error' | 'pending' = info
+    - size: number = 16
+    - label: string. Accessible name, only when the icon stands alone.
+    - className: string. Extra classes for spacing or placement only. Never colors, radius or shadows.
+Use when: Anywhere a status needs a mark.
+Do not use when: lucide CircleCheck, AlertTriangle, Info, XCircle (use StatusIcon (S3))
+Rules: S3
+Accessibility: Decorative by default; meaning must also be in text.
+
+Example:
+```jsx
+<StatusIcon status="success" />
+```
+
+### @lsl/feedback · Callout, LinearLoader, EmptyState, ErrorState, NotFound
+Inline messages, progress, and the empty, error and not-found states.
+Layer L2 · stable · install: npx shadcn@latest add @lsl/feedback
+Files: src/components/lsl/feedback/feedback.jsx
+- Callout
+    - tone: 'info' | 'success' | 'warning' | 'error' = info
+    - title: node
+    - children: node
+    - className: string. Extra classes for spacing or placement only. Never colors, radius or shadows.
+- LinearLoader
+    - value: number (0-100). Omit for indeterminate.
+    - label: string = Loading. Accessible name.
+    - className: string. Extra classes for spacing or placement only. Never colors, radius or shadows.
+- EmptyState
+    - title: node = Nothing here yet
+    - children: node. What this area is for and how to fill it.
+    - action: node. Usually a Button.
+    - headingLevel: number = 2
+    - className: string. Extra classes for spacing or placement only. Never colors, radius or shadows.
+- ErrorState
+    - title: node = Something went wrong
+    - children: node = It is on our side. Please try again.
+    - action: node. Retry button.
+    - headingLevel: number = 2
+    - className: string. Extra classes for spacing or placement only. Never colors, radius or shadows.
+- NotFound
+    - title: node = This page does not exist
+    - children: node = The link may be old, or the address has a typo.
+    - action: node
+    - className: string. Extra classes for spacing or placement only. Never colors, radius or shadows.
+Use when: Persistent notes in content (Callout). Uploads and long loads (LinearLoader). First use and no-results (EmptyState); failed loads (ErrorState); 404 routes (NotFound).
+Do not use when: A ring spinner (use LinearLoader (S2)); Transient confirmations (use Toaster)
+Rules: S2, S3, A4, W1, W3
+Accessibility: ErrorState has role="alert". LinearLoader is a labelled progressbar.
+
+Example:
+```jsx
+<Callout tone="warning" title="Prices exclude VAT">We add 25% MVA on the invoice.</Callout>
+<LinearLoader value={60} label="Uploading receipt" />
+<EmptyState title="No receipts yet" action={<Button>Add a receipt</Button>}>Photos of receipts you add will show up here.</EmptyState>
+```
+
+### @lsl/reveal · Reveal, Rise
+The two motion primitives: a fail-safe scroll reveal and a one-time hero entrance. CSS only.
+Layer L2 · stable · install: npx shadcn@latest add @lsl/reveal
+Files: src/components/lsl/motion/reveal.jsx
+- Reveal
+    - as: element type = varies. Rendered element.
+    - delay: number (s) = 0. Stagger siblings by 0.06 to 0.1s.
+    - className: string. Extra classes for spacing or placement only. Never colors, radius or shadows.
+- Rise
+    - as: element type = varies. Rendered element.
+    - delay: number (s) = 0
+    - className: string. Extra classes for spacing or placement only. Never colors, radius or shadows.
+Use when: Section content as it scrolls in (Reveal). Hero text on load (Rise).
+Do not use when: Looping or decorative motion (use Nothing (M1)); framer-motion (use These CSS primitives (M2))
+Rules: M1, M2, M3, A4
+Accessibility: Content stays visible if observers never run; reduced motion shows it at once.
+
+Example:
+```jsx
+<Reveal><Heading level={2}>How we work</Heading></Reveal>
+<Rise delay={0.1}><Lead>…</Lead></Rise>
+```
+
+### @lsl/section-nav · useGoToSection, useActiveSection
+In-page navigation: smooth jump that moves focus to the section heading, and active-section tracking for the header.
+Layer L0 · stable · install: npx shadcn@latest add @lsl/section-nav
+Files: src/hooks/use-section-nav.js
+- useGoToSection
+    - enabled: boolean = true. False on pages where the targets are not rendered.
+- useActiveSection
+    - ids (required): string[]
+    - enabled: boolean = true
+Use when: One-page sites with section links.
+
+Rules: A3, A4
+Accessibility: Respects reduced motion (instant jump).
+
+Example:
+```jsx
+const go = useGoToSection()
+<a href="#work" onClick={(e) => go("work", e)}>Work</a>
+```
+
+### @lsl/use-document-title · useDocumentTitle
+Sets the browser title as "Page · LoyStudioLab".
+Layer L0 · stable · install: npx shadcn@latest add @lsl/use-document-title
+Files: src/hooks/use-document-title.js
+- useDocumentTitle
+    - title: string
+    - site: string = LoyStudioLab
+Use when: Every routed page.
+
+Rules: A6
+Accessibility: Unique titles help screen-reader and tab users.
+
+Example:
+```jsx
+useDocumentTitle("OSF HUB")
+```
+
+### @lsl/use-reduced-motion · useReducedMotion
+True when the user asked for reduced motion; updates live.
+Layer L0 · stable · install: npx shadcn@latest add @lsl/use-reduced-motion
+Files: src/hooks/use-reduced-motion.js
+- useReducedMotion
+Use when: JS-driven motion (scrolling, timed changes).
+Do not use when: CSS animations (use Nothing: the preset already disables them)
+Rules: A4
+
+
+Example:
+```jsx
+const reduced = useReducedMotion()
+```
+
+### @lsl/field-context · FieldContext
+Lets Field pass its id and aria wiring to controls nested deeper than its direct child (SelectTrigger).
+Layer L0 · stable · install: npx shadcn@latest add @lsl/field-context
+Files: src/lib/field-context.js
+- FieldContext
+- useFieldContext
+Use when: Building a new control that should work inside Field without being its direct child.
+Do not use when: Normal forms (use Field (it handles this for you))
+Rules: A5
+Accessibility: Spread the context value onto the focusable element.
+
+Example:
+```jsx
+const field = useFieldContext()
+<button {...(field ?? {})}>…</button>
+```
+
+### @lsl/format · formatNOK, formatNumber, formatDate
+Money, number and date formatting: English copy, Norwegian conventions (2 500 kr, 1 234,5, 11.11.2026).
+Layer L0 · stable · install: npx shadcn@latest add @lsl/format
+Files: src/lib/format.js
+- formatNOK
+    - amount (required): number
+    - options: { decimals?, locale? } = { decimals: 0, locale: 'nb-NO' }
+- formatNumber
+    - value (required): number
+    - options: { decimals?, locale? }
+- formatDate
+    - value (required): Date | string
+    - options: { style?: 'long' | 'short' | 'numeric', locale? } = { style: 'long', locale: 'en-GB' }
+Use when: Any amount or date shown to people.
+Do not use when: toFixed or manual string building (use These helpers)
+Rules: W1
+
+
+Example:
+```jsx
+formatNOK(2500) // "2 500 kr"
+formatDate("2026-11-11") // "11 November 2026"
+```

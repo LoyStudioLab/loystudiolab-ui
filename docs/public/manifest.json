@@ -1,0 +1,3962 @@
+{
+  "$schema": "https://loystudiolab.github.io/loystudiolab-ui/manifest.schema.json",
+  "name": "loystudiolab-ui",
+  "version": "0.1.0",
+  "registry": "https://loystudiolab.github.io/loystudiolab-ui/r/{name}.json",
+  "generated": "2026-11-11",
+  "layers": {
+    "L0": "Foundation: tokens, preset, hooks, lib",
+    "L1": "Primitives: shadcn/ui restyled, src/components/ui",
+    "L2": "LSL components: src/components/lsl/<category>",
+    "L3": "Patterns and sections",
+    "L4": "Page templates"
+  },
+  "rules": [
+    {
+      "id": "C1",
+      "group": "Color",
+      "rule": "One accent (butter) CTA per page, maximum.",
+      "why": "Rarity keeps the accent meaningful; frequency erodes salience (Philosophy §2).",
+      "check": "doctor + AccentBudget"
+    },
+    {
+      "id": "C2",
+      "group": "Color",
+      "rule": "Butter is never a surface. Allowed only for: the accent CTA, the Studio glyph/square in the mark, hover underlines, focus rings, text selection.",
+      "why": "One color, one job (§2).",
+      "check": "doctor"
+    },
+    {
+      "id": "C3",
+      "group": "Color",
+      "rule": "Petrol marks the Loy layer only (founder monograms, Loy tags).",
+      "why": "Two colors with different jobs must never do the same job (§2).",
+      "check": "review"
+    },
+    {
+      "id": "C4",
+      "group": "Color",
+      "rule": "Signal teal only where something is computing or AI-generated. Never decoration.",
+      "why": "Signal is Petrol given voltage, reserved for the Lab's live states.",
+      "check": "doctor"
+    },
+    {
+      "id": "C5",
+      "group": "Color",
+      "rule": "Text must pass WCAG AA (4.5:1). Concrete, butter, ochre and signal are never text on paper. Use ink-2 for secondary text, brick-deep for errors on paper-alt, signal-ink for Signal text.",
+      "why": "Accessible by default.",
+      "check": "check-contrast + axe"
+    },
+    {
+      "id": "C6",
+      "group": "Color",
+      "rule": "No raw hex or arbitrary color classes in app code. Tokens only.",
+      "why": "One source of truth.",
+      "check": "doctor"
+    },
+    {
+      "id": "S1",
+      "group": "Shape",
+      "rule": "Solid circle = Loy, solid square = Studio, hollow triangle = Lab. These shapes mean nothing else.",
+      "why": "Kandinsky's shape logic, mapped to the studio's three real bodies of work (§1.2).",
+      "check": "review"
+    },
+    {
+      "id": "S2",
+      "group": "Shape",
+      "rule": "No circular or triangular UI chrome: square avatars (except founders), square radios, linear loaders instead of ring spinners, no pie or donut charts.",
+      "why": "Consequence of S1.",
+      "check": "doctor (rounded-full, spinners) + review"
+    },
+    {
+      "id": "S3",
+      "group": "Shape",
+      "rule": "Status icons are square-framed (StatusIcon). Never lucide CircleCheck, AlertTriangle, Info or XCircle.",
+      "why": "Consequence of S1.",
+      "check": "doctor"
+    },
+    {
+      "id": "G1",
+      "group": "Geometry",
+      "rule": "Radius 0 everywhere.",
+      "why": "A rounded corner softens an edge that has no reason to be soft (§1.1).",
+      "check": "doctor + preset"
+    },
+    {
+      "id": "G2",
+      "group": "Geometry",
+      "rule": "Meaningful boundaries are 2px ink (or the surface's line color). The rule color #D8D2C2 is for decorative inner dividers only.",
+      "why": "One visual question per edge (§3).",
+      "check": "review"
+    },
+    {
+      "id": "G3",
+      "group": "Geometry",
+      "rule": "No shadows. Overlays use a 2px border and an ink scrim.",
+      "why": "A shadow implies a light source that does not exist (§1.1).",
+      "check": "doctor + preset"
+    },
+    {
+      "id": "G4",
+      "group": "Geometry",
+      "rule": "No gradients (including skeleton shimmer).",
+      "why": "Ambiguous depth cues cost reading effort (§3).",
+      "check": "doctor"
+    },
+    {
+      "id": "G5",
+      "group": "Geometry",
+      "rule": "Base-8 spacing. Use Stack/Cluster/Grid gap steps; half-steps (4px, 12px) only in tight UI.",
+      "why": "Exposed, regular structure (§3).",
+      "check": "review"
+    },
+    {
+      "id": "T1",
+      "group": "Type",
+      "rule": "Jost for display and headings, Archivo for body and UI. No other families.",
+      "why": "A working revival of a working revival (§1.4).",
+      "check": "doctor"
+    },
+    {
+      "id": "T2",
+      "group": "Type",
+      "rule": "Heading levels are semantic and sequential (one h1, no skips). Visual size is a separate prop.",
+      "why": "Structure for screen readers; looks are independent.",
+      "check": "doctor (per file) + axe"
+    },
+    {
+      "id": "T3",
+      "group": "Type",
+      "rule": "Fonts load via <link> in index.html with preconnect, never CSS @import.",
+      "why": "Faster first paint.",
+      "check": "doctor"
+    },
+    {
+      "id": "T4",
+      "group": "Type",
+      "rule": "Use the fluid type scale (display, h1, h2, h3, lead, body, small, eyebrow, label). No ad-hoc font sizes for headings.",
+      "why": "Consistency across sites.",
+      "check": "review"
+    },
+    {
+      "id": "A1",
+      "group": "Accessibility",
+      "rule": "AA contrast for all text and UI boundaries.",
+      "why": "Accessible by default.",
+      "check": "axe + check-contrast"
+    },
+    {
+      "id": "A2",
+      "group": "Accessibility",
+      "rule": "Visible focus: butter ring hugging the element plus an ink (or paper) outline. Never remove focus styles.",
+      "why": "Butter alone is 1.55:1 on paper; the outline carries the contrast.",
+      "check": "preset"
+    },
+    {
+      "id": "A3",
+      "group": "Accessibility",
+      "rule": "Everything works with a keyboard; icon-only controls have labels.",
+      "why": "",
+      "check": "tests + review"
+    },
+    {
+      "id": "A4",
+      "group": "Accessibility",
+      "rule": "Respect prefers-reduced-motion.",
+      "why": "",
+      "check": "preset"
+    },
+    {
+      "id": "A5",
+      "group": "Accessibility",
+      "rule": "Every control has a visible label; errors are linked with aria-describedby; focus moves to the first invalid field, the error alert or the success heading.",
+      "why": "",
+      "check": "doctor (bare inputs) + tests"
+    },
+    {
+      "id": "A6",
+      "group": "Accessibility",
+      "rule": "Skip link, landmarks (header, main, footer, nav labels) and a unique document title on every page.",
+      "why": "",
+      "check": "SiteShell + axe"
+    },
+    {
+      "id": "A7",
+      "group": "Accessibility",
+      "rule": "Touch targets at least 44px.",
+      "why": "",
+      "check": "components"
+    },
+    {
+      "id": "A8",
+      "group": "Accessibility",
+      "rule": "Every image has alt text; alt=\"\" only when purely decorative.",
+      "why": "",
+      "check": "doctor"
+    },
+    {
+      "id": "M1",
+      "group": "Motion",
+      "rule": "Motion explains (assembly, state change, reveal). It never decorates or loops, except the Signal computing indicator.",
+      "why": "Functional honesty (§1.1).",
+      "check": "review"
+    },
+    {
+      "id": "M2",
+      "group": "Motion",
+      "rule": "CSS only, durations 150/250/550ms, easing cubic-bezier(0.2,0.7,0.2,1). No framer-motion.",
+      "why": "Small bundles, one motion language.",
+      "check": "doctor"
+    },
+    {
+      "id": "M3",
+      "group": "Motion",
+      "rule": "Reveals are fail-safe: content is visible unless an IntersectionObserver has proven it runs.",
+      "why": "Never hide content behind JavaScript.",
+      "check": "Reveal"
+    },
+    {
+      "id": "W1",
+      "group": "Writing",
+      "rule": "All UI copy in English.",
+      "why": "",
+      "check": "review"
+    },
+    {
+      "id": "W2",
+      "group": "Writing",
+      "rule": "No em dashes. Use periods, commas or colons.",
+      "why": "Reads as machine-written to our audience.",
+      "check": "doctor"
+    },
+    {
+      "id": "W3",
+      "group": "Writing",
+      "rule": "No superlatives or hype (best, leading, revolutionary, cutting-edge, seamless, world-class, game-changing).",
+      "why": "Janteloven: confidence without volume (§1.5).",
+      "check": "doctor"
+    },
+    {
+      "id": "W4",
+      "group": "Writing",
+      "rule": "No stats as flex, no invented numbers.",
+      "why": "Janteloven (§1.5).",
+      "check": "review"
+    },
+    {
+      "id": "W5",
+      "group": "Writing",
+      "rule": "Real assets over recreations: real screenshots, real quotes, real clients only.",
+      "why": "Functional honesty.",
+      "check": "review"
+    },
+    {
+      "id": "W6",
+      "group": "Writing",
+      "rule": "Copy lives in a data file (src/data/content.js), not inside components.",
+      "why": "Edit words without touching layout.",
+      "check": "review"
+    }
+  ],
+  "intents": [
+    {
+      "intent": "Start a new app or add the library to an existing one",
+      "use": [
+        "@lsl/foundation",
+        "@lsl/doctor",
+        "@lsl/accent-budget"
+      ]
+    },
+    {
+      "intent": "Page frame with header, footer, skip link",
+      "use": [
+        "SiteShell",
+        "SiteHeader",
+        "SiteFooter"
+      ]
+    },
+    {
+      "intent": "A page band / section",
+      "use": [
+        "Section (surface paper | alt | ink)"
+      ]
+    },
+    {
+      "intent": "Numbered section heading (01 What we do)",
+      "use": [
+        "TitleBlock + Heading"
+      ]
+    },
+    {
+      "intent": "Hero title and intro",
+      "use": [
+        "Eyebrow",
+        "Display",
+        "Lead",
+        "Rise"
+      ]
+    },
+    {
+      "intent": "The single most important call to action on the page",
+      "use": [
+        "Button variant=\"accent\" (once per page)"
+      ]
+    },
+    {
+      "intent": "Any other action",
+      "use": [
+        "Button (default | outline | ghost)",
+        "IconButton"
+      ]
+    },
+    {
+      "intent": "Inline link in text",
+      "use": [
+        "TextLink"
+      ]
+    },
+    {
+      "intent": "Parallel items (services, values, steps)",
+      "use": [
+        "RuledGrid + RuledCell",
+        "TopRuleCard"
+      ]
+    },
+    {
+      "intent": "A self-contained item (a case, a person)",
+      "use": [
+        "Card"
+      ]
+    },
+    {
+      "intent": "Mark work as Studio or Lab, people as Loy",
+      "use": [
+        "LayerTag",
+        "Glyph"
+      ]
+    },
+    {
+      "intent": "Explain the three marks",
+      "use": [
+        "LayerLegend",
+        "AssemblingMark"
+      ]
+    },
+    {
+      "intent": "Founder avatar",
+      "use": [
+        "FounderMonogram"
+      ]
+    },
+    {
+      "intent": "Person avatar in a product",
+      "use": [
+        "Avatar (square)"
+      ]
+    },
+    {
+      "intent": "Facts about a project (client, year, status)",
+      "use": [
+        "MetaList"
+      ]
+    },
+    {
+      "intent": "A workflow status",
+      "use": [
+        "StatusBadge"
+      ]
+    },
+    {
+      "intent": "A category tag",
+      "use": [
+        "Badge"
+      ]
+    },
+    {
+      "intent": "A form field",
+      "use": [
+        "Field + Input | Textarea | Select"
+      ]
+    },
+    {
+      "intent": "Choose one of 2 to 4 options with hints",
+      "use": [
+        "RadioTiles"
+      ]
+    },
+    {
+      "intent": "Choose one of 5+ options",
+      "use": [
+        "Select"
+      ]
+    },
+    {
+      "intent": "Yes/no or opt-in",
+      "use": [
+        "Checkbox",
+        "Switch (applies immediately)"
+      ]
+    },
+    {
+      "intent": "Form error / success",
+      "use": [
+        "FieldError (via Field)",
+        "FormAlert",
+        "FormSuccess"
+      ]
+    },
+    {
+      "intent": "Stop form spam",
+      "use": [
+        "Honeypot"
+      ]
+    },
+    {
+      "intent": "Inline note or warning in content",
+      "use": [
+        "Callout"
+      ]
+    },
+    {
+      "intent": "Transient confirmation",
+      "use": [
+        "Toaster + toast()"
+      ]
+    },
+    {
+      "intent": "Loading",
+      "use": [
+        "Skeleton (known shape)",
+        "LinearLoader (progress or long wait)"
+      ]
+    },
+    {
+      "intent": "Nothing to show yet / failed to load / 404",
+      "use": [
+        "EmptyState",
+        "ErrorState",
+        "NotFound"
+      ]
+    },
+    {
+      "intent": "Status icon",
+      "use": [
+        "StatusIcon"
+      ]
+    },
+    {
+      "intent": "Side panel or mobile menu",
+      "use": [
+        "Sheet"
+      ]
+    },
+    {
+      "intent": "Hint on an icon",
+      "use": [
+        "Tooltip"
+      ]
+    },
+    {
+      "intent": "Breadcrumb trail",
+      "use": [
+        "Breadcrumbs"
+      ]
+    },
+    {
+      "intent": "Scroll-in motion",
+      "use": [
+        "Reveal"
+      ]
+    },
+    {
+      "intent": "Money and dates",
+      "use": [
+        "formatNOK",
+        "formatDate"
+      ]
+    },
+    {
+      "intent": "In-page section links",
+      "use": [
+        "useGoToSection",
+        "useActiveSection"
+      ]
+    }
+  ],
+  "items": [
+    {
+      "name": "foundation",
+      "title": "Foundation",
+      "category": "foundation",
+      "layer": "L0",
+      "status": "stable",
+      "type": "registry:style",
+      "files": [
+        {
+          "path": "styles/lsl-preset.cjs",
+          "type": "registry:file",
+          "target": "src/styles/lsl-preset.cjs",
+          "hash": "be8a6d611fe84131"
+        },
+        {
+          "path": "lib/lsl-tokens.js",
+          "type": "registry:lib",
+          "target": "src/lib/lsl-tokens.js",
+          "hash": "c1b9199059b4ce81"
+        },
+        {
+          "path": "../templates/tailwind.config.cjs",
+          "type": "registry:file",
+          "target": "~/tailwind.config.cjs",
+          "hash": "607ccedb75bf6f2a"
+        }
+      ],
+      "dependencies": [
+        "tailwindcss-animate"
+      ],
+      "registryDependencies": [],
+      "purpose": "Tokens, global base styles, surfaces, focus ring, type classes and motion for every LoyStudioLab app. Install first.",
+      "exports": [
+        {
+          "name": "lsl-preset.cjs",
+          "kind": "tailwind-preset",
+          "props": []
+        },
+        {
+          "name": "colors, surfaces, type, motion, fontLink",
+          "kind": "module",
+          "props": []
+        }
+      ],
+      "useWhen": [
+        "Always, once per app, before any other @lsl item."
+      ],
+      "dontUseWhen": [
+        {
+          "case": "Client brands (OSF HUB, Casa Clean)",
+          "use": "Their own UI. This library is LoyStudioLab-only."
+        }
+      ],
+      "rules": [
+        "G1",
+        "G3",
+        "G4",
+        "A2",
+        "A4",
+        "T1",
+        "T3",
+        "C5"
+      ],
+      "a11y": [
+        "Dual focus ring on every focusable element: butter ring plus ink (or paper) outline.",
+        "All animation and transition collapses under prefers-reduced-motion."
+      ],
+      "setup": [
+        "tailwind.config.cjs is replaced by a 6-line config that loads the preset (pass --overwrite). Re-add any app-specific theme.extend entries.",
+        "Add the font <link> from `fontLink` to index.html <head> with preconnect to fonts.googleapis.com and fonts.gstatic.com (rule T3). Remove any CSS @import of fonts.",
+        "Keep src/index.css to the three @tailwind directives; delete the stock shadcn :root and .dark variable blocks (the preset defines them).",
+        "Wrap page bands in a surface: <Section surface=\"paper|alt|ink\"> or className=\"surface-ink\"."
+      ],
+      "example": "// tailwind.config.cjs\nmodule.exports = {\n  presets: [require(\"./src/styles/lsl-preset.cjs\")],\n  content: [\"./index.html\", \"./src/**/*.{js,jsx,ts,tsx}\"],\n}",
+      "classes": [
+        {
+          "name": "surface-paper | surface-alt | surface-ink",
+          "purpose": "Set colors for everything inside. Components follow automatically."
+        },
+        {
+          "name": "container-site",
+          "purpose": "Centred 1280px column with responsive gutters."
+        },
+        {
+          "name": "display-1, heading-1, heading-2, heading-3",
+          "purpose": "Type scale (prefer <Heading>)."
+        },
+        {
+          "name": "eyebrow, label-caps, lead",
+          "purpose": "Section labels, UI labels, intro paragraphs."
+        },
+        {
+          "name": "link-u",
+          "purpose": "Inline link with butter underline (prefer <TextLink>)."
+        },
+        {
+          "name": "grid-ruled",
+          "purpose": "Exposed grid with shared 2px rules (prefer <RuledGrid>)."
+        },
+        {
+          "name": "skip-link",
+          "purpose": "Skip link styling (prefer <SkipLink>)."
+        },
+        {
+          "name": "Tailwind colors",
+          "purpose": "Contextual: surface, fg, fg-2, line, divider, danger, loy, signal-fg, tint. Fixed: paper, paper-alt, ink, ink-2, butter, petrol, brick, brick-deep, ochre, concrete, rule, signal, signal-ink."
+        }
+      ],
+      "install": "npx shadcn@latest add @lsl/foundation",
+      "json": "https://loystudiolab.github.io/loystudiolab-ui/r/foundation.json"
+    },
+    {
+      "name": "doctor",
+      "title": "lsl-doctor",
+      "category": "foundation",
+      "layer": "L0",
+      "status": "beta",
+      "type": "registry:file",
+      "files": [
+        {
+          "path": "../scripts/lsl-doctor.mjs",
+          "type": "registry:file",
+          "target": "~/scripts/lsl-doctor.mjs",
+          "hash": "ea379bde71fa2b2c"
+        }
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "purpose": "Checks an app against the LoyStudioLab rules and reports violations by rule ID. Run it before you finish any UI task.",
+      "exports": [
+        {
+          "name": "lsl-doctor.mjs",
+          "kind": "cli",
+          "props": []
+        }
+      ],
+      "useWhen": [
+        "After building or changing UI in any app that uses the library.",
+        "In CI for apps that use the library."
+      ],
+      "dontUseWhen": [],
+      "rules": [
+        "C1",
+        "C2",
+        "C4",
+        "C6",
+        "G1",
+        "G3",
+        "G4",
+        "S2",
+        "S3",
+        "T1",
+        "T2",
+        "T3",
+        "M2",
+        "W2",
+        "W3",
+        "A8"
+      ],
+      "a11y": [
+        "Static checks only. Still run axe and a keyboard pass."
+      ],
+      "example": "node scripts/lsl-doctor.mjs src            # human-readable\nnode scripts/lsl-doctor.mjs src --json     # for agents",
+      "install": "npx shadcn@latest add @lsl/doctor",
+      "json": "https://loystudiolab.github.io/loystudiolab-ui/r/doctor.json"
+    },
+    {
+      "name": "accent-budget",
+      "title": "AccentBudget",
+      "category": "foundation",
+      "layer": "L0",
+      "status": "stable",
+      "type": "registry:component",
+      "files": [
+        {
+          "path": "components/lsl/dev/accent-budget.jsx",
+          "type": "registry:component",
+          "target": "src/components/lsl/dev/accent-budget.jsx",
+          "hash": "7a76925fc5dabff6"
+        }
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "purpose": "Dev-only console warning when a page renders more than one accent (butter) CTA.",
+      "exports": [
+        {
+          "name": "AccentBudget",
+          "props": [
+            {
+              "name": "max",
+              "type": "number",
+              "default": "1",
+              "description": "Allowed accent CTAs per page."
+            }
+          ]
+        }
+      ],
+      "useWhen": [
+        "Mount once near the app root, next to the router."
+      ],
+      "dontUseWhen": [],
+      "rules": [
+        "C1"
+      ],
+      "a11y": [],
+      "example": "<AccentBudget />",
+      "install": "npx shadcn@latest add @lsl/accent-budget",
+      "json": "https://loystudiolab.github.io/loystudiolab-ui/r/accent-budget.json"
+    },
+    {
+      "name": "button",
+      "category": "actions",
+      "layer": "L1",
+      "status": "stable",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "components/ui/button.jsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/button.jsx",
+          "hash": "b60ee1f08c44f8f4"
+        }
+      ],
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "title": "Button",
+      "dependencies": [
+        "@radix-ui/react-slot",
+        "class-variance-authority"
+      ],
+      "purpose": "Trigger an action, or style a link as a button with asChild.",
+      "exports": [
+        {
+          "name": "Button",
+          "props": [
+            {
+              "name": "variant",
+              "type": "'default' | 'accent' | 'outline' | 'ghost' | 'link' | 'destructive'",
+              "default": "default",
+              "description": "accent = the page's one highest-priority CTA (C1). default = solid, follows the surface. outline = secondary. ghost = tertiary. destructive = delete or remove."
+            },
+            {
+              "name": "size",
+              "type": "'default' | 'sm' | 'lg' | 'icon'",
+              "default": "default",
+              "description": "All sizes are at least 44px tall (A7)."
+            },
+            {
+              "name": "asChild",
+              "type": "boolean",
+              "default": "false",
+              "description": "Render the child (e.g. a router <Link>) with button styles."
+            }
+          ]
+        }
+      ],
+      "useWhen": [
+        "Any action: submit, open, save, start.",
+        "Primary page CTA: variant=\"accent\", once per page.",
+        "A link that should look like a button: asChild around <Link>."
+      ],
+      "dontUseWhen": [
+        {
+          "case": "Inline link inside text",
+          "use": "TextLink"
+        },
+        {
+          "case": "Icon-only control",
+          "use": "IconButton"
+        },
+        {
+          "case": "A second accent on the same page",
+          "use": "variant default or outline"
+        }
+      ],
+      "rules": [
+        "C1",
+        "C2",
+        "A2",
+        "A7",
+        "W1"
+      ],
+      "a11y": [
+        "Busy state: set disabled and aria-busy while sending.",
+        "Label is the visible text; keep it a verb phrase (\"Send message\")."
+      ],
+      "example": "<Button variant=\"accent\" size=\"lg\">Send message</Button>\n<Button variant=\"outline\">See the work</Button>\n<Button asChild><Link to=\"/contact\">Contact</Link></Button>",
+      "install": "npx shadcn@latest add @lsl/button",
+      "json": "https://loystudiolab.github.io/loystudiolab-ui/r/button.json"
+    },
+    {
+      "name": "input",
+      "category": "forms",
+      "layer": "L1",
+      "status": "stable",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "components/ui/input.jsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/input.jsx",
+          "hash": "c73fcd5790ec37de"
+        }
+      ],
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "title": "Input",
+      "dependencies": [],
+      "purpose": "Single-line text entry. Always inside a Field.",
+      "exports": [
+        {
+          "name": "Input",
+          "props": [
+            {
+              "name": "type",
+              "type": "string",
+              "default": "text",
+              "description": "Native input type. Use type, inputMode and autoComplete for good mobile keyboards."
+            }
+          ]
+        }
+      ],
+      "useWhen": [
+        "Names, emails, short answers."
+      ],
+      "dontUseWhen": [
+        {
+          "case": "More than one line",
+          "use": "Textarea"
+        },
+        {
+          "case": "Choosing from a list",
+          "use": "Select or RadioTiles"
+        }
+      ],
+      "rules": [
+        "A5",
+        "G2"
+      ],
+      "a11y": [
+        "Wrap in Field so label, hint and error are wired.",
+        "aria-invalid turns the border to the danger color."
+      ],
+      "example": "<Field label=\"Email\" required error={errors.email?.message}>\n  <Input type=\"email\" autoComplete=\"email\" {...register(\"email\")} />\n</Field>",
+      "install": "npx shadcn@latest add @lsl/input",
+      "json": "https://loystudiolab.github.io/loystudiolab-ui/r/input.json"
+    },
+    {
+      "name": "textarea",
+      "category": "forms",
+      "layer": "L1",
+      "status": "stable",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "components/ui/textarea.jsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/textarea.jsx",
+          "hash": "136e1475d8757c1c"
+        }
+      ],
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "title": "Textarea",
+      "dependencies": [],
+      "purpose": "Multi-line text entry. Always inside a Field; pass maxLength and count to Field for a counter.",
+      "exports": [
+        {
+          "name": "Textarea",
+          "props": []
+        }
+      ],
+      "useWhen": [
+        "Messages, descriptions, notes."
+      ],
+      "dontUseWhen": [
+        {
+          "case": "One line",
+          "use": "Input"
+        }
+      ],
+      "rules": [
+        "A5"
+      ],
+      "a11y": [
+        "Field links the character count with aria-describedby."
+      ],
+      "example": "<Field label=\"Message\" required maxLength={2000} count={message.length}>\n  <Textarea rows={6} {...register(\"message\")} />\n</Field>",
+      "install": "npx shadcn@latest add @lsl/textarea",
+      "json": "https://loystudiolab.github.io/loystudiolab-ui/r/textarea.json"
+    },
+    {
+      "name": "label",
+      "category": "forms",
+      "layer": "L1",
+      "status": "stable",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "components/ui/label.jsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/label.jsx",
+          "hash": "fe508f368ba9cbf5"
+        }
+      ],
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "title": "Label",
+      "dependencies": [
+        "@radix-ui/react-label",
+        "class-variance-authority"
+      ],
+      "purpose": "Uppercase UI label for a control. Field renders it for you.",
+      "exports": [
+        {
+          "name": "Label",
+          "props": []
+        }
+      ],
+      "useWhen": [
+        "Only when building a control outside Field."
+      ],
+      "dontUseWhen": [
+        {
+          "case": "Normal form fields",
+          "use": "Field"
+        }
+      ],
+      "rules": [
+        "A5",
+        "T1"
+      ],
+      "a11y": [
+        "Always set htmlFor."
+      ],
+      "example": "<Label htmlFor=\"q\">Search</Label>",
+      "install": "npx shadcn@latest add @lsl/label",
+      "json": "https://loystudiolab.github.io/loystudiolab-ui/r/label.json"
+    },
+    {
+      "name": "select",
+      "category": "forms",
+      "layer": "L1",
+      "status": "stable",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "components/ui/select.jsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/select.jsx",
+          "hash": "6caa04cb4cb3005b"
+        }
+      ],
+      "registryDependencies": [
+        "@lsl/field-context"
+      ],
+      "title": "Select",
+      "dependencies": [
+        "@radix-ui/react-select",
+        "lucide-react"
+      ],
+      "purpose": "Choose one option from a list of five or more.",
+      "exports": [
+        {
+          "name": "Select",
+          "props": []
+        },
+        {
+          "name": "SelectTrigger",
+          "props": []
+        },
+        {
+          "name": "SelectValue",
+          "props": []
+        },
+        {
+          "name": "SelectContent",
+          "props": [
+            {
+              "name": "position",
+              "type": "'popper' | 'item-aligned'",
+              "default": "popper",
+              "description": "Radix positioning mode."
+            }
+          ]
+        },
+        {
+          "name": "SelectItem",
+          "props": []
+        },
+        {
+          "name": "SelectGroup",
+          "props": []
+        },
+        {
+          "name": "SelectLabel",
+          "props": []
+        },
+        {
+          "name": "SelectSeparator",
+          "props": []
+        }
+      ],
+      "useWhen": [
+        "Five or more options, or options that do not need explanation."
+      ],
+      "dontUseWhen": [
+        {
+          "case": "Two to four options with hints",
+          "use": "RadioTiles"
+        }
+      ],
+      "rules": [
+        "A3",
+        "A5",
+        "G3"
+      ],
+      "a11y": [
+        "Wrap <Select> in Field: SelectTrigger reads the Field's id and aria wiring through FieldContext, so the label and errors apply."
+      ],
+      "example": "<Field label=\"Topic\">\n  <Select onValueChange={setTopic}>\n    <SelectTrigger><SelectValue placeholder=\"Choose a topic\" /></SelectTrigger>\n    <SelectContent>\n      <SelectItem value=\"web\">Website</SelectItem>\n      <SelectItem value=\"app\">App or internal tool</SelectItem>\n    </SelectContent>\n  </Select>\n</Field>",
+      "install": "npx shadcn@latest add @lsl/select",
+      "json": "https://loystudiolab.github.io/loystudiolab-ui/r/select.json"
+    },
+    {
+      "name": "checkbox",
+      "category": "forms",
+      "layer": "L1",
+      "status": "stable",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "components/ui/checkbox.jsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/checkbox.jsx",
+          "hash": "0164a11d45ff51d7"
+        }
+      ],
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "title": "Checkbox",
+      "dependencies": [
+        "@radix-ui/react-checkbox",
+        "lucide-react"
+      ],
+      "purpose": "A yes or no choice, or several independent choices.",
+      "exports": [
+        {
+          "name": "Checkbox",
+          "props": []
+        }
+      ],
+      "useWhen": [
+        "Consent, opt-ins, multi-select lists."
+      ],
+      "dontUseWhen": [
+        {
+          "case": "A setting that applies immediately",
+          "use": "Switch"
+        }
+      ],
+      "rules": [
+        "S2",
+        "A5"
+      ],
+      "a11y": [
+        "Pair with a <Label htmlFor> next to it; the label is the click target."
+      ],
+      "example": "<div className=\"flex items-center gap-3\">\n  <Checkbox id=\"news\" />\n  <Label htmlFor=\"news\" className=\"normal-case tracking-normal text-base font-normal\">Send me the occasional update</Label>\n</div>",
+      "install": "npx shadcn@latest add @lsl/checkbox",
+      "json": "https://loystudiolab.github.io/loystudiolab-ui/r/checkbox.json"
+    },
+    {
+      "name": "radio-group",
+      "category": "forms",
+      "layer": "L1",
+      "status": "stable",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "components/ui/radio-group.jsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/radio-group.jsx",
+          "hash": "c9e6b3603aa8c2e5"
+        }
+      ],
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "title": "RadioGroup",
+      "dependencies": [
+        "@radix-ui/react-radio-group"
+      ],
+      "purpose": "One choice from a short list, as square radios (circles mean Loy, rule S2).",
+      "exports": [
+        {
+          "name": "RadioGroup",
+          "props": []
+        },
+        {
+          "name": "RadioGroupItem",
+          "props": []
+        }
+      ],
+      "useWhen": [
+        "Compact one-of-many choice in dense forms."
+      ],
+      "dontUseWhen": [
+        {
+          "case": "Two to four options that need hints",
+          "use": "RadioTiles"
+        }
+      ],
+      "rules": [
+        "S2",
+        "A5"
+      ],
+      "a11y": [
+        "Give the group aria-labelledby pointing at a visible legend."
+      ],
+      "example": "<RadioGroup defaultValue=\"email\" aria-label=\"Reply by\">\n  <div className=\"flex items-center gap-3\"><RadioGroupItem value=\"email\" id=\"r1\" /><Label htmlFor=\"r1\">Email</Label></div>\n  <div className=\"flex items-center gap-3\"><RadioGroupItem value=\"phone\" id=\"r2\" /><Label htmlFor=\"r2\">Phone</Label></div>\n</RadioGroup>",
+      "install": "npx shadcn@latest add @lsl/radio-group",
+      "json": "https://loystudiolab.github.io/loystudiolab-ui/r/radio-group.json"
+    },
+    {
+      "name": "switch",
+      "category": "forms",
+      "layer": "L1",
+      "status": "stable",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "components/ui/switch.jsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/switch.jsx",
+          "hash": "ca28ebc73d0df21d"
+        }
+      ],
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "title": "Switch",
+      "dependencies": [
+        "@radix-ui/react-switch"
+      ],
+      "purpose": "Turn a setting on or off, applied immediately.",
+      "exports": [
+        {
+          "name": "Switch",
+          "props": []
+        }
+      ],
+      "useWhen": [
+        "Settings that take effect at once."
+      ],
+      "dontUseWhen": [
+        {
+          "case": "A choice submitted with a form",
+          "use": "Checkbox"
+        }
+      ],
+      "rules": [
+        "G1",
+        "A5"
+      ],
+      "a11y": [
+        "Needs a label via <Label htmlFor> or aria-label."
+      ],
+      "example": "<div className=\"flex items-center gap-3\"><Switch id=\"notify\" /><Label htmlFor=\"notify\">Notifications</Label></div>",
+      "install": "npx shadcn@latest add @lsl/switch",
+      "json": "https://loystudiolab.github.io/loystudiolab-ui/r/switch.json"
+    },
+    {
+      "name": "badge",
+      "category": "data-display",
+      "layer": "L1",
+      "status": "stable",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "components/ui/badge.jsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/badge.jsx",
+          "hash": "8c78f65dcd46eb69"
+        }
+      ],
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "title": "Badge",
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "purpose": "A short uppercase tag: category, count, state.",
+      "exports": [
+        {
+          "name": "Badge",
+          "props": [
+            {
+              "name": "variant",
+              "type": "'default' | 'solid' | 'danger' | 'signal'",
+              "default": "default",
+              "description": "signal is only for AI or computing states (C4)."
+            }
+          ]
+        }
+      ],
+      "useWhen": [
+        "Categories, short states, counts."
+      ],
+      "dontUseWhen": [
+        {
+          "case": "Loy / Studio / Lab",
+          "use": "LayerTag"
+        },
+        {
+          "case": "A workflow status",
+          "use": "StatusBadge"
+        }
+      ],
+      "rules": [
+        "C4",
+        "S1"
+      ],
+      "a11y": [
+        "Text must carry the meaning; color is never the only cue."
+      ],
+      "example": "<Badge>Case study</Badge> <Badge variant=\"solid\">New</Badge>",
+      "install": "npx shadcn@latest add @lsl/badge",
+      "json": "https://loystudiolab.github.io/loystudiolab-ui/r/badge.json"
+    },
+    {
+      "name": "card",
+      "category": "data-display",
+      "layer": "L1",
+      "status": "stable",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "components/ui/card.jsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/card.jsx",
+          "hash": "d74ec56c547eab56"
+        }
+      ],
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "title": "Card",
+      "dependencies": [],
+      "purpose": "A flat 2px-ruled container for one item: a case, a person, a setting group.",
+      "exports": [
+        {
+          "name": "Card",
+          "props": []
+        },
+        {
+          "name": "CardHeader",
+          "props": []
+        },
+        {
+          "name": "CardTitle",
+          "props": [
+            {
+              "name": "as",
+              "type": "'h2' | 'h3' | 'h4'",
+              "default": "h3",
+              "description": "Heading level; keep levels sequential (T2)."
+            }
+          ]
+        },
+        {
+          "name": "CardDescription",
+          "props": []
+        },
+        {
+          "name": "CardContent",
+          "props": []
+        },
+        {
+          "name": "CardFooter",
+          "props": []
+        }
+      ],
+      "useWhen": [
+        "Separate, clickable or self-contained items."
+      ],
+      "dontUseWhen": [
+        {
+          "case": "A set of parallel items in one block",
+          "use": "RuledGrid (shared rules) or TopRuleCard"
+        }
+      ],
+      "rules": [
+        "G1",
+        "G2",
+        "G3",
+        "T2"
+      ],
+      "a11y": [
+        "If the whole card is a link, put the <a> on the title and stretch it (after:absolute after:inset-0)."
+      ],
+      "example": "<Card>\n  <CardHeader>\n    <CardTitle>Oslo Skatehall</CardTitle>\n    <CardDescription>An operations system for a community-run skatepark.</CardDescription>\n  </CardHeader>\n</Card>",
+      "install": "npx shadcn@latest add @lsl/card",
+      "json": "https://loystudiolab.github.io/loystudiolab-ui/r/card.json"
+    },
+    {
+      "name": "sheet",
+      "category": "overlays",
+      "layer": "L1",
+      "status": "stable",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "components/ui/sheet.jsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/sheet.jsx",
+          "hash": "6da91d971d086bb0"
+        }
+      ],
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "title": "Sheet",
+      "dependencies": [
+        "@radix-ui/react-dialog",
+        "class-variance-authority",
+        "lucide-react"
+      ],
+      "purpose": "A panel that slides in from an edge: mobile menu, filters, details.",
+      "exports": [
+        {
+          "name": "Sheet",
+          "props": []
+        },
+        {
+          "name": "SheetTrigger",
+          "props": []
+        },
+        {
+          "name": "SheetContent",
+          "props": [
+            {
+              "name": "side",
+              "type": "'top' | 'right' | 'bottom' | 'left'",
+              "default": "right",
+              "description": ""
+            },
+            {
+              "name": "closeLabel",
+              "type": "string",
+              "default": "Close",
+              "description": "Accessible name of the close button."
+            }
+          ]
+        },
+        {
+          "name": "SheetHeader",
+          "props": []
+        },
+        {
+          "name": "SheetTitle",
+          "props": []
+        },
+        {
+          "name": "SheetDescription",
+          "props": []
+        },
+        {
+          "name": "SheetFooter",
+          "props": []
+        },
+        {
+          "name": "SheetClose",
+          "props": []
+        }
+      ],
+      "useWhen": [
+        "Mobile navigation (SiteHeader uses it).",
+        "Secondary panels that keep the page visible behind them."
+      ],
+      "dontUseWhen": [
+        {
+          "case": "A blocking question",
+          "use": "AlertDialog (phase 3)"
+        }
+      ],
+      "rules": [
+        "G3",
+        "A3"
+      ],
+      "a11y": [
+        "Always render a SheetTitle (visually hidden is fine). Focus is trapped and Escape closes."
+      ],
+      "example": "<Sheet>\n  <SheetTrigger asChild><Button variant=\"outline\">Filters</Button></SheetTrigger>\n  <SheetContent side=\"right\">\n    <SheetHeader><SheetTitle>Filters</SheetTitle></SheetHeader>\n  </SheetContent>\n</Sheet>",
+      "install": "npx shadcn@latest add @lsl/sheet",
+      "json": "https://loystudiolab.github.io/loystudiolab-ui/r/sheet.json"
+    },
+    {
+      "name": "separator",
+      "category": "layout",
+      "layer": "L1",
+      "status": "stable",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "components/ui/separator.jsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/separator.jsx",
+          "hash": "ab3aa8461ceb7d67"
+        }
+      ],
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "title": "Separator",
+      "dependencies": [
+        "@radix-ui/react-separator"
+      ],
+      "purpose": "A 2px rule between regions.",
+      "exports": [
+        {
+          "name": "Separator",
+          "props": [
+            {
+              "name": "orientation",
+              "type": "'horizontal' | 'vertical'",
+              "default": "horizontal",
+              "description": ""
+            },
+            {
+              "name": "decorative",
+              "type": "boolean",
+              "default": "true",
+              "description": ""
+            },
+            {
+              "name": "tone",
+              "type": "'strong' | 'subtle'",
+              "default": "strong",
+              "description": "subtle is decoration only (G2)."
+            }
+          ]
+        }
+      ],
+      "useWhen": [
+        "Between groups in a panel or list."
+      ],
+      "dontUseWhen": [
+        {
+          "case": "Between page bands",
+          "use": "Section (has its own top border)"
+        }
+      ],
+      "rules": [
+        "G2"
+      ],
+      "a11y": [],
+      "example": "<Separator />",
+      "install": "npx shadcn@latest add @lsl/separator",
+      "json": "https://loystudiolab.github.io/loystudiolab-ui/r/separator.json"
+    },
+    {
+      "name": "sonner",
+      "category": "feedback",
+      "layer": "L1",
+      "status": "stable",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "components/ui/sonner.jsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/sonner.jsx",
+          "hash": "3820735af00991d9"
+        }
+      ],
+      "registryDependencies": [
+        "@lsl/status-icon"
+      ],
+      "title": "Toaster",
+      "dependencies": [
+        "sonner"
+      ],
+      "purpose": "Short, transient confirmation messages (toast). Mount <Toaster /> once.",
+      "exports": [
+        {
+          "name": "Toaster",
+          "props": []
+        }
+      ],
+      "useWhen": [
+        "Confirming a background action: saved, copied, sent."
+      ],
+      "dontUseWhen": [
+        {
+          "case": "Errors the user must fix",
+          "use": "FieldError or FormAlert"
+        },
+        {
+          "case": "Persistent information",
+          "use": "Callout"
+        }
+      ],
+      "rules": [
+        "S3",
+        "G3"
+      ],
+      "a11y": [
+        "Toasts disappear: never put the only copy of important information in one."
+      ],
+      "example": "import { toast } from \"sonner\"\n<Toaster />\ntoast.success(\"Saved\")",
+      "install": "npx shadcn@latest add @lsl/sonner",
+      "json": "https://loystudiolab.github.io/loystudiolab-ui/r/sonner.json"
+    },
+    {
+      "name": "skeleton",
+      "category": "feedback",
+      "layer": "L1",
+      "status": "stable",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "components/ui/skeleton.jsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/skeleton.jsx",
+          "hash": "65a08d722d2d0258"
+        }
+      ],
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "title": "Skeleton",
+      "dependencies": [],
+      "purpose": "Placeholder block while content loads. Pulses opacity, no shimmer.",
+      "exports": [
+        {
+          "name": "Skeleton",
+          "props": []
+        }
+      ],
+      "useWhen": [
+        "Content with a known shape that loads in under a few seconds."
+      ],
+      "dontUseWhen": [
+        {
+          "case": "Long or unknown waits",
+          "use": "LinearLoader with a label"
+        }
+      ],
+      "rules": [
+        "G4",
+        "A4"
+      ],
+      "a11y": [
+        "Hidden from screen readers; announce loading elsewhere (aria-busy on the region)."
+      ],
+      "example": "<Skeleton className=\"h-6 w-40\" />",
+      "install": "npx shadcn@latest add @lsl/skeleton",
+      "json": "https://loystudiolab.github.io/loystudiolab-ui/r/skeleton.json"
+    },
+    {
+      "name": "tooltip",
+      "category": "overlays",
+      "layer": "L1",
+      "status": "stable",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "components/ui/tooltip.jsx",
+          "type": "registry:ui",
+          "target": "src/components/ui/tooltip.jsx",
+          "hash": "4a491227a6e6288c"
+        }
+      ],
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "title": "Tooltip",
+      "dependencies": [
+        "@radix-ui/react-tooltip"
+      ],
+      "purpose": "A short hint on hover or focus for an icon or abbreviation.",
+      "exports": [
+        {
+          "name": "TooltipProvider",
+          "props": []
+        },
+        {
+          "name": "Tooltip",
+          "props": []
+        },
+        {
+          "name": "TooltipTrigger",
+          "props": []
+        },
+        {
+          "name": "TooltipContent",
+          "props": [
+            {
+              "name": "sideOffset",
+              "type": "number",
+              "default": "6",
+              "description": ""
+            }
+          ]
+        }
+      ],
+      "useWhen": [
+        "Naming an icon-only control (in addition to its aria-label)."
+      ],
+      "dontUseWhen": [
+        {
+          "case": "Information people need to finish a task",
+          "use": "Field hint or Callout"
+        }
+      ],
+      "rules": [
+        "A3"
+      ],
+      "a11y": [
+        "Not reachable on touch: never the only place for important text."
+      ],
+      "example": "<TooltipProvider><Tooltip><TooltipTrigger asChild><IconButton label=\"Copy link\"><Copy /></IconButton></TooltipTrigger><TooltipContent>Copy link</TooltipContent></Tooltip></TooltipProvider>",
+      "install": "npx shadcn@latest add @lsl/tooltip",
+      "json": "https://loystudiolab.github.io/loystudiolab-ui/r/tooltip.json"
+    },
+    {
+      "name": "mark",
+      "layer": "L2",
+      "status": "stable",
+      "type": "registry:component",
+      "files": [
+        {
+          "path": "components/lsl/brand/mark.jsx",
+          "type": "registry:component",
+          "target": "src/components/lsl/brand/mark.jsx",
+          "hash": "6b7590943f7008a0"
+        }
+      ],
+      "dependencies": [],
+      "title": "Mark, AssemblingMark, Logo",
+      "category": "brand",
+      "purpose": "The LoyStudioLab mark and wordmark lockups. INTERIM geometry until the final logo is delivered.",
+      "exports": [
+        {
+          "name": "Mark",
+          "props": [
+            {
+              "name": "size",
+              "type": "number",
+              "default": "40",
+              "description": "Pixel size."
+            },
+            {
+              "name": "title",
+              "type": "string",
+              "default": "",
+              "description": "Accessible name; omit when decorative (e.g. next to the wordmark)."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+            }
+          ]
+        },
+        {
+          "name": "AssemblingMark",
+          "props": [
+            {
+              "name": "focus",
+              "type": "'loy' | 'studio' | 'lab' | null",
+              "default": "null",
+              "description": "Dims the other two shapes, for a legend that points at one layer."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Set the width here: w-40 sm:w-56 lg:w-72 in a hero; it scales from its viewBox."
+            }
+          ]
+        },
+        {
+          "name": "Logo",
+          "props": [
+            {
+              "name": "variant",
+              "type": "'horizontal' | 'stacked' | 'mark'",
+              "default": "horizontal",
+              "description": "horizontal for headers and footers; stacked LOY/STUDIO/LAB for covers; mark alone for tight spaces."
+            },
+            {
+              "name": "size",
+              "type": "number",
+              "default": "",
+              "description": "Mark size override."
+            },
+            {
+              "name": "title",
+              "type": "string",
+              "default": "LoyStudioLab",
+              "description": "Accessible name when variant is mark."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+            }
+          ]
+        },
+        {
+          "name": "MARK_GEOMETRY",
+          "kind": "constant",
+          "props": []
+        }
+      ],
+      "useWhen": [
+        "Site header and footer (Logo).",
+        "Hero diagrams explaining the name (AssemblingMark).",
+        "Favicons and covers (Mark, Logo stacked)."
+      ],
+      "dontUseWhen": [
+        {
+          "case": "Decorating a section",
+          "use": "Nothing. The mark is a signature, not an ornament (M1)."
+        },
+        {
+          "case": "Redrawing the shapes by hand",
+          "use": "Glyph or MARK_GEOMETRY"
+        }
+      ],
+      "rules": [
+        "S1",
+        "C2",
+        "W5"
+      ],
+      "a11y": [
+        "Logo inside a link: give the link aria-label=\"LoyStudioLab, home\"."
+      ],
+      "example": "<Logo />\n<Logo variant=\"stacked\" />\n<AssemblingMark focus={hovered} className=\"w-64\" />",
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "install": "npx shadcn@latest add @lsl/mark",
+      "json": "https://loystudiolab.github.io/loystudiolab-ui/r/mark.json"
+    },
+    {
+      "name": "glyph",
+      "layer": "L2",
+      "status": "stable",
+      "type": "registry:component",
+      "files": [
+        {
+          "path": "components/lsl/brand/glyph.jsx",
+          "type": "registry:component",
+          "target": "src/components/lsl/brand/glyph.jsx",
+          "hash": "2024230af7c81606"
+        }
+      ],
+      "dependencies": [],
+      "title": "Glyph, LayerTag, LayerLegend, FounderMonogram",
+      "category": "brand",
+      "purpose": "The three layer marks (Loy circle, Studio square, Lab hollow triangle) and the tags, legend and founder monogram built from them.",
+      "exports": [
+        {
+          "name": "Glyph",
+          "props": [
+            {
+              "name": "layer",
+              "type": "'loy' | 'studio' | 'lab'",
+              "default": "",
+              "description": "Which layer.",
+              "required": true
+            },
+            {
+              "name": "size",
+              "type": "number",
+              "default": "14",
+              "description": ""
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+            }
+          ]
+        },
+        {
+          "name": "LayerTag",
+          "props": [
+            {
+              "name": "layer",
+              "type": "'loy' | 'studio' | 'lab'",
+              "default": "",
+              "description": "",
+              "required": true
+            },
+            {
+              "name": "children",
+              "type": "node",
+              "default": "layer name",
+              "description": "Label, e.g. \"Studio · Website\"."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+            }
+          ]
+        },
+        {
+          "name": "LayerLegend",
+          "props": [
+            {
+              "name": "layers",
+              "type": "object",
+              "default": "LAYERS",
+              "description": "Override copy per layer. LAYERS is canonical brand copy and the one allowed exception to W6; pass content.js copy here when a page explains the layers in its own words."
+            },
+            {
+              "name": "detail",
+              "type": "'short' | 'line'",
+              "default": "short",
+              "description": "Short label or full sentence. A compact key: for a full section explaining the layers, compose Glyph + Heading in RuledCells instead."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+            }
+          ]
+        },
+        {
+          "name": "FounderMonogram",
+          "props": [
+            {
+              "name": "initials",
+              "type": "string",
+              "default": "",
+              "description": "",
+              "required": true
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "default": "",
+              "description": "Accessible name; omit when the name is printed next to it."
+            },
+            {
+              "name": "size",
+              "type": "number",
+              "default": "56",
+              "description": ""
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+            }
+          ]
+        },
+        {
+          "name": "LAYERS",
+          "kind": "constant",
+          "props": []
+        }
+      ],
+      "useWhen": [
+        "Tagging work as Studio or Lab, people as Loy.",
+        "Explaining the three marks (footer, menu, about page).",
+        "Founder avatars."
+      ],
+      "dontUseWhen": [
+        {
+          "case": "Any other meaning (steps, features, Props/People/Process)",
+          "use": "Numbers or words, never shapes (S1)"
+        },
+        {
+          "case": "Avatars for anyone who is not a founder",
+          "use": "Avatar (square)"
+        },
+        {
+          "case": "Generic category tags",
+          "use": "Badge"
+        }
+      ],
+      "rules": [
+        "S1",
+        "S2",
+        "C3"
+      ],
+      "a11y": [
+        "Glyphs are decorative; the layer name is always printed next to them."
+      ],
+      "example": "// work: \"<Layer> · <kind>\"; people: layer=\"loy\", label \"Loy · Founder\"\n<LayerTag layer=\"studio\">Studio · Website</LayerTag>\n<LayerTag layer=\"loy\">Loy · Founder</LayerTag>\n<LayerTag layer=\"lab\" />\n<FounderMonogram initials=\"ML\" />",
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "install": "npx shadcn@latest add @lsl/glyph",
+      "json": "https://loystudiolab.github.io/loystudiolab-ui/r/glyph.json"
+    },
+    {
+      "name": "layout",
+      "layer": "L2",
+      "status": "stable",
+      "type": "registry:component",
+      "files": [
+        {
+          "path": "components/lsl/layout/layout.jsx",
+          "type": "registry:component",
+          "target": "src/components/lsl/layout/layout.jsx",
+          "hash": "179f7a1204413724"
+        }
+      ],
+      "dependencies": [],
+      "title": "Layout: Container, Section, Stack, Cluster, Grid, RuledGrid, TitleBlock, Divider",
+      "category": "layout",
+      "purpose": "Page bands with surfaces, base-8 spacing stacks, responsive grids and the exposed ruled grid.",
+      "exports": [
+        {
+          "name": "Container",
+          "props": [
+            {
+              "name": "as",
+              "type": "element type",
+              "default": "varies",
+              "description": "Rendered element."
+            },
+            {
+              "name": "width",
+              "type": "'site' | 'prose'",
+              "default": "site",
+              "description": "1280px column or a ~65ch reading column."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+            }
+          ]
+        },
+        {
+          "name": "Section",
+          "props": [
+            {
+              "name": "as",
+              "type": "element type",
+              "default": "varies",
+              "description": "Rendered element."
+            },
+            {
+              "name": "surface",
+              "type": "'paper' | 'alt' | 'ink'",
+              "default": "paper",
+              "description": "Sets colors for everything inside. Alternate paper and alt; use ink for one emphasis band (e.g. the closing CTA)."
+            },
+            {
+              "name": "space",
+              "type": "'sm' | 'md' | 'lg'",
+              "default": "md",
+              "description": "Vertical padding."
+            },
+            {
+              "name": "bordered",
+              "type": "boolean",
+              "default": "true",
+              "description": "2px ink rule on top."
+            },
+            {
+              "name": "contained",
+              "type": "boolean",
+              "default": "true",
+              "description": "Wrap children in container-site."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+            }
+          ]
+        },
+        {
+          "name": "Stack",
+          "props": [
+            {
+              "name": "as",
+              "type": "element type",
+              "default": "varies",
+              "description": "Rendered element."
+            },
+            {
+              "name": "gap",
+              "type": "0 | 1 | 2 | 3 | 4 | 6 | 8",
+              "default": "3",
+              "description": "Grid steps: 1 = 8px … 8 = 64px."
+            },
+            {
+              "name": "align",
+              "type": "'start' | 'center' | 'end' | 'baseline' | 'stretch'",
+              "default": "stretch",
+              "description": ""
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+            }
+          ]
+        },
+        {
+          "name": "Cluster",
+          "props": [
+            {
+              "name": "as",
+              "type": "element type",
+              "default": "varies",
+              "description": "Rendered element."
+            },
+            {
+              "name": "gap",
+              "type": "0 | 1 | 2 | 3 | 4 | 6 | 8",
+              "default": "2",
+              "description": ""
+            },
+            {
+              "name": "align",
+              "type": "'start' | 'center' | 'end' | 'baseline' | 'stretch'",
+              "default": "center",
+              "description": ""
+            },
+            {
+              "name": "justify",
+              "type": "'start' | 'center' | 'end' | 'between'",
+              "default": "start",
+              "description": ""
+            },
+            {
+              "name": "wrap",
+              "type": "boolean",
+              "default": "true",
+              "description": ""
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+            }
+          ]
+        },
+        {
+          "name": "Grid",
+          "props": [
+            {
+              "name": "as",
+              "type": "element type",
+              "default": "varies",
+              "description": "Rendered element."
+            },
+            {
+              "name": "cols",
+              "type": "1 | 2 | 3 | 4 | 6 | 12",
+              "default": "3",
+              "description": "Columns at full width; collapses on small screens."
+            },
+            {
+              "name": "gap",
+              "type": "0 | 1 | 2 | 3 | 4 | 6 | 8",
+              "default": "4",
+              "description": ""
+            },
+            {
+              "name": "align",
+              "type": "'start' | 'center' | 'end' | 'baseline' | 'stretch'",
+              "default": "stretch",
+              "description": "Vertical alignment of cells."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+            }
+          ]
+        },
+        {
+          "name": "RuledGrid",
+          "props": [
+            {
+              "name": "as",
+              "type": "element type",
+              "default": "varies",
+              "description": "Rendered element."
+            },
+            {
+              "name": "cols",
+              "type": "1 | 2 | 3 | 4 | 6 | 12",
+              "default": "3",
+              "description": ""
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+            }
+          ]
+        },
+        {
+          "name": "RuledCell",
+          "props": [
+            {
+              "name": "as",
+              "type": "element type",
+              "default": "varies",
+              "description": "Rendered element."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+            }
+          ]
+        },
+        {
+          "name": "TitleBlock",
+          "props": [
+            {
+              "name": "index",
+              "type": "string | number",
+              "default": "",
+              "description": "Section number, e.g. \"01\"."
+            },
+            {
+              "name": "label",
+              "type": "string",
+              "default": "",
+              "description": "Section label (eyebrow)."
+            },
+            {
+              "name": "children",
+              "type": "node",
+              "default": "",
+              "description": "Heading, lead, content."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+            }
+          ]
+        },
+        {
+          "name": "Divider",
+          "props": [
+            {
+              "name": "tone",
+              "type": "'strong' | 'subtle'",
+              "default": "strong",
+              "description": ""
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+            }
+          ]
+        }
+      ],
+      "useWhen": [
+        "Every page: Sections stacked, each with a surface.",
+        "Parallel items that belong together: RuledGrid + RuledCell.",
+        "Numbered page sections: TitleBlock."
+      ],
+      "dontUseWhen": [
+        {
+          "case": "Arbitrary margins and paddings",
+          "use": "Stack / Cluster gaps on the base-8 scale (G5)"
+        }
+      ],
+      "rules": [
+        "G2",
+        "G5",
+        "C2"
+      ],
+      "a11y": [
+        "Section renders <section>; give it aria-labelledby pointing at its heading id."
+      ],
+      "example": "<Section surface=\"alt\" aria-labelledby=\"work-h\">\n  <TitleBlock index=\"03\" label=\"Work\">\n    <Heading level={2} id=\"work-h\">Projects we can show</Heading>\n  </TitleBlock>\n  <RuledGrid cols={3} className=\"mt-12\">\n    <RuledCell><Heading level={3}>Digitalization</Heading><Text tone=\"muted\">…</Text></RuledCell>\n  </RuledGrid>\n</Section>",
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "install": "npx shadcn@latest add @lsl/layout",
+      "json": "https://loystudiolab.github.io/loystudiolab-ui/r/layout.json"
+    },
+    {
+      "name": "typography",
+      "layer": "L2",
+      "status": "stable",
+      "type": "registry:component",
+      "files": [
+        {
+          "path": "components/lsl/typography/typography.jsx",
+          "type": "registry:component",
+          "target": "src/components/lsl/typography/typography.jsx",
+          "hash": "608c5e06733f021f"
+        }
+      ],
+      "dependencies": [
+        "@radix-ui/react-slot"
+      ],
+      "title": "Typography: Heading, Display, Eyebrow, Lead, Text, TextLink",
+      "category": "typography",
+      "purpose": "The type scale as components. Heading level (semantics) and size (looks) are separate.",
+      "exports": [
+        {
+          "name": "Heading",
+          "props": [
+            {
+              "name": "level",
+              "type": "1 | 2 | 3 | 4 | 5 | 6",
+              "default": "2",
+              "description": "Semantic level. One h1 per page; never skip levels (T2)."
+            },
+            {
+              "name": "size",
+              "type": "'display' | 1 | 2 | 3 | 4",
+              "default": "matches level",
+              "description": "Visual size."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+            }
+          ]
+        },
+        {
+          "name": "Display",
+          "props": [
+            {
+              "name": "level",
+              "type": "1 | 2",
+              "default": "1",
+              "description": ""
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+            }
+          ]
+        },
+        {
+          "name": "Eyebrow",
+          "props": [
+            {
+              "name": "as",
+              "type": "element type",
+              "default": "varies",
+              "description": "Rendered element."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+            }
+          ]
+        },
+        {
+          "name": "Lead",
+          "props": [
+            {
+              "name": "as",
+              "type": "element type",
+              "default": "varies",
+              "description": "Rendered element."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+            }
+          ]
+        },
+        {
+          "name": "Text",
+          "props": [
+            {
+              "name": "as",
+              "type": "element type",
+              "default": "varies",
+              "description": "Rendered element."
+            },
+            {
+              "name": "size",
+              "type": "'body' | 'small' | 'label'",
+              "default": "body",
+              "description": ""
+            },
+            {
+              "name": "tone",
+              "type": "'default' | 'muted' | 'danger'",
+              "default": "default",
+              "description": "muted = ink-2 (passes AA)."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+            }
+          ]
+        },
+        {
+          "name": "TextLink",
+          "props": [
+            {
+              "name": "asChild",
+              "type": "boolean",
+              "default": "false",
+              "description": "Wrap a router <Link>."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+            }
+          ]
+        }
+      ],
+      "useWhen": [
+        "All text. Prefer these over raw classes so levels and sizes stay consistent."
+      ],
+      "dontUseWhen": [
+        {
+          "case": "Muted gray text in concrete (#A39B8B)",
+          "use": "Text tone=\"muted\" (concrete fails AA, C5)"
+        }
+      ],
+      "rules": [
+        "T1",
+        "T2",
+        "T4",
+        "C5",
+        "W1",
+        "W2"
+      ],
+      "a11y": [
+        "Hero title is the page's only h1.",
+        "A section heading that receives focus from in-page nav needs tabIndex={-1} and data-section-heading."
+      ],
+      "example": "<Eyebrow>Design and technology studio in Oslo</Eyebrow>\n<Display>We design and build the digital tools small organizations run on.</Display>\n<Lead>We help community organizations and local businesses …</Lead>\n<Text tone=\"muted\">Read the <TextLink href=\"/work/osf-hub\">OSF HUB case</TextLink>.</Text>",
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "install": "npx shadcn@latest add @lsl/typography",
+      "json": "https://loystudiolab.github.io/loystudiolab-ui/r/typography.json"
+    },
+    {
+      "name": "icon-button",
+      "layer": "L2",
+      "status": "stable",
+      "type": "registry:component",
+      "files": [
+        {
+          "path": "components/lsl/actions/icon-button.jsx",
+          "type": "registry:component",
+          "target": "src/components/lsl/actions/icon-button.jsx",
+          "hash": "454e7ed9be6b4153"
+        }
+      ],
+      "dependencies": [],
+      "title": "IconButton, ButtonGroup",
+      "category": "actions",
+      "registryDependencies": [
+        "@lsl/foundation",
+        "@lsl/button"
+      ],
+      "purpose": "An icon-only button with a required accessible label, and a row of buttons.",
+      "exports": [
+        {
+          "name": "IconButton",
+          "props": [
+            {
+              "name": "label",
+              "type": "string",
+              "default": "",
+              "description": "Accessible name and tooltip.",
+              "required": true
+            },
+            {
+              "name": "variant",
+              "type": "Button variant",
+              "default": "outline",
+              "description": ""
+            }
+          ]
+        },
+        {
+          "name": "ButtonGroup",
+          "props": [
+            {
+              "name": "attached",
+              "type": "boolean",
+              "default": "false",
+              "description": "Join buttons into one ruled bar."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+            }
+          ]
+        }
+      ],
+      "useWhen": [
+        "Toolbar actions, menu toggles, close buttons.",
+        "Primary + secondary action pairs (ButtonGroup)."
+      ],
+      "dontUseWhen": [
+        {
+          "case": "An action people need to discover",
+          "use": "Button with a text label"
+        }
+      ],
+      "rules": [
+        "A3",
+        "A7",
+        "S3"
+      ],
+      "a11y": [
+        "Lucide icons inside must have aria-hidden=\"true\"."
+      ],
+      "example": "<IconButton label=\"Open menu\"><Menu aria-hidden=\"true\" /></IconButton>\n<ButtonGroup><Button variant=\"accent\">Start a project</Button><Button variant=\"outline\">See the work</Button></ButtonGroup>",
+      "install": "npx shadcn@latest add @lsl/icon-button",
+      "json": "https://loystudiolab.github.io/loystudiolab-ui/r/icon-button.json"
+    },
+    {
+      "name": "field",
+      "layer": "L2",
+      "status": "stable",
+      "type": "registry:component",
+      "files": [
+        {
+          "path": "components/lsl/forms/field.jsx",
+          "type": "registry:component",
+          "target": "src/components/lsl/forms/field.jsx",
+          "hash": "08bee8590475b3cd"
+        }
+      ],
+      "dependencies": [],
+      "title": "Field, FieldError, FormAlert, FormSuccess, Honeypot",
+      "category": "forms",
+      "registryDependencies": [
+        "@lsl/foundation",
+        "@lsl/label",
+        "@lsl/status-icon",
+        "@lsl/field-context"
+      ],
+      "purpose": "Wires label, hint, error and character count to a control, plus form-level error, success and anti-bot pieces.",
+      "exports": [
+        {
+          "name": "Field",
+          "props": [
+            {
+              "name": "label",
+              "type": "node",
+              "default": "",
+              "description": "Visible label.",
+              "required": true
+            },
+            {
+              "name": "hint",
+              "type": "node",
+              "default": "",
+              "description": "Help text under the label."
+            },
+            {
+              "name": "error",
+              "type": "string",
+              "default": "",
+              "description": "Error message; sets aria-invalid."
+            },
+            {
+              "name": "required",
+              "type": "boolean",
+              "default": "false",
+              "description": "Adds * and aria-required."
+            },
+            {
+              "name": "optional",
+              "type": "boolean",
+              "default": "false",
+              "description": "Adds \"(optional)\"."
+            },
+            {
+              "name": "id",
+              "type": "string",
+              "default": "auto",
+              "description": ""
+            },
+            {
+              "name": "count",
+              "type": "number",
+              "default": "",
+              "description": "Current length, for the counter."
+            },
+            {
+              "name": "maxLength",
+              "type": "number",
+              "default": "",
+              "description": "Shows a counter."
+            },
+            {
+              "name": "children",
+              "type": "element",
+              "default": "",
+              "description": "Exactly one control: Input, Textarea or SelectTrigger wrapper.",
+              "required": true
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+            }
+          ]
+        },
+        {
+          "name": "FieldError",
+          "props": [
+            {
+              "name": "id",
+              "type": "string",
+              "default": "",
+              "description": ""
+            },
+            {
+              "name": "message",
+              "type": "string",
+              "default": "",
+              "description": ""
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+            }
+          ]
+        },
+        {
+          "name": "FormAlert",
+          "props": [
+            {
+              "name": "tone",
+              "type": "'error' | 'success' | 'info'",
+              "default": "error",
+              "description": ""
+            },
+            {
+              "name": "title",
+              "type": "node",
+              "default": "",
+              "description": ""
+            },
+            {
+              "name": "children",
+              "type": "node",
+              "default": "",
+              "description": ""
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+            }
+          ]
+        },
+        {
+          "name": "FormSuccess",
+          "props": [
+            {
+              "name": "title",
+              "type": "node",
+              "default": "",
+              "description": "Focused on mount.",
+              "required": true
+            },
+            {
+              "name": "children",
+              "type": "node",
+              "default": "",
+              "description": ""
+            },
+            {
+              "name": "action",
+              "type": "node",
+              "default": "",
+              "description": "E.g. \"Send another message\"."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+            }
+          ]
+        },
+        {
+          "name": "Honeypot",
+          "props": [
+            {
+              "name": "name",
+              "type": "string",
+              "default": "website",
+              "description": "Field name; spread register(name) on it."
+            }
+          ]
+        }
+      ],
+      "useWhen": [
+        "Every form control.",
+        "Form-level errors (FormAlert) and success (FormSuccess)."
+      ],
+      "dontUseWhen": [
+        {
+          "case": "Bare Input with a placeholder as the label",
+          "use": "Field with a visible label (A5)"
+        }
+      ],
+      "rules": [
+        "A5",
+        "S3",
+        "W1",
+        "W3"
+      ],
+      "a11y": [
+        "On submit errors, focus the first invalid field (react-hook-form shouldFocusError does this).",
+        "On server errors, focus the FormAlert. Keep the user's text.",
+        "Error copy says what to do: \"Please add your email, so we can reply.\""
+      ],
+      "example": "<form noValidate onSubmit={handleSubmit(onSubmit)} className=\"flex flex-col gap-7\">\n  {failed && <FormAlert ref={alertRef} title=\"Your message was not sent.\">Your text is still here. Try again, or email us.</FormAlert>}\n  <Field label=\"Name\" required error={errors.name?.message}>\n    <Input autoComplete=\"name\" {...register(\"name\")} />\n  </Field>\n  <Honeypot {...register(\"website\")} />\n</form>",
+      "install": "npx shadcn@latest add @lsl/field",
+      "json": "https://loystudiolab.github.io/loystudiolab-ui/r/field.json"
+    },
+    {
+      "name": "radio-tiles",
+      "layer": "L2",
+      "status": "stable",
+      "type": "registry:component",
+      "files": [
+        {
+          "path": "components/lsl/forms/radio-tiles.jsx",
+          "type": "registry:component",
+          "target": "src/components/lsl/forms/radio-tiles.jsx",
+          "hash": "3778a1b3aae37b98"
+        }
+      ],
+      "dependencies": [
+        "@radix-ui/react-radio-group"
+      ],
+      "title": "RadioTiles",
+      "category": "forms",
+      "registryDependencies": [
+        "@lsl/foundation",
+        "@lsl/field"
+      ],
+      "purpose": "Two to four options drawn as ruled tiles with a hint each. The selected tile inverts to ink.",
+      "exports": [
+        {
+          "name": "RadioTiles",
+          "props": [
+            {
+              "name": "legend",
+              "type": "node",
+              "default": "",
+              "description": "Question shown above the tiles.",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "{ value, label?, hint? }[]",
+              "default": "",
+              "description": "",
+              "required": true
+            },
+            {
+              "name": "value",
+              "type": "string",
+              "default": "",
+              "description": "Controlled value."
+            },
+            {
+              "name": "onValueChange",
+              "type": "(value) => void",
+              "default": "",
+              "description": ""
+            },
+            {
+              "name": "onBlur",
+              "type": "() => void",
+              "default": "",
+              "description": ""
+            },
+            {
+              "name": "error",
+              "type": "string",
+              "default": "",
+              "description": ""
+            },
+            {
+              "name": "required",
+              "type": "boolean",
+              "default": "false",
+              "description": ""
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "default": "",
+              "description": ""
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+            }
+          ]
+        }
+      ],
+      "useWhen": [
+        "\"What is this about?\" style choices with short explanations."
+      ],
+      "dontUseWhen": [
+        {
+          "case": "Five or more options",
+          "use": "Select"
+        }
+      ],
+      "rules": [
+        "S2",
+        "A5"
+      ],
+      "a11y": [
+        "Arrow keys move between tiles (Radix).",
+        "With react-hook-form, use a Controller."
+      ],
+      "example": "<Controller name=\"reason\" control={control} render={({ field }) => (\n  <RadioTiles legend=\"What is this about?\" required error={errors.reason?.message}\n    value={field.value} onValueChange={field.onChange} onBlur={field.onBlur}\n    options={[{ value: \"New project\", hint: \"You have something to build.\" }, { value: \"Collaboration\" }, { value: \"General question\" }]} />\n)} />",
+      "install": "npx shadcn@latest add @lsl/radio-tiles",
+      "json": "https://loystudiolab.github.io/loystudiolab-ui/r/radio-tiles.json"
+    },
+    {
+      "name": "site-header",
+      "layer": "L3",
+      "status": "stable",
+      "type": "registry:component",
+      "files": [
+        {
+          "path": "components/lsl/navigation/site-header.jsx",
+          "type": "registry:component",
+          "target": "src/components/lsl/navigation/site-header.jsx",
+          "hash": "2db8a7bb9868987c"
+        }
+      ],
+      "dependencies": [
+        "react-router-dom",
+        "lucide-react"
+      ],
+      "title": "SiteHeader",
+      "category": "navigation",
+      "registryDependencies": [
+        "@lsl/foundation",
+        "@lsl/mark",
+        "@lsl/glyph",
+        "@lsl/button",
+        "@lsl/sheet",
+        "@lsl/section-nav"
+      ],
+      "purpose": "Sticky site header: logo, section or page links with the butter active underline, a plain CTA, and a full-height mobile menu.",
+      "exports": [
+        {
+          "name": "SiteHeader",
+          "props": [
+            {
+              "name": "items",
+              "type": "{ label, id? , href? }[]",
+              "default": "[]",
+              "description": "id = section on the home page; href = another page."
+            },
+            {
+              "name": "cta",
+              "type": "{ label, href, id? }",
+              "default": "",
+              "description": "Shown as a default (ink) button. Never accent: the page's accent CTA lives in the content (C1)."
+            },
+            {
+              "name": "homePath",
+              "type": "string",
+              "default": "/",
+              "description": ""
+            },
+            {
+              "name": "showLegend",
+              "type": "boolean",
+              "default": "true",
+              "description": "Show the marks legend in the mobile menu."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+            }
+          ]
+        }
+      ],
+      "useWhen": [
+        "Every marketing site and case-study page."
+      ],
+      "dontUseWhen": [
+        {
+          "case": "Product / app screens",
+          "use": "AppShell (phase 3)"
+        }
+      ],
+      "rules": [
+        "C1",
+        "A3",
+        "A6",
+        "A7"
+      ],
+      "a11y": [
+        "Active section uses aria-current=\"location\"; active page aria-current=\"page\".",
+        "Mobile menu traps focus and closes with Escape."
+      ],
+      "setup": [
+        "Needs react-router: render inside <BrowserRouter> (Base44 apps already have one in App.jsx).",
+        "For section items ({ id }): put the id on the <Section>, and give that section's heading tabIndex={-1} and data-section-heading so focus lands on it after the jump."
+      ],
+      "example": "<SiteHeader\n  items={[{ id: \"what-we-do\", label: \"What we do\" }, { id: \"work\", label: \"Work\" }, { id: \"about\", label: \"About\" }]}\n  cta={{ label: \"Contact\", href: \"/#contact\", id: \"contact\" }}\n/>",
+      "install": "npx shadcn@latest add @lsl/site-header",
+      "json": "https://loystudiolab.github.io/loystudiolab-ui/r/site-header.json"
+    },
+    {
+      "name": "site-footer",
+      "layer": "L3",
+      "status": "stable",
+      "type": "registry:component",
+      "files": [
+        {
+          "path": "components/lsl/navigation/site-footer.jsx",
+          "type": "registry:component",
+          "target": "src/components/lsl/navigation/site-footer.jsx",
+          "hash": "7b93f3d598f2cd0e"
+        }
+      ],
+      "dependencies": [
+        "react-router-dom"
+      ],
+      "title": "SiteFooter",
+      "category": "navigation",
+      "registryDependencies": [
+        "@lsl/foundation",
+        "@lsl/mark",
+        "@lsl/glyph"
+      ],
+      "purpose": "Footer on paper-alt with logo, tagline, email, site links and the marks legend. Needs react-router (inside <BrowserRouter>).",
+      "exports": [
+        {
+          "name": "SiteFooter",
+          "props": [
+            {
+              "name": "tagline",
+              "type": "string",
+              "default": "Design and technology studio. Oslo, Norway.",
+              "description": ""
+            },
+            {
+              "name": "email",
+              "type": "string",
+              "default": "",
+              "description": ""
+            },
+            {
+              "name": "links",
+              "type": "{ label, href }[]",
+              "default": "[]",
+              "description": ""
+            },
+            {
+              "name": "showLegend",
+              "type": "boolean",
+              "default": "true",
+              "description": ""
+            },
+            {
+              "name": "note",
+              "type": "string",
+              "default": "Built by us, with the same process we use for clients.",
+              "description": "Right side of the bottom line; pass null to hide."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+            }
+          ]
+        }
+      ],
+      "useWhen": [
+        "Every marketing site page."
+      ],
+      "dontUseWhen": [],
+      "rules": [
+        "W3",
+        "W4"
+      ],
+      "a11y": [
+        "Footer nav is labelled \"Footer\"."
+      ],
+      "example": "<SiteFooter email=\"hello@loystudiolab.com\" links={[{ label: \"Work\", href: \"/#work\" }]} />",
+      "install": "npx shadcn@latest add @lsl/site-footer",
+      "json": "https://loystudiolab.github.io/loystudiolab-ui/r/site-footer.json"
+    },
+    {
+      "name": "site-shell",
+      "layer": "L3",
+      "status": "stable",
+      "type": "registry:component",
+      "files": [
+        {
+          "path": "components/lsl/navigation/site-shell.jsx",
+          "type": "registry:component",
+          "target": "src/components/lsl/navigation/site-shell.jsx",
+          "hash": "571b7d0a6a980800"
+        }
+      ],
+      "dependencies": [],
+      "title": "SiteShell, SkipLink",
+      "category": "navigation",
+      "purpose": "Page frame with landmarks: skip link, header, <main id=\"main\">, footer.",
+      "exports": [
+        {
+          "name": "SiteShell",
+          "props": [
+            {
+              "name": "header",
+              "type": "node",
+              "default": "",
+              "description": "Usually <SiteHeader />."
+            },
+            {
+              "name": "footer",
+              "type": "node",
+              "default": "",
+              "description": "Usually <SiteFooter />."
+            },
+            {
+              "name": "children",
+              "type": "node",
+              "default": "",
+              "description": "Page content or <Outlet />."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+            }
+          ]
+        },
+        {
+          "name": "SkipLink",
+          "props": [
+            {
+              "name": "href",
+              "type": "string",
+              "default": "#main",
+              "description": ""
+            },
+            {
+              "name": "children",
+              "type": "node",
+              "default": "Skip to content",
+              "description": ""
+            }
+          ]
+        }
+      ],
+      "useWhen": [
+        "As the layout route of every site."
+      ],
+      "dontUseWhen": [],
+      "rules": [
+        "A6"
+      ],
+      "a11y": [
+        "Provides the skip link and the main landmark; do not add a second <main>."
+      ],
+      "example": "<Route element={<SiteShell header={<SiteHeader … />} footer={<SiteFooter … />}><Outlet /></SiteShell>}>",
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "install": "npx shadcn@latest add @lsl/site-shell",
+      "json": "https://loystudiolab.github.io/loystudiolab-ui/r/site-shell.json"
+    },
+    {
+      "name": "breadcrumbs",
+      "layer": "L2",
+      "status": "stable",
+      "type": "registry:component",
+      "files": [
+        {
+          "path": "components/lsl/navigation/breadcrumbs.jsx",
+          "type": "registry:component",
+          "target": "src/components/lsl/navigation/breadcrumbs.jsx",
+          "hash": "78fbf38a6090a100"
+        }
+      ],
+      "dependencies": [
+        "react-router-dom"
+      ],
+      "title": "Breadcrumbs, NavLink",
+      "category": "navigation",
+      "purpose": "Where-am-I trail for nested pages, and a standalone nav link with the butter active underline. Needs react-router.",
+      "exports": [
+        {
+          "name": "Breadcrumbs",
+          "props": [
+            {
+              "name": "items",
+              "type": "{ label, href }[]",
+              "default": "",
+              "description": "Last item is the current page.",
+              "required": true
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+            }
+          ]
+        },
+        {
+          "name": "NavLink",
+          "props": [
+            {
+              "name": "to",
+              "type": "string",
+              "default": "",
+              "description": "",
+              "required": true
+            },
+            {
+              "name": "active",
+              "type": "boolean",
+              "default": "false",
+              "description": "Sets aria-current=\"page\" and shows the underline."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+            }
+          ]
+        }
+      ],
+      "useWhen": [
+        "Case-study and article pages (Breadcrumbs).",
+        "Custom navs outside SiteHeader (NavLink)."
+      ],
+      "dontUseWhen": [
+        {
+          "case": "One-level sites",
+          "use": "Nothing; the header is enough"
+        }
+      ],
+      "rules": [
+        "A3"
+      ],
+      "a11y": [
+        "Breadcrumbs is a labelled nav with an ordered list."
+      ],
+      "example": "<Breadcrumbs items={[{ label: \"Work\", href: \"/#work\" }, { label: \"OSF HUB\" }]} />",
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "install": "npx shadcn@latest add @lsl/breadcrumbs",
+      "json": "https://loystudiolab.github.io/loystudiolab-ui/r/breadcrumbs.json"
+    },
+    {
+      "name": "data-display",
+      "layer": "L2",
+      "status": "stable",
+      "type": "registry:component",
+      "files": [
+        {
+          "path": "components/lsl/data-display/data-display.jsx",
+          "type": "registry:component",
+          "target": "src/components/lsl/data-display/data-display.jsx",
+          "hash": "43f5e26b5ee1f034"
+        }
+      ],
+      "dependencies": [],
+      "title": "TopRuleCard, MetaList, StatusBadge, Avatar",
+      "category": "data-display",
+      "registryDependencies": [
+        "@lsl/foundation",
+        "@lsl/badge",
+        "@lsl/status-icon"
+      ],
+      "purpose": "Small display patterns: parallel items with a top rule, term/detail lists, workflow status, square avatars.",
+      "exports": [
+        {
+          "name": "TopRuleCard",
+          "props": [
+            {
+              "name": "title",
+              "type": "node",
+              "default": "",
+              "description": "",
+              "required": true
+            },
+            {
+              "name": "as",
+              "type": "'h2' | 'h3' | 'h4'",
+              "default": "h3",
+              "description": "Heading element."
+            },
+            {
+              "name": "bar",
+              "type": "'ink' | 'brick' | 'ochre' | 'petrol' | 'concrete'",
+              "default": "ink",
+              "description": "Rule color. Values cards may use the muted palette; never butter (C2)."
+            },
+            {
+              "name": "children",
+              "type": "node",
+              "default": "",
+              "description": ""
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+            }
+          ]
+        },
+        {
+          "name": "MetaList",
+          "props": [
+            {
+              "name": "items",
+              "type": "{ term, detail }[]",
+              "default": "",
+              "description": "",
+              "required": true
+            },
+            {
+              "name": "cols",
+              "type": "1 | 2 | 3",
+              "default": "2",
+              "description": ""
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+            }
+          ]
+        },
+        {
+          "name": "StatusBadge",
+          "props": [
+            {
+              "name": "status",
+              "type": "'draft' | 'active' | 'done' | 'paused' | 'error' | 'ai'",
+              "default": "draft",
+              "description": "ai is only for AI-generated content (C4)."
+            },
+            {
+              "name": "children",
+              "type": "node",
+              "default": "status label",
+              "description": "Override the label."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+            }
+          ]
+        },
+        {
+          "name": "Avatar",
+          "props": [
+            {
+              "name": "src",
+              "type": "string",
+              "default": "",
+              "description": ""
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "default": "",
+              "description": "Alt text and initials source."
+            },
+            {
+              "name": "initials",
+              "type": "string",
+              "default": "",
+              "description": ""
+            },
+            {
+              "name": "size",
+              "type": "'sm' | 'md' | 'lg'",
+              "default": "md",
+              "description": ""
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+            }
+          ]
+        }
+      ],
+      "useWhen": [
+        "Services or values in a row (TopRuleCard).",
+        "Case facts (MetaList).",
+        "Lists of things with a state (StatusBadge).",
+        "People in products (Avatar)."
+      ],
+      "dontUseWhen": [
+        {
+          "case": "Founders",
+          "use": "FounderMonogram"
+        },
+        {
+          "case": "Loy / Studio / Lab",
+          "use": "LayerTag"
+        }
+      ],
+      "rules": [
+        "S2",
+        "S3",
+        "C2",
+        "C4"
+      ],
+      "a11y": [
+        "StatusBadge always shows text; the icon is decorative."
+      ],
+      "example": "<TopRuleCard title=\"Digitalization\">One real system instead of spreadsheets, chat threads and paper.</TopRuleCard>\n<MetaList items={[{ term: \"Client\", detail: \"Oslo Skateboardforening\" }, { term: \"Status\", detail: \"In use\" }]} />\n<StatusBadge status=\"done\" />",
+      "install": "npx shadcn@latest add @lsl/data-display",
+      "json": "https://loystudiolab.github.io/loystudiolab-ui/r/data-display.json"
+    },
+    {
+      "name": "status-icon",
+      "layer": "L2",
+      "status": "stable",
+      "type": "registry:component",
+      "files": [
+        {
+          "path": "components/lsl/feedback/status-icon.jsx",
+          "type": "registry:component",
+          "target": "src/components/lsl/feedback/status-icon.jsx",
+          "hash": "52769c4b6f8bd372"
+        }
+      ],
+      "dependencies": [],
+      "title": "StatusIcon",
+      "category": "feedback",
+      "purpose": "Square-framed status marks: info, success, warning, error, pending.",
+      "exports": [
+        {
+          "name": "StatusIcon",
+          "props": [
+            {
+              "name": "status",
+              "type": "'info' | 'success' | 'warning' | 'error' | 'pending'",
+              "default": "info",
+              "description": ""
+            },
+            {
+              "name": "size",
+              "type": "number",
+              "default": "16",
+              "description": ""
+            },
+            {
+              "name": "label",
+              "type": "string",
+              "default": "",
+              "description": "Accessible name, only when the icon stands alone."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+            }
+          ]
+        }
+      ],
+      "useWhen": [
+        "Anywhere a status needs a mark."
+      ],
+      "dontUseWhen": [
+        {
+          "case": "lucide CircleCheck, AlertTriangle, Info, XCircle",
+          "use": "StatusIcon (S3)"
+        }
+      ],
+      "rules": [
+        "S3"
+      ],
+      "a11y": [
+        "Decorative by default; meaning must also be in text."
+      ],
+      "example": "<StatusIcon status=\"success\" />",
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "install": "npx shadcn@latest add @lsl/status-icon",
+      "json": "https://loystudiolab.github.io/loystudiolab-ui/r/status-icon.json"
+    },
+    {
+      "name": "feedback",
+      "layer": "L2",
+      "status": "stable",
+      "type": "registry:component",
+      "files": [
+        {
+          "path": "components/lsl/feedback/feedback.jsx",
+          "type": "registry:component",
+          "target": "src/components/lsl/feedback/feedback.jsx",
+          "hash": "c6abe372aaa1e8bd"
+        }
+      ],
+      "dependencies": [],
+      "title": "Callout, LinearLoader, EmptyState, ErrorState, NotFound",
+      "category": "feedback",
+      "registryDependencies": [
+        "@lsl/foundation",
+        "@lsl/status-icon"
+      ],
+      "purpose": "Inline messages, progress, and the empty, error and not-found states.",
+      "exports": [
+        {
+          "name": "Callout",
+          "props": [
+            {
+              "name": "tone",
+              "type": "'info' | 'success' | 'warning' | 'error'",
+              "default": "info",
+              "description": ""
+            },
+            {
+              "name": "title",
+              "type": "node",
+              "default": "",
+              "description": ""
+            },
+            {
+              "name": "children",
+              "type": "node",
+              "default": "",
+              "description": ""
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+            }
+          ]
+        },
+        {
+          "name": "LinearLoader",
+          "props": [
+            {
+              "name": "value",
+              "type": "number (0-100)",
+              "default": "",
+              "description": "Omit for indeterminate."
+            },
+            {
+              "name": "label",
+              "type": "string",
+              "default": "Loading",
+              "description": "Accessible name."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+            }
+          ]
+        },
+        {
+          "name": "EmptyState",
+          "props": [
+            {
+              "name": "title",
+              "type": "node",
+              "default": "Nothing here yet",
+              "description": ""
+            },
+            {
+              "name": "children",
+              "type": "node",
+              "default": "",
+              "description": "What this area is for and how to fill it."
+            },
+            {
+              "name": "action",
+              "type": "node",
+              "default": "",
+              "description": "Usually a Button."
+            },
+            {
+              "name": "headingLevel",
+              "type": "number",
+              "default": "2",
+              "description": ""
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+            }
+          ]
+        },
+        {
+          "name": "ErrorState",
+          "props": [
+            {
+              "name": "title",
+              "type": "node",
+              "default": "Something went wrong",
+              "description": ""
+            },
+            {
+              "name": "children",
+              "type": "node",
+              "default": "It is on our side. Please try again.",
+              "description": ""
+            },
+            {
+              "name": "action",
+              "type": "node",
+              "default": "",
+              "description": "Retry button."
+            },
+            {
+              "name": "headingLevel",
+              "type": "number",
+              "default": "2",
+              "description": ""
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+            }
+          ]
+        },
+        {
+          "name": "NotFound",
+          "props": [
+            {
+              "name": "title",
+              "type": "node",
+              "default": "This page does not exist",
+              "description": ""
+            },
+            {
+              "name": "children",
+              "type": "node",
+              "default": "The link may be old, or the address has a typo.",
+              "description": ""
+            },
+            {
+              "name": "action",
+              "type": "node",
+              "default": "",
+              "description": ""
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+            }
+          ]
+        }
+      ],
+      "useWhen": [
+        "Persistent notes in content (Callout).",
+        "Uploads and long loads (LinearLoader).",
+        "First use and no-results (EmptyState); failed loads (ErrorState); 404 routes (NotFound)."
+      ],
+      "dontUseWhen": [
+        {
+          "case": "A ring spinner",
+          "use": "LinearLoader (S2)"
+        },
+        {
+          "case": "Transient confirmations",
+          "use": "Toaster"
+        }
+      ],
+      "rules": [
+        "S2",
+        "S3",
+        "A4",
+        "W1",
+        "W3"
+      ],
+      "a11y": [
+        "ErrorState has role=\"alert\".",
+        "LinearLoader is a labelled progressbar."
+      ],
+      "example": "<Callout tone=\"warning\" title=\"Prices exclude VAT\">We add 25% MVA on the invoice.</Callout>\n<LinearLoader value={60} label=\"Uploading receipt\" />\n<EmptyState title=\"No receipts yet\" action={<Button>Add a receipt</Button>}>Photos of receipts you add will show up here.</EmptyState>",
+      "install": "npx shadcn@latest add @lsl/feedback",
+      "json": "https://loystudiolab.github.io/loystudiolab-ui/r/feedback.json"
+    },
+    {
+      "name": "reveal",
+      "layer": "L2",
+      "status": "stable",
+      "type": "registry:component",
+      "files": [
+        {
+          "path": "components/lsl/motion/reveal.jsx",
+          "type": "registry:component",
+          "target": "src/components/lsl/motion/reveal.jsx",
+          "hash": "b0faa9a9664f78c7"
+        }
+      ],
+      "dependencies": [],
+      "title": "Reveal, Rise",
+      "category": "motion",
+      "purpose": "The two motion primitives: a fail-safe scroll reveal and a one-time hero entrance. CSS only.",
+      "exports": [
+        {
+          "name": "Reveal",
+          "props": [
+            {
+              "name": "as",
+              "type": "element type",
+              "default": "varies",
+              "description": "Rendered element."
+            },
+            {
+              "name": "delay",
+              "type": "number (s)",
+              "default": "0",
+              "description": "Stagger siblings by 0.06 to 0.1s."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+            }
+          ]
+        },
+        {
+          "name": "Rise",
+          "props": [
+            {
+              "name": "as",
+              "type": "element type",
+              "default": "varies",
+              "description": "Rendered element."
+            },
+            {
+              "name": "delay",
+              "type": "number (s)",
+              "default": "0",
+              "description": ""
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+            }
+          ]
+        }
+      ],
+      "useWhen": [
+        "Section content as it scrolls in (Reveal).",
+        "Hero text on load (Rise)."
+      ],
+      "dontUseWhen": [
+        {
+          "case": "Looping or decorative motion",
+          "use": "Nothing (M1)"
+        },
+        {
+          "case": "framer-motion",
+          "use": "These CSS primitives (M2)"
+        }
+      ],
+      "rules": [
+        "M1",
+        "M2",
+        "M3",
+        "A4"
+      ],
+      "a11y": [
+        "Content stays visible if observers never run; reduced motion shows it at once."
+      ],
+      "example": "<Reveal><Heading level={2}>How we work</Heading></Reveal>\n<Rise delay={0.1}><Lead>…</Lead></Rise>",
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "install": "npx shadcn@latest add @lsl/reveal",
+      "json": "https://loystudiolab.github.io/loystudiolab-ui/r/reveal.json"
+    },
+    {
+      "name": "section-nav",
+      "layer": "L0",
+      "status": "stable",
+      "type": "registry:hook",
+      "files": [
+        {
+          "path": "hooks/use-section-nav.js",
+          "type": "registry:hook",
+          "target": "src/hooks/use-section-nav.js",
+          "hash": "faac02f732b626fb"
+        }
+      ],
+      "dependencies": [],
+      "title": "useGoToSection, useActiveSection",
+      "category": "hooks",
+      "purpose": "In-page navigation: smooth jump that moves focus to the section heading, and active-section tracking for the header.",
+      "exports": [
+        {
+          "name": "useGoToSection",
+          "kind": "hook",
+          "props": [
+            {
+              "name": "enabled",
+              "type": "boolean",
+              "default": "true",
+              "description": "False on pages where the targets are not rendered."
+            }
+          ]
+        },
+        {
+          "name": "useActiveSection",
+          "kind": "hook",
+          "props": [
+            {
+              "name": "ids",
+              "type": "string[]",
+              "default": "",
+              "description": "",
+              "required": true
+            },
+            {
+              "name": "enabled",
+              "type": "boolean",
+              "default": "true",
+              "description": ""
+            }
+          ]
+        }
+      ],
+      "useWhen": [
+        "One-page sites with section links."
+      ],
+      "dontUseWhen": [],
+      "rules": [
+        "A3",
+        "A4"
+      ],
+      "a11y": [
+        "Respects reduced motion (instant jump)."
+      ],
+      "example": "const go = useGoToSection()\n<a href=\"#work\" onClick={(e) => go(\"work\", e)}>Work</a>",
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "install": "npx shadcn@latest add @lsl/section-nav",
+      "json": "https://loystudiolab.github.io/loystudiolab-ui/r/section-nav.json"
+    },
+    {
+      "name": "use-document-title",
+      "layer": "L0",
+      "status": "stable",
+      "type": "registry:hook",
+      "files": [
+        {
+          "path": "hooks/use-document-title.js",
+          "type": "registry:hook",
+          "target": "src/hooks/use-document-title.js",
+          "hash": "b0bf589466af8bb1"
+        }
+      ],
+      "dependencies": [],
+      "title": "useDocumentTitle",
+      "category": "hooks",
+      "purpose": "Sets the browser title as \"Page · LoyStudioLab\".",
+      "exports": [
+        {
+          "name": "useDocumentTitle",
+          "kind": "hook",
+          "props": [
+            {
+              "name": "title",
+              "type": "string",
+              "default": "",
+              "description": ""
+            },
+            {
+              "name": "site",
+              "type": "string",
+              "default": "LoyStudioLab",
+              "description": ""
+            }
+          ]
+        }
+      ],
+      "useWhen": [
+        "Every routed page."
+      ],
+      "dontUseWhen": [],
+      "rules": [
+        "A6"
+      ],
+      "a11y": [
+        "Unique titles help screen-reader and tab users."
+      ],
+      "example": "useDocumentTitle(\"OSF HUB\")",
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "install": "npx shadcn@latest add @lsl/use-document-title",
+      "json": "https://loystudiolab.github.io/loystudiolab-ui/r/use-document-title.json"
+    },
+    {
+      "name": "use-reduced-motion",
+      "layer": "L0",
+      "status": "stable",
+      "type": "registry:hook",
+      "files": [
+        {
+          "path": "hooks/use-reduced-motion.js",
+          "type": "registry:hook",
+          "target": "src/hooks/use-reduced-motion.js",
+          "hash": "1583652eed921338"
+        }
+      ],
+      "dependencies": [],
+      "title": "useReducedMotion",
+      "category": "hooks",
+      "purpose": "True when the user asked for reduced motion; updates live.",
+      "exports": [
+        {
+          "name": "useReducedMotion",
+          "kind": "hook",
+          "props": []
+        }
+      ],
+      "useWhen": [
+        "JS-driven motion (scrolling, timed changes)."
+      ],
+      "dontUseWhen": [
+        {
+          "case": "CSS animations",
+          "use": "Nothing: the preset already disables them"
+        }
+      ],
+      "rules": [
+        "A4"
+      ],
+      "a11y": [],
+      "example": "const reduced = useReducedMotion()",
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "install": "npx shadcn@latest add @lsl/use-reduced-motion",
+      "json": "https://loystudiolab.github.io/loystudiolab-ui/r/use-reduced-motion.json"
+    },
+    {
+      "name": "field-context",
+      "layer": "L0",
+      "status": "stable",
+      "type": "registry:lib",
+      "files": [
+        {
+          "path": "lib/field-context.js",
+          "type": "registry:lib",
+          "target": "src/lib/field-context.js",
+          "hash": "4b4947a953359ff4"
+        }
+      ],
+      "dependencies": [],
+      "title": "FieldContext",
+      "category": "hooks",
+      "purpose": "Lets Field pass its id and aria wiring to controls nested deeper than its direct child (SelectTrigger).",
+      "exports": [
+        {
+          "name": "FieldContext",
+          "kind": "constant",
+          "props": []
+        },
+        {
+          "name": "useFieldContext",
+          "kind": "hook",
+          "props": []
+        }
+      ],
+      "useWhen": [
+        "Building a new control that should work inside Field without being its direct child."
+      ],
+      "dontUseWhen": [
+        {
+          "case": "Normal forms",
+          "use": "Field (it handles this for you)"
+        }
+      ],
+      "rules": [
+        "A5"
+      ],
+      "a11y": [
+        "Spread the context value onto the focusable element."
+      ],
+      "example": "const field = useFieldContext()\n<button {...(field ?? {})}>…</button>",
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "install": "npx shadcn@latest add @lsl/field-context",
+      "json": "https://loystudiolab.github.io/loystudiolab-ui/r/field-context.json"
+    },
+    {
+      "name": "format",
+      "layer": "L0",
+      "status": "stable",
+      "type": "registry:lib",
+      "files": [
+        {
+          "path": "lib/format.js",
+          "type": "registry:lib",
+          "target": "src/lib/format.js",
+          "hash": "6d69e1ea07ad7872"
+        }
+      ],
+      "dependencies": [],
+      "title": "formatNOK, formatNumber, formatDate",
+      "category": "hooks",
+      "purpose": "Money, number and date formatting: English copy, Norwegian conventions (2 500 kr, 1 234,5, 11.11.2026).",
+      "exports": [
+        {
+          "name": "formatNOK",
+          "kind": "function",
+          "props": [
+            {
+              "name": "amount",
+              "type": "number",
+              "default": "",
+              "description": "",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "{ decimals?, locale? }",
+              "default": "{ decimals: 0, locale: 'nb-NO' }",
+              "description": ""
+            }
+          ]
+        },
+        {
+          "name": "formatNumber",
+          "kind": "function",
+          "props": [
+            {
+              "name": "value",
+              "type": "number",
+              "default": "",
+              "description": "",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "{ decimals?, locale? }",
+              "default": "",
+              "description": ""
+            }
+          ]
+        },
+        {
+          "name": "formatDate",
+          "kind": "function",
+          "props": [
+            {
+              "name": "value",
+              "type": "Date | string",
+              "default": "",
+              "description": "",
+              "required": true
+            },
+            {
+              "name": "options",
+              "type": "{ style?: 'long' | 'short' | 'numeric', locale? }",
+              "default": "{ style: 'long', locale: 'en-GB' }",
+              "description": ""
+            }
+          ]
+        }
+      ],
+      "useWhen": [
+        "Any amount or date shown to people."
+      ],
+      "dontUseWhen": [
+        {
+          "case": "toFixed or manual string building",
+          "use": "These helpers"
+        }
+      ],
+      "rules": [
+        "W1"
+      ],
+      "a11y": [],
+      "example": "formatNOK(2500) // \"2 500 kr\"\nformatDate(\"2026-11-11\") // \"11 November 2026\"",
+      "registryDependencies": [
+        "@lsl/foundation"
+      ],
+      "install": "npx shadcn@latest add @lsl/format",
+      "json": "https://loystudiolab.github.io/loystudiolab-ui/r/format.json"
+    }
+  ]
+}

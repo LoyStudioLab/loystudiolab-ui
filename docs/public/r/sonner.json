@@ -1,0 +1,31 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sonner",
+  "type": "registry:ui",
+  "title": "Toaster",
+  "description": "Short, transient confirmation messages (toast). Mount <Toaster /> once.",
+  "dependencies": [
+    "sonner"
+  ],
+  "registryDependencies": [
+    "@lsl/status-icon"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/sonner.jsx",
+      "type": "registry:ui",
+      "target": "src/components/ui/sonner.jsx",
+      "content": "// @lsl/sonner 0.1.0 · managed by loystudiolab-ui · change upstream, not here.\nimport { Toaster as Sonner } from \"sonner\"\n\nimport { StatusIcon } from \"@/components/lsl/feedback/status-icon\"\n\n// Toasts: ink box on paper, square status marks (rule S3), no shadow, no radius.\nconst Toaster = (props) => (\n  <Sonner\n    className=\"toaster group\"\n    icons={{\n      success: <StatusIcon status=\"success\" />,\n      info: <StatusIcon status=\"info\" />,\n      warning: <StatusIcon status=\"warning\" />,\n      error: <StatusIcon status=\"error\" />,\n    }}\n    toastOptions={{\n      unstyled: true,\n      classNames: {\n        toast:\n          \"flex w-full items-start gap-3 border-2 border-ink bg-paper p-4 font-body text-sm text-ink [&[data-type=error]_svg]:text-brick-deep\",\n        title: \"font-semibold\",\n        description: \"mt-1 text-ink-2\",\n        actionButton: \"ml-auto border-2 border-ink bg-ink px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.06em] text-paper\",\n        cancelButton: \"border-2 border-ink px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.06em]\",\n      },\n    }}\n    {...props}\n  />\n)\n\nexport { Toaster }\n"
+    }
+  ],
+  "meta": {
+    "version": "0.1.0",
+    "layer": "L1",
+    "status": "stable",
+    "category": "feedback",
+    "rules": [
+      "S3",
+      "G3"
+    ]
+  }
+}

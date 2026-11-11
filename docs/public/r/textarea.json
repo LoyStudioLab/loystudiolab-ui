@@ -1,0 +1,28 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "textarea",
+  "type": "registry:ui",
+  "title": "Textarea",
+  "description": "Multi-line text entry. Always inside a Field; pass maxLength and count to Field for a counter.",
+  "dependencies": [],
+  "registryDependencies": [
+    "@lsl/foundation"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/textarea.jsx",
+      "type": "registry:ui",
+      "target": "src/components/ui/textarea.jsx",
+      "content": "// @lsl/textarea 0.1.0 · managed by loystudiolab-ui · change upstream, not here.\nimport * as React from \"react\"\n\nimport { cn } from \"@/lib/utils\"\n\nconst Textarea = React.forwardRef(({ className, ...props }, ref) => {\n  return (\n    <textarea\n      className={cn(\n        \"flex min-h-[160px] w-full resize-y border-2 border-line bg-surface px-4 py-3 font-body text-base leading-relaxed text-fg transition-colors duration-fast placeholder:text-fg-2/70 hover:bg-tint disabled:cursor-not-allowed disabled:opacity-60 aria-[invalid=true]:border-danger\",\n        className\n      )}\n      ref={ref}\n      {...props}\n    />\n  )\n})\nTextarea.displayName = \"Textarea\"\n\nexport { Textarea }\n"
+    }
+  ],
+  "meta": {
+    "version": "0.1.0",
+    "layer": "L1",
+    "status": "stable",
+    "category": "forms",
+    "rules": [
+      "A5"
+    ]
+  }
+}
