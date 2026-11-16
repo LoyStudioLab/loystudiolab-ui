@@ -66,8 +66,13 @@ test("keyboard: RadioTiles moves with arrow keys", async ({ page }) => {
   await expect(first).toBeChecked()
   await first.focus()
   await expect(first).toBeFocused()
-  await page.keyboard.press("ArrowDown")
-  await expect(page.getByRole("radio", { name: "Collaboration" }).first()).toBeChecked()
+  // Radix moves focus in a timeout and checks only while the arrow key is still down.
+  // A real key press lasts long enough; press() releases at once and races it.
+  const next = page.getByRole("radio", { name: "Collaboration" }).first()
+  await page.keyboard.down("ArrowDown")
+  await expect(next).toBeFocused()
+  await page.keyboard.up("ArrowDown")
+  await expect(next).toBeChecked()
 })
 
 test("keyboard: Escape closes the sheet and returns focus", async ({ page }) => {
