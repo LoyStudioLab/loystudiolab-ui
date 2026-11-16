@@ -1,9 +1,10 @@
+import * as React from "react"
 import { Link } from "react-router-dom"
 
 import { Section, Stack, Cluster, RuledGrid, RuledCell, TitleBlock } from "@/components/lsl/layout/layout"
 import { Display, Eyebrow, Lead, Heading, Text, TextLink } from "@/components/lsl/typography/typography"
 import { Button } from "@/components/ui/button"
-import { AssemblingMark } from "@/components/lsl/brand/mark"
+import { LogoAssemble } from "@/components/lsl/brand/mark"
 import { LayerLegend } from "@/components/lsl/brand/glyph"
 import { Rise, Reveal } from "@/components/lsl/motion/reveal"
 import { useDocumentTitle } from "@/hooks/use-document-title"
@@ -17,6 +18,8 @@ const PRINCIPLES = [
 ]
 
 export default function Home() {
+  const [step, setStep] = React.useState(null)
+  const [hover, setHover] = React.useState(null)
   useDocumentTitle("Principles", "LoyStudioLab UI")
   return (
     <>
@@ -47,8 +50,8 @@ export default function Home() {
             </Rise>
           </Stack>
           <div className="lg:col-span-4">
-            <AssemblingMark className="mx-auto w-full max-w-[16rem]" />
-            <LayerLegend detail="short" className="mt-8" />
+            <LogoAssemble onStep={setStep} focus={hover} className="mx-auto w-full max-w-[16rem]" />
+            <LayerLegend detail="short" order={["loy", "lab", "studio"]} active={hover ?? step} onActiveChange={setHover} className="mt-8" />
           </div>
         </div>
       </Section>

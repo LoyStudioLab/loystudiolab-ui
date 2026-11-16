@@ -41,6 +41,17 @@ the library repo installs all items and builds).
    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Jost:wght@500;600;700&display=swap" rel="stylesheet" />
    ```
    Remove any `@import url(...fonts.googleapis...)` from CSS. Set `<html lang="en">` and a real `<title>`.
+   Favicons: copy `favicon.svg`, `favicon.ico`, `apple-touch-icon.png`, `icon-192.png`,
+   `icon-512.png` and `loystudiolab-og.png` from `studio/brand/logo/` (or download them from
+   `https://loystudiolab.github.io/loystudiolab-ui/brand/<file>`) into `public/`, then:
+   ```html
+   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+   <link rel="icon" href="/favicon.ico" sizes="32x32" />
+   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+   <meta property="og:image" content="https://<your-domain>/loystudiolab-og.png" />
+   ```
+   In a Base44 sandbox without a shell, upload the PNGs with `upload_app_asset` and use the
+   returned URLs; `favicon.svg` can be written as a text file.
 3. `src/index.css`: only `@tailwind base; @tailwind components; @tailwind utilities;`
    (delete the stock shadcn `:root` and `.dark` blocks; the preset defines all variables).
 4. Root component: render `<AccentBudget />` and `<Toaster />` once.

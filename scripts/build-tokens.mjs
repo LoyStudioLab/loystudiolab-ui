@@ -16,6 +16,9 @@ const { version } = JSON.parse(readFileSync(resolve(root, "package.json"), "utf8
 const colors = Object.fromEntries(
   Object.entries(T.color).filter(([k]) => !k.startsWith("$")).map(([k, v]) => [k, v.$value])
 );
+const logo = Object.fromEntries(
+  Object.entries(T.logo).filter(([k]) => !k.startsWith("$")).map(([k, v]) => [k, v.$value])
+);
 const rgb = (hex) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16)).join(" ");
 const hsl = (hex) => {
   let [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255);
@@ -48,6 +51,9 @@ for (const [name, map] of Object.entries(T.surface)) {
     "--lsl-loy": rgb(c("loy")),
     "--lsl-signal-fg": rgb(c("signal-fg")),
     "--lsl-tint": rgb(c("hover")),
+    // Logo artwork only (exact file colors), see tokens.logo.
+    "--lsl-logo-circle": rgb(logo[map["logo-circle"]]),
+    "--lsl-logo-lab": rgb(logo[map["logo-lab"]]),
     // shadcn/ui variables, so stock-API primitives follow the surface too.
     "--background": hsl(c("bg")),
     "--foreground": hsl(c("fg")),
@@ -74,6 +80,8 @@ for (const [name, map] of Object.entries(T.surface)) {
 const ease = `cubic-bezier(${T.motion.easing.standard.$value.join(", ")})`;
 const rootVars = {
   ...Object.fromEntries(Object.entries(colors).map(([k, v]) => [`--lsl-${k}`, rgb(v)])),
+  // Fixed logo colors. LAB and the circle are contextual (--lsl-logo-lab, --lsl-logo-circle per surface).
+  ...Object.fromEntries(Object.entries(logo).filter(([k]) => k !== "lab").map(([k, v]) => [`--lsl-logo-${k}`, rgb(v)])),
   ...surfaceVars.paper,
   "--lsl-font-display": T.font.display.$value.map((f) => (f.includes("-") ? f : `"${f}"`)).join(", "),
   "--lsl-font-body": T.font.body.$value.map((f) => (f.includes("-") ? f : `"${f}"`)).join(", "),
@@ -193,6 +201,7 @@ writeFileSync(resolve(root, "src/styles/lsl-preset.cjs"), file);
 const js = `// @lsl/tokens ${version} · managed by loystudiolab-ui · change upstream, not here.
 // GENERATED from tokens/tokens.json. Plain values for SVG, charts and docs.
 export const colors = ${JSON.stringify(colors, null, 2)};
+export const logo = ${JSON.stringify(logo, null, 2)};
 export const surfaces = ${JSON.stringify(Object.fromEntries(Object.entries(T.surface).filter(([k]) => !k.startsWith("$"))), null, 2)};
 export const type = ${JSON.stringify(Object.fromEntries(Object.entries(T.type).filter(([k]) => !k.startsWith("$"))), null, 2)};
 export const motion = { fast: 150, base: 250, slow: 550, ease: "${ease}" };
@@ -203,6 +212,7 @@ writeFileSync(resolve(root, "src/lib/lsl-tokens.js"), js);
 const css = `/* LoyStudioLab tokens ${version}. GENERATED from tokens/tokens.json. */
 :root {
 ${Object.entries(colors).map(([k, v]) => `  --${k}: ${v};`).join("\n")}
+${Object.entries(logo).map(([k, v]) => `  --logo-${k}: ${v};`).join("\n")}
   --font-display: ${rootVars["--lsl-font-display"]};
   --font-body: ${rootVars["--lsl-font-body"]};
 ${Object.entries(T.type).filter(([k]) => !k.startsWith("$")).map(([k, v]) => `  --type-${k}: ${v.size};`).join("\n")}

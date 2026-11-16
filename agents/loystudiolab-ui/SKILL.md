@@ -40,6 +40,36 @@ color, a radius, a font size or an icon style, stop: the library already decided
 6. Jost + Archivo via the `<link>` in `index.html`. Heading levels sequential, size via the `size` prop. (T1 to T3)
 7. Copy: English, plain, modest. **No em dashes.** No superlatives, no stats as flex, real assets only. Copy lives in `src/data/content.js`. (W1 to W6)
 8. Accessible by default: every control in a `Field`, visible focus (never removed), keyboard works, reduced motion respected. (A1 to A8)
+9. The logo comes from `@lsl/mark` or the files in `studio/brand/logo/`. Never redraw it, retype it in Jost or recolor it. (L1 to L5, see "The logo")
+
+## The logo
+
+Final logo, traced from Mariana's master file. Three separate shapes: `lsl-circle` (Loy),
+`lsl-triangle` (Lab: a cut into the circle, it shows the surface), `lsl-square` (Studio).
+The wordmark LOY / STUDIO / LAB is outlined artwork (Jost Black plus custom LAB letters).
+
+| Need | Use |
+|---|---|
+| Site header (72px bar) | `<Logo title="" />` inside the home link with `aria-label="LoyStudioLab, home"` (lockup, 44px) |
+| Footer, cover, about page | `<Logo />` or `<Lockup height={72} />` |
+| Favicon, app icon, avatar, anything under 40px tall | `<Logo variant="mark" size={32} />`; files in `studio/brand/logo/favicon/` |
+| One color only (stamp, emboss, single-ink print) | `tone="mono"` (currentColor) |
+| Hero or about page explaining the name | `<LogoAssemble legend />` (circle, then the Lab cut, then the Studio square; legend highlights each step) |
+| Share image | `studio/brand/logo/loystudiolab-og.png` (1200x630) |
+
+- **Lockup or mark (L2):** lockup by default. Mark alone only for favicons, app icons,
+  avatars, spaces under 40px tall, or when "LoyStudioLab" is already written next to it.
+- **Minimum size (L3):** lockup 40px tall (15mm print), mark 16px (6mm). The components
+  enforce the floor.
+- **Clearspace (L4):** a quarter of the circle's diameter on every side.
+- **Color (L5):** the logo keeps its own colors (`tokens.logo`: circle #161512, cut
+  #F3EFE5, yellow #F5B640, LAB #1B1A17). The yellow is not the butter accent. On paper and
+  paper-alt use the color logo; inside `surface="ink"` it reverses by itself (cream circle
+  and LAB, the cut shows the ink). Never on butter, petrol fields or busy photos.
+- Static files (for `index.html`, emails, decks): `studio/brand/logo/` and
+  `https://loystudiolab.github.io/loystudiolab-ui/brand/` (favicon.svg, favicon.ico,
+  favicon-16/32.png, apple-touch-icon.png, icon-192/512.png, loystudiolab-avatar.png,
+  loystudiolab-og.png, mark and lockup SVGs in color, reversed, mono, mono-reversed).
 
 ## Decision procedure (follow in order)
 

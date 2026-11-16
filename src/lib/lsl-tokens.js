@@ -1,4 +1,4 @@
-// @lsl/tokens 0.1.2 · managed by loystudiolab-ui · change upstream, not here.
+// @lsl/tokens 0.2.0 · managed by loystudiolab-ui · change upstream, not here.
 // GENERATED from tokens/tokens.json. Plain values for SVG, charts and docs.
 export const colors = {
   "paper": "#F4EFE4",
@@ -17,6 +17,12 @@ export const colors = {
   "signal": "#17B8A6",
   "signal-ink": "#0E6E64"
 };
+export const logo = {
+  "ink": "#161512",
+  "lab": "#1B1A17",
+  "cream": "#F3EFE5",
+  "yellow": "#F5B640"
+};
 export const surfaces = {
   "paper": {
     "bg": "paper",
@@ -29,7 +35,9 @@ export const surfaces = {
     "danger": "brick-deep",
     "loy": "petrol",
     "signal-fg": "signal-ink",
-    "hover": "paper-alt"
+    "hover": "paper-alt",
+    "logo-circle": "ink",
+    "logo-lab": "lab"
   },
   "alt": {
     "bg": "paper-alt",
@@ -42,7 +50,9 @@ export const surfaces = {
     "danger": "brick-deep",
     "loy": "petrol",
     "signal-fg": "signal-ink",
-    "hover": "paper"
+    "hover": "paper",
+    "logo-circle": "ink",
+    "logo-lab": "lab"
   },
   "ink": {
     "bg": "ink",
@@ -55,7 +65,9 @@ export const surfaces = {
     "danger": "brick-light",
     "loy": "petrol-light",
     "signal-fg": "signal",
-    "hover": "ink-2"
+    "hover": "ink-2",
+    "logo-circle": "cream",
+    "logo-lab": "cream"
   }
 };
 export const type = {

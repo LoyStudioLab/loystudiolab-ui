@@ -134,3 +134,62 @@ describe("format", () => {
     expect(formatDate("2026-11-11")).toBe("11 November 2026")
   })
 })
+
+import { Logo, Lockup, Mark, LogoAssemble } from "@/components/lsl/brand/mark"
+
+describe("Logo", () => {
+  it("renders the lockup by default with an accessible name and the three named shapes", () => {
+    const { container } = render(<Logo />)
+    expect(screen.getByRole("img", { name: "LoyStudioLab" })).toBeInTheDocument()
+    for (const s of ["lsl-circle", "lsl-triangle", "lsl-square", "lsl-word-loy", "lsl-word-studio", "lsl-word-lab"]) {
+      expect(container.querySelector(`[data-shape="${s}"]`)).not.toBeNull()
+    }
+  })
+  it("never renders below the minimum sizes (L3)", () => {
+    const { container: a } = render(<Lockup height={20} />)
+    expect(a.querySelector("svg")).toHaveAttribute("height", "40")
+    const { container: b } = render(<Mark size={8} />)
+    expect(b.querySelector("svg")).toHaveAttribute("width", "16")
+  })
+  it("mono draws in currentColor without a separate triangle", () => {
+    const { container } = render(<Logo variant="mark" tone="mono" />)
+    expect(container.querySelector('[data-shape="lsl-triangle"]')).toBeNull()
+    expect(container.querySelector("g[fill='currentColor']")).not.toBeNull()
+  })
+  it("is decorative when title is empty", () => {
+    const { container } = render(<Logo title="" />)
+    expect(container.querySelector("svg")).toHaveAttribute("aria-hidden", "true")
+  })
+})
+
+describe("LogoAssemble", () => {
+  it("runs circle, lab cut, studio square, then ends, reporting each step", () => {
+    vi.useFakeTimers()
+    const steps = []
+    const { container } = render(<LogoAssemble trigger="mount" onStep={(l) => steps.push(l)} />)
+    const svg = container.querySelector("svg")
+    expect(svg).toHaveAttribute("data-step", "0")
+    act(() => vi.advanceTimersByTime(3000))
+    expect(steps).toEqual(["loy", "lab", "studio", null])
+    expect(svg).toHaveAttribute("data-step", "4")
+    vi.useRealTimers()
+  })
+  it("stays fully drawn when off screen and no IntersectionObserver exists (M3)", () => {
+    const { container } = render(<LogoAssemble />)
+    expect(container.querySelector("svg")).toHaveAttribute("data-step", "3")
+  })
+  it("shows the final logo under reduced motion (A4)", () => {
+    const mm = window.matchMedia
+    window.matchMedia = (q) => ({ matches: q.includes("reduce"), addEventListener() {}, removeEventListener() {} })
+    const { container } = render(<LogoAssemble trigger="mount" />)
+    expect(container.querySelector("svg")).toHaveAttribute("data-step", "3")
+    window.matchMedia = mm
+  })
+  it("highlights the legend row of the current step", () => {
+    vi.useFakeTimers()
+    const { container } = render(<LogoAssemble trigger="mount" legend />)
+    act(() => vi.advanceTimersByTime(700))
+    expect(container.querySelector('[data-layer="lab"]')).toHaveAttribute("data-active", "true")
+    vi.useRealTimers()
+  })
+})

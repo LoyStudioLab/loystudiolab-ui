@@ -1,4 +1,4 @@
-# LoyStudioLab UI 0.1.2
+# LoyStudioLab UI 0.2.0
 
 > Component library for LoyStudioLab's own sites and Lab products (Snapticket, Kine OS). React + Tailwind 3.4 + shadcn/ui (JSX), distributed as a shadcn registry. Not for client brands.
 
@@ -21,7 +21,8 @@ Before building UI: read the intents and rules, pick a template, then sections, 
 - Parallel items (services, values, steps): RuledGrid + RuledCell, TopRuleCard
 - A self-contained item (a case, a person): Card
 - Mark work as Studio or Lab, people as Loy: LayerTag, Glyph
-- Explain the three marks: LayerLegend, AssemblingMark
+- The logo (header, footer, cover, share image): Logo (lockup), Logo variant="mark" (favicon, avatar, under 40px)
+- Explain the three marks: LogoAssemble legend, LayerLegend
 - Founder avatar: FounderMonogram
 - Person avatar in a product: Avatar (square)
 - Facts about a project (client, year, status): MetaList
@@ -47,11 +48,16 @@ Before building UI: read the intents and rules, pick a template, then sections, 
 
 ## Rules
 - C1 One accent (butter) CTA per page, maximum.
-- C2 Butter is never a surface. Allowed only for: the accent CTA, the Studio glyph/square in the mark, hover underlines, focus rings, text selection.
+- C2 Butter is never a surface. Allowed only for: the accent CTA, the Studio glyph, hover underlines, focus rings, text selection.
 - C3 Petrol marks the Loy layer only (founder monograms, Loy tags).
 - C4 Signal teal only where something is computing or AI-generated. Never decoration.
 - C5 Text must pass WCAG AA (4.5:1). Concrete, butter, ochre and signal are never text on paper. Use ink-2 for secondary text, brick-deep for errors on paper-alt, signal-ink for Signal text.
 - C6 No raw hex or arbitrary color classes in app code. Tokens only.
+- L1 Use the logo as delivered: the @lsl/mark components or the files in studio/brand/logo. Never redraw, retype, stretch, rotate or recolor it, and never set the name in Jost next to the mark as a stand-in lockup.
+- L2 Lockup by default (headers, footers, covers, share images). Mark alone only for favicons, app icons, avatars, spaces under 40px tall, or where the name is already written next to it.
+- L3 Minimum size: lockup 40px tall on screen (15mm in print), mark 16px (6mm).
+- L4 Clearspace: a quarter of the circle's diameter on every side. Nothing inside it.
+- L5 Logo colors (tokens.logo: #161512, #F3EFE5, #F5B640) are for the logo only. Color logo on paper and paper-alt; on ink it turns reversed by itself; mono (tone="mono") for one-color uses. Never on butter, on petrol color fields or on busy photos.
 - S1 Solid circle = Loy, solid square = Studio, hollow triangle = Lab. These shapes mean nothing else.
 - S2 No circular or triangular UI chrome: square avatars (except founders), square radios, linear loaders instead of ring spinners, no pie or donut charts.
 - S3 Status icons are square-framed (StatusIcon). Never lucide CircleCheck, AlertTriangle, Info or XCircle.
@@ -123,7 +129,7 @@ Before building UI: read the intents and rules, pick a template, then sections, 
 - @lsl/feedback (Callout, LinearLoader, EmptyState, ErrorState, NotFound): Inline messages, progress, and the empty, error and not-found states.
 
 ### brand
-- @lsl/mark (Mark, AssemblingMark, Logo, MARK_GEOMETRY): The LoyStudioLab mark and wordmark lockups. INTERIM geometry until the final logo is delivered.
+- @lsl/mark (Logo, Lockup, Mark, LogoAssemble, AssemblingMark, MARK_GEOMETRY, LOCKUP_GEOMETRY, LOGO_COLORS, LOGO_MIN): The final LoyStudioLab logo: lockup (mark + LOY / STUDIO / LAB), mark alone, mono, and the animated LogoAssemble. Geometry traced from the master file; colors are the logo's own (tokens.logo), and it turns reversed by itself on ink surfaces.
 - @lsl/glyph (Glyph, LayerTag, LayerLegend, FounderMonogram, LAYERS): The three layer marks (Loy circle, Studio square, Lab hollow triangle) and the tags, legend and founder monogram built from them.
 
 ### typography

@@ -39,7 +39,7 @@ export function SiteHeader({ items = [], cta, homePath = "/", showLegend = true,
     <header className={cn("surface-paper sticky top-0 z-header border-b-2 border-ink", className)}>
       <div className="container-site flex h-[var(--lsl-header-h)] items-center justify-between gap-6">
         <Link to={homePath} onClick={onLogo} className="-m-1 p-1" aria-label="LoyStudioLab, home">
-          <Logo />
+          <Logo title="" />
         </Link>
 
         <nav aria-label="Main" className="hidden lg:block">

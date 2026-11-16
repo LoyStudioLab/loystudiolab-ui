@@ -8,11 +8,21 @@ Rationale sections (§) refer to `LoyStudioLab/Website/AESTHETIC_PHILOSOPHY.md`.
 | ID | Rule | Why | Checked by |
 |---|---|---|---|
 | C1 | One accent (butter) CTA per page, maximum. | Rarity keeps the accent meaningful; frequency erodes salience (Philosophy §2). | doctor + AccentBudget |
-| C2 | Butter is never a surface. Allowed only for: the accent CTA, the Studio glyph/square in the mark, hover underlines, focus rings, text selection. | One color, one job (§2). | doctor |
+| C2 | Butter is never a surface. Allowed only for: the accent CTA, the Studio glyph, hover underlines, focus rings, text selection. | One color, one job (§2). | doctor |
 | C3 | Petrol marks the Loy layer only (founder monograms, Loy tags). | Two colors with different jobs must never do the same job (§2). | review |
 | C4 | Signal teal only where something is computing or AI-generated. Never decoration. | Signal is Petrol given voltage, reserved for the Lab's live states. | doctor |
 | C5 | Text must pass WCAG AA (4.5:1). Concrete, butter, ochre and signal are never text on paper. Use ink-2 for secondary text, brick-deep for errors on paper-alt, signal-ink for Signal text. | Accessible by default. | check-contrast + axe |
 | C6 | No raw hex or arbitrary color classes in app code. Tokens only. | One source of truth. | doctor |
+
+## Logo
+
+| ID | Rule | Why | Checked by |
+|---|---|---|---|
+| L1 | Use the logo as delivered: the @lsl/mark components or the files in studio/brand/logo. Never redraw, retype, stretch, rotate or recolor it, and never set the name in Jost next to the mark as a stand-in lockup. | The wordmark is outlined artwork (Jost Black plus custom LAB letters), not text. | review |
+| L2 | Lockup by default (headers, footers, covers, share images). Mark alone only for favicons, app icons, avatars, spaces under 40px tall, or where the name is already written next to it. | The name is part of the logo; the mark alone is a signature. | review |
+| L3 | Minimum size: lockup 40px tall on screen (15mm in print), mark 16px (6mm). | Below that the LAB letters and the cut close up. | components (size floor) |
+| L4 | Clearspace: a quarter of the circle's diameter on every side. Nothing inside it. | The circle needs air to read as a shape. | review |
+| L5 | Logo colors (tokens.logo: #161512, #F3EFE5, #F5B640) are for the logo only. Color logo on paper and paper-alt; on ink it turns reversed by itself; mono (tone="mono") for one-color uses. Never on butter, on petrol color fields or on busy photos. | The logo keeps its own colors; the UI keeps its own. | review |
 
 ## Shape
 

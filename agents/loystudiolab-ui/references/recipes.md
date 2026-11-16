@@ -24,7 +24,7 @@ Alternate paper and alt; use ink once, for the closing band. Every Section gets
 ## About page
 
 ```
-Section bordered=false space=lg   Eyebrow, Display (the only h1), Lead; AssemblingMark (w-40 sm:w-56 lg:w-72) beside it
+Section bordered=false space=lg   Eyebrow, Display (the only h1), Lead; LogoAssemble (className w-40 sm:w-56 lg:w-72) beside it
 Section surface=alt  TitleBlock 01 Founders     RuledGrid cols=2: per founder FounderMonogram, LayerTag layer="loy" ("Loy · Founder"),
                                                  Heading level=3 name, Text tone=muted role, Text bio
 Section              TitleBlock 02 The name     RuledGrid cols=3: Glyph + Heading level=3 + Text per layer (copy in content.js);

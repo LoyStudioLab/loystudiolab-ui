@@ -1,9 +1,9 @@
 {
   "$schema": "https://loystudiolab.github.io/loystudiolab-ui/manifest.schema.json",
   "name": "loystudiolab-ui",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "registry": "https://loystudiolab.github.io/loystudiolab-ui/r/{name}.json",
-  "generated": "2026-11-11",
+  "generated": "2026-11-16",
   "layers": {
     "L0": "Foundation: tokens, preset, hooks, lib",
     "L1": "Primitives: shadcn/ui restyled, src/components/ui",
@@ -22,7 +22,7 @@
     {
       "id": "C2",
       "group": "Color",
-      "rule": "Butter is never a surface. Allowed only for: the accent CTA, the Studio glyph/square in the mark, hover underlines, focus rings, text selection.",
+      "rule": "Butter is never a surface. Allowed only for: the accent CTA, the Studio glyph, hover underlines, focus rings, text selection.",
       "why": "One color, one job (§2).",
       "check": "doctor"
     },
@@ -53,6 +53,41 @@
       "rule": "No raw hex or arbitrary color classes in app code. Tokens only.",
       "why": "One source of truth.",
       "check": "doctor"
+    },
+    {
+      "id": "L1",
+      "group": "Logo",
+      "rule": "Use the logo as delivered: the @lsl/mark components or the files in studio/brand/logo. Never redraw, retype, stretch, rotate or recolor it, and never set the name in Jost next to the mark as a stand-in lockup.",
+      "why": "The wordmark is outlined artwork (Jost Black plus custom LAB letters), not text.",
+      "check": "review"
+    },
+    {
+      "id": "L2",
+      "group": "Logo",
+      "rule": "Lockup by default (headers, footers, covers, share images). Mark alone only for favicons, app icons, avatars, spaces under 40px tall, or where the name is already written next to it.",
+      "why": "The name is part of the logo; the mark alone is a signature.",
+      "check": "review"
+    },
+    {
+      "id": "L3",
+      "group": "Logo",
+      "rule": "Minimum size: lockup 40px tall on screen (15mm in print), mark 16px (6mm).",
+      "why": "Below that the LAB letters and the cut close up.",
+      "check": "components (size floor)"
+    },
+    {
+      "id": "L4",
+      "group": "Logo",
+      "rule": "Clearspace: a quarter of the circle's diameter on every side. Nothing inside it.",
+      "why": "The circle needs air to read as a shape.",
+      "check": "review"
+    },
+    {
+      "id": "L5",
+      "group": "Logo",
+      "rule": "Logo colors (tokens.logo: #161512, #F3EFE5, #F5B640) are for the logo only. Color logo on paper and paper-alt; on ink it turns reversed by itself; mono (tone=\"mono\") for one-color uses. Never on butter, on petrol color fields or on busy photos.",
+      "why": "The logo keeps its own colors; the UI keeps its own.",
+      "check": "review"
     },
     {
       "id": "S1",
@@ -336,10 +371,17 @@
       ]
     },
     {
+      "intent": "The logo (header, footer, cover, share image)",
+      "use": [
+        "Logo (lockup)",
+        "Logo variant=\"mark\" (favicon, avatar, under 40px)"
+      ]
+    },
+    {
       "intent": "Explain the three marks",
       "use": [
-        "LayerLegend",
-        "AssemblingMark"
+        "LogoAssemble legend",
+        "LayerLegend"
       ]
     },
     {
@@ -496,13 +538,13 @@
           "path": "styles/lsl-preset.cjs",
           "type": "registry:file",
           "target": "src/styles/lsl-preset.cjs",
-          "hash": "f53d2bc1d1a71d6e"
+          "hash": "caa5908b801013da"
         },
         {
           "path": "lib/lsl-tokens.js",
           "type": "registry:lib",
           "target": "src/lib/lsl-tokens.js",
-          "hash": "c1b9199059b4ce81"
+          "hash": "17568d64b9d0553d"
         },
         {
           "path": "../templates/tailwind.config.js",
@@ -1627,14 +1669,83 @@
           "path": "components/lsl/brand/mark.jsx",
           "type": "registry:component",
           "target": "src/components/lsl/brand/mark.jsx",
-          "hash": "6b7590943f7008a0"
+          "hash": "7ad4e410b8b67dba"
         }
       ],
       "dependencies": [],
-      "title": "Mark, AssemblingMark, Logo",
+      "title": "Logo, Lockup, Mark, LogoAssemble",
       "category": "brand",
-      "purpose": "The LoyStudioLab mark and wordmark lockups. INTERIM geometry until the final logo is delivered.",
+      "registryDependencies": [
+        "@lsl/foundation",
+        "@lsl/glyph",
+        "@lsl/use-reduced-motion"
+      ],
+      "purpose": "The final LoyStudioLab logo: lockup (mark + LOY / STUDIO / LAB), mark alone, mono, and the animated LogoAssemble. Geometry traced from the master file; colors are the logo's own (tokens.logo), and it turns reversed by itself on ink surfaces.",
       "exports": [
+        {
+          "name": "Logo",
+          "props": [
+            {
+              "name": "variant",
+              "type": "'lockup' | 'mark'",
+              "default": "lockup",
+              "description": "lockup for headers, footers, covers and share images; mark for favicons, avatars and tight spaces (L2). 'horizontal' and 'stacked' from 0.1 render the lockup."
+            },
+            {
+              "name": "size",
+              "type": "number",
+              "default": "44 (lockup) / 40 (mark)",
+              "description": "Lockup height or mark size in px. Floors: 40 and 16 (L3)."
+            },
+            {
+              "name": "tone",
+              "type": "'color' | 'mono'",
+              "default": "color",
+              "description": "color follows the surface (reversed on ink); mono draws everything in currentColor."
+            },
+            {
+              "name": "title",
+              "type": "string",
+              "default": "LoyStudioLab",
+              "description": "Accessible name. Inside a link, label the link instead."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+            }
+          ]
+        },
+        {
+          "name": "Lockup",
+          "props": [
+            {
+              "name": "height",
+              "type": "number",
+              "default": "44",
+              "description": "Height in px (min 40). Width follows, aspect 2.32."
+            },
+            {
+              "name": "tone",
+              "type": "'color' | 'mono'",
+              "default": "color",
+              "description": "See Logo."
+            },
+            {
+              "name": "title",
+              "type": "string",
+              "default": "LoyStudioLab",
+              "description": "Accessible name; pass \"\" when a parent link already has aria-label."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+            }
+          ]
+        },
         {
           "name": "Mark",
           "props": [
@@ -1642,19 +1753,78 @@
               "name": "size",
               "type": "number",
               "default": "40",
-              "description": "Pixel size."
+              "description": "Pixel size (min 16)."
+            },
+            {
+              "name": "tone",
+              "type": "'color' | 'mono'",
+              "default": "color",
+              "description": "See Logo."
             },
             {
               "name": "title",
               "type": "string",
               "default": "",
-              "description": "Accessible name; omit when decorative (e.g. next to the wordmark)."
+              "description": "Accessible name; omit when decorative."
             },
             {
               "name": "className",
               "type": "string",
               "default": "",
               "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+            }
+          ]
+        },
+        {
+          "name": "LogoAssemble",
+          "props": [
+            {
+              "name": "trigger",
+              "type": "'visible' | 'mount' | 'none'",
+              "default": "visible",
+              "description": "When the sequence runs: when 40% of it is on screen, on mount, or never (static)."
+            },
+            {
+              "name": "legend",
+              "type": "boolean",
+              "default": "false",
+              "description": "Render a LayerLegend beside the mark; each step highlights its layer, and hovering a legend row highlights the shape."
+            },
+            {
+              "name": "focus",
+              "type": "'loy' | 'studio' | 'lab' | null",
+              "default": "null",
+              "description": "Controlled highlight: dims the other two shapes."
+            },
+            {
+              "name": "onStep",
+              "type": "(layer: 'loy' | 'lab' | 'studio' | null) => void",
+              "default": "",
+              "description": "Called as each step starts (circle, triangle, square) and with null at the end. Drive your own legend with it."
+            },
+            {
+              "name": "replayKey",
+              "type": "any",
+              "default": "",
+              "description": "Change it to play the sequence again."
+            },
+            {
+              "name": "title",
+              "type": "string",
+              "default": "",
+              "description": "Accessible name; omit when decorative."
+            },
+            {
+              "name": "className",
+              "type": "string",
+              "default": "",
+              "description": "Width of the mark (or of the grid with legend): w-40 sm:w-56 lg:w-72 in a hero."
+            },
+            {
+              "name": "markClassName",
+              "type": "string",
+              "default": "",
+              "description": "Width of the mark when legend is on."
             }
           ]
         },
@@ -1665,42 +1835,13 @@
               "name": "focus",
               "type": "'loy' | 'studio' | 'lab' | null",
               "default": "null",
-              "description": "Dims the other two shapes, for a legend that points at one layer."
+              "description": "Deprecated 0.1 name: LogoAssemble with trigger=\"mount\"."
             },
             {
               "name": "className",
               "type": "string",
               "default": "",
-              "description": "Set the width here: w-40 sm:w-56 lg:w-72 in a hero; it scales from its viewBox."
-            }
-          ]
-        },
-        {
-          "name": "Logo",
-          "props": [
-            {
-              "name": "variant",
-              "type": "'horizontal' | 'stacked' | 'mark'",
-              "default": "horizontal",
-              "description": "horizontal for headers and footers; stacked LOY/STUDIO/LAB for covers; mark alone for tight spaces."
-            },
-            {
-              "name": "size",
-              "type": "number",
-              "default": "",
-              "description": "Mark size override."
-            },
-            {
-              "name": "title",
-              "type": "string",
-              "default": "LoyStudioLab",
-              "description": "Accessible name when variant is mark."
-            },
-            {
-              "name": "className",
-              "type": "string",
-              "default": "",
-              "description": "Extra classes for spacing or placement only. Never colors, radius or shadows."
+              "description": "Width."
             }
           ]
         },
@@ -1708,35 +1849,58 @@
           "name": "MARK_GEOMETRY",
           "kind": "constant",
           "props": []
+        },
+        {
+          "name": "LOCKUP_GEOMETRY",
+          "kind": "constant",
+          "props": []
+        },
+        {
+          "name": "LOGO_COLORS",
+          "kind": "constant",
+          "props": []
+        },
+        {
+          "name": "LOGO_MIN",
+          "kind": "constant",
+          "props": []
         }
       ],
       "useWhen": [
-        "Site header and footer (Logo).",
-        "Hero diagrams explaining the name (AssemblingMark).",
-        "Favicons and covers (Mark, Logo stacked)."
+        "Site header and footer: <Logo /> (the lockup).",
+        "Favicons, app icons, avatars, spaces under 40px tall: <Logo variant=\"mark\" />.",
+        "One-color uses (stamps, embossing, single-ink print): tone=\"mono\".",
+        "Explaining the name on a hero or about page: <LogoAssemble legend />."
       ],
       "dontUseWhen": [
         {
           "case": "Decorating a section",
-          "use": "Nothing. The mark is a signature, not an ornament (M1)."
+          "use": "Nothing. The logo is a signature, not an ornament (M1)."
         },
         {
-          "case": "Redrawing the shapes by hand",
-          "use": "Glyph or MARK_GEOMETRY"
+          "case": "Setting LoyStudioLab in Jost next to the mark",
+          "use": "Logo (the lockup is outlined artwork, L1)"
+        },
+        {
+          "case": "Tagging work as Loy, Studio or Lab",
+          "use": "LayerTag / Glyph"
         }
       ],
       "rules": [
+        "L1",
+        "L2",
+        "L3",
+        "L4",
+        "L5",
         "S1",
-        "C2",
-        "W5"
+        "A4",
+        "M3"
       ],
       "a11y": [
-        "Logo inside a link: give the link aria-label=\"LoyStudioLab, home\"."
+        "Logo inside a link: give the link aria-label=\"LoyStudioLab, home\" and the Logo title=\"\".",
+        "LogoAssemble shows the final logo under reduced motion and before its observer has run."
       ],
-      "example": "<Logo />\n<Logo variant=\"stacked\" />\n<AssemblingMark focus={hovered} className=\"w-64\" />",
-      "registryDependencies": [
-        "@lsl/foundation"
-      ],
+      "example": "<Logo />\n<Logo variant=\"mark\" size={32} />\n<Logo tone=\"mono\" />\n<LogoAssemble legend className=\"max-w-xl\" markClassName=\"w-48\" />",
       "install": "npx shadcn@latest add @lsl/mark",
       "json": "https://loystudiolab.github.io/loystudiolab-ui/r/mark.json"
     },
@@ -1750,7 +1914,7 @@
           "path": "components/lsl/brand/glyph.jsx",
           "type": "registry:component",
           "target": "src/components/lsl/brand/glyph.jsx",
-          "hash": "2024230af7c81606"
+          "hash": "93f18d5fb790fdf3"
         }
       ],
       "dependencies": [],
@@ -1820,6 +1984,24 @@
               "type": "'short' | 'line'",
               "default": "short",
               "description": "Short label or full sentence. A compact key: for a full section explaining the layers, compose Glyph + Heading in RuledCells instead."
+            },
+            {
+              "name": "order",
+              "type": "string[]",
+              "default": "loy, studio, lab",
+              "description": "Row order. LogoAssemble uses loy, lab, studio (the build order)."
+            },
+            {
+              "name": "active",
+              "type": "'loy' | 'studio' | 'lab' | null",
+              "default": "null",
+              "description": "Highlights one row and dims the others."
+            },
+            {
+              "name": "onActiveChange",
+              "type": "(layer | null) => void",
+              "default": "",
+              "description": "Hovering a row reports its layer, so a mark can highlight the matching shape."
             },
             {
               "name": "className",
@@ -2775,7 +2957,7 @@
           "path": "components/lsl/navigation/site-header.jsx",
           "type": "registry:component",
           "target": "src/components/lsl/navigation/site-header.jsx",
-          "hash": "2db8a7bb9868987c"
+          "hash": "c3a6adc1214d30a1"
         }
       ],
       "dependencies": [

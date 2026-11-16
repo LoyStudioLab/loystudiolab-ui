@@ -19,7 +19,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetFooter
 import { Separator } from "@/components/ui/separator"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
-import { Mark, AssemblingMark, Logo } from "@/components/lsl/brand/mark"
+import { Mark, Logo, Lockup, LogoAssemble } from "@/components/lsl/brand/mark"
 import { Glyph, LayerTag, LayerLegend, FounderMonogram } from "@/components/lsl/brand/glyph"
 import { Section, Stack, Cluster, Grid, RuledGrid, RuledCell, TitleBlock, Divider, Container } from "@/components/lsl/layout/layout"
 import { Heading, Display, Eyebrow, Lead, Text, TextLink } from "@/components/lsl/typography/typography"
@@ -53,27 +53,14 @@ function FocusDemo() {
   )
 }
 
-function MarkLegend() {
-  const [focus, setFocus] = React.useState(null)
+function AssembleDemo() {
+  const [key, setKey] = React.useState(0)
   return (
-    <div className="grid items-center gap-8 sm:grid-cols-2">
-      <AssemblingMark focus={focus} className="w-48" />
-      <ul className="space-y-2">
-        {["loy", "studio", "lab"].map((k) => (
-          <li key={k}>
-            <button
-              type="button"
-              className="flex min-h-11 items-center gap-3 font-semibold"
-              onMouseEnter={() => setFocus(k)}
-              onMouseLeave={() => setFocus(null)}
-              onFocus={() => setFocus(k)}
-              onBlur={() => setFocus(null)}
-            >
-              <Glyph layer={k} /> {k[0].toUpperCase() + k.slice(1)}
-            </button>
-          </li>
-        ))}
-      </ul>
+    <div className="space-y-6">
+      <LogoAssemble legend replayKey={key} className="max-w-2xl" markClassName="w-48" />
+      <Button variant="outline" size="sm" onClick={() => setKey((k) => k + 1)}>
+        Play again
+      </Button>
     </div>
   )
 }
@@ -383,17 +370,21 @@ export const EXAMPLES = {
   ],
   mark: [
     {
-      title: "Lockups",
+      title: "Lockup and mark",
       render: () => (
         <Cluster gap={8} align="end">
           <Logo />
-          <Logo variant="stacked" />
-          <Mark size={64} title="LoyStudioLab" />
+          <Lockup height={72} />
+          <Logo variant="mark" size={64} />
+          <Logo variant="mark" size={16} />
         </Cluster>
       ),
     },
-    { title: "On ink", surface: "ink", render: () => <Cluster gap={8} align="end"><Logo /><Mark size={64} /></Cluster> },
-    { title: "Assembling mark with legend", render: () => <MarkLegend /> },
+    { title: "On paper-alt", surface: "alt", render: () => <Cluster gap={8} align="end"><Logo /><Logo variant="mark" size={64} /></Cluster> },
+    { title: "On ink (reversed by itself)", surface: "ink", render: () => <Cluster gap={8} align="end"><Logo /><Lockup height={72} /><Logo variant="mark" size={64} /></Cluster> },
+    { title: "Mono", render: () => <Cluster gap={8} align="end"><Logo tone="mono" /><Logo variant="mark" tone="mono" size={64} /></Cluster> },
+    { title: "Mono on ink", surface: "ink", render: () => <Cluster gap={8} align="end"><Logo tone="mono" /><Logo variant="mark" tone="mono" size={64} /></Cluster> },
+    { title: "LogoAssemble with legend", render: () => <AssembleDemo /> },
   ],
   glyph: [
     {

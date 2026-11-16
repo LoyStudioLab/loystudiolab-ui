@@ -61,18 +61,31 @@ export function LayerTag({ layer, children, className }) {
 }
 
 // "How to read our marks": the key to the three shapes.
-export function LayerLegend({ layers = LAYERS, detail = "short", className }) {
+export function LayerLegend({ layers = LAYERS, detail = "short", order, active = null, onActiveChange, className }) {
+  const keys = order ?? Object.keys(layers)
   return (
     <dl className={cn("space-y-3", className)}>
-      {Object.entries(layers).map(([key, l]) => (
-        <div key={key} className="flex items-start gap-3">
-          <dt className="flex w-24 shrink-0 items-center gap-2 pt-0.5 font-body text-xs font-semibold uppercase tracking-[0.08em]">
-            <Glyph layer={key} size={12} />
-            {l.name}
-          </dt>
-          <dd className="text-sm text-fg-2">{detail === "line" ? l.line : l.short}</dd>
-        </div>
-      ))}
+      {keys.map((key) => {
+        const l = layers[key]
+        const on = active === key
+        return (
+          <div
+            key={key}
+            data-layer={key}
+            data-active={on || undefined}
+            className="flex items-start gap-3 transition-opacity duration-base"
+            style={{ opacity: active && !on ? 0.45 : 1 }}
+            onMouseEnter={onActiveChange ? () => onActiveChange(key) : undefined}
+            onMouseLeave={onActiveChange ? () => onActiveChange(null) : undefined}
+          >
+            <dt className="flex w-24 shrink-0 items-center gap-2 pt-0.5 font-body text-xs font-semibold uppercase tracking-[0.08em]">
+              <Glyph layer={key} size={12} />
+              {l.name}
+            </dt>
+            <dd className="text-sm text-fg-2">{detail === "line" ? l.line : l.short}</dd>
+          </div>
+        )
+      })}
     </dl>
   )
 }

@@ -17,22 +17,38 @@ const CLASS = p("className", "string", "", "Extra classes for spacing or placeme
 export default [
   // ── Brand ────────────────────────────────────────────────────────────────
   item("mark", "components/lsl/brand/mark.jsx", {
-    title: "Mark, AssemblingMark, Logo",
+    title: "Logo, Lockup, Mark, LogoAssemble",
     category: "brand",
-    purpose: "The LoyStudioLab mark and wordmark lockups. INTERIM geometry until the final logo is delivered.",
+    registryDependencies: ["@lsl/glyph", "@lsl/use-reduced-motion"],
+    purpose: "The final LoyStudioLab logo: lockup (mark + LOY / STUDIO / LAB), mark alone, mono, and the animated LogoAssemble. Geometry traced from the master file; colors are the logo's own (tokens.logo), and it turns reversed by itself on ink surfaces.",
     exports: [
-      { name: "Mark", props: [p("size", "number", "40", "Pixel size."), p("title", "string", "", "Accessible name; omit when decorative (e.g. next to the wordmark)."), CLASS] },
-      { name: "AssemblingMark", props: [p("focus", "'loy' | 'studio' | 'lab' | null", "null", "Dims the other two shapes, for a legend that points at one layer."), p("className", "string", "", "Set the width here: w-40 sm:w-56 lg:w-72 in a hero; it scales from its viewBox.")] },
-      { name: "Logo", props: [p("variant", "'horizontal' | 'stacked' | 'mark'", "horizontal", "horizontal for headers and footers; stacked LOY/STUDIO/LAB for covers; mark alone for tight spaces."), p("size", "number", "", "Mark size override."), p("title", "string", "LoyStudioLab", "Accessible name when variant is mark."), CLASS] },
+      { name: "Logo", props: [p("variant", "'lockup' | 'mark'", "lockup", "lockup for headers, footers, covers and share images; mark for favicons, avatars and tight spaces (L2). 'horizontal' and 'stacked' from 0.1 render the lockup."), p("size", "number", "44 (lockup) / 40 (mark)", "Lockup height or mark size in px. Floors: 40 and 16 (L3)."), p("tone", "'color' | 'mono'", "color", "color follows the surface (reversed on ink); mono draws everything in currentColor."), p("title", "string", "LoyStudioLab", "Accessible name. Inside a link, label the link instead."), CLASS] },
+      { name: "Lockup", props: [p("height", "number", "44", "Height in px (min 40). Width follows, aspect 2.32."), p("tone", "'color' | 'mono'", "color", "See Logo."), p("title", "string", "LoyStudioLab", "Accessible name; pass \"\" when a parent link already has aria-label."), CLASS] },
+      { name: "Mark", props: [p("size", "number", "40", "Pixel size (min 16)."), p("tone", "'color' | 'mono'", "color", "See Logo."), p("title", "string", "", "Accessible name; omit when decorative."), CLASS] },
+      { name: "LogoAssemble", props: [p("trigger", "'visible' | 'mount' | 'none'", "visible", "When the sequence runs: when 40% of it is on screen, on mount, or never (static)."), p("legend", "boolean", "false", "Render a LayerLegend beside the mark; each step highlights its layer, and hovering a legend row highlights the shape."), p("focus", "'loy' | 'studio' | 'lab' | null", "null", "Controlled highlight: dims the other two shapes."), p("onStep", "(layer: 'loy' | 'lab' | 'studio' | null) => void", "", "Called as each step starts (circle, triangle, square) and with null at the end. Drive your own legend with it."), p("replayKey", "any", "", "Change it to play the sequence again."), p("title", "string", "", "Accessible name; omit when decorative."), p("className", "string", "", "Width of the mark (or of the grid with legend): w-40 sm:w-56 lg:w-72 in a hero."), p("markClassName", "string", "", "Width of the mark when legend is on.")] },
+      { name: "AssemblingMark", props: [p("focus", "'loy' | 'studio' | 'lab' | null", "null", "Deprecated 0.1 name: LogoAssemble with trigger=\"mount\"."), p("className", "string", "", "Width.")] },
       { name: "MARK_GEOMETRY", kind: "constant", props: [] },
+      { name: "LOCKUP_GEOMETRY", kind: "constant", props: [] },
+      { name: "LOGO_COLORS", kind: "constant", props: [] },
+      { name: "LOGO_MIN", kind: "constant", props: [] },
     ],
-    useWhen: ["Site header and footer (Logo).", "Hero diagrams explaining the name (AssemblingMark).", "Favicons and covers (Mark, Logo stacked)."],
-    dontUseWhen: [{ case: "Decorating a section", use: "Nothing. The mark is a signature, not an ornament (M1)." }, { case: "Redrawing the shapes by hand", use: "Glyph or MARK_GEOMETRY" }],
-    rules: ["S1", "C2", "W5"],
-    a11y: ["Logo inside a link: give the link aria-label=\"LoyStudioLab, home\"."],
+    useWhen: [
+      "Site header and footer: <Logo /> (the lockup).",
+      "Favicons, app icons, avatars, spaces under 40px tall: <Logo variant=\"mark\" />.",
+      "One-color uses (stamps, embossing, single-ink print): tone=\"mono\".",
+      "Explaining the name on a hero or about page: <LogoAssemble legend />.",
+    ],
+    dontUseWhen: [
+      { case: "Decorating a section", use: "Nothing. The logo is a signature, not an ornament (M1)." },
+      { case: "Setting LoyStudioLab in Jost next to the mark", use: "Logo (the lockup is outlined artwork, L1)" },
+      { case: "Tagging work as Loy, Studio or Lab", use: "LayerTag / Glyph" },
+    ],
+    rules: ["L1", "L2", "L3", "L4", "L5", "S1", "A4", "M3"],
+    a11y: ["Logo inside a link: give the link aria-label=\"LoyStudioLab, home\" and the Logo title=\"\".", "LogoAssemble shows the final logo under reduced motion and before its observer has run."],
     example: `<Logo />
-<Logo variant="stacked" />
-<AssemblingMark focus={hovered} className="w-64" />`,
+<Logo variant="mark" size={32} />
+<Logo tone="mono" />
+<LogoAssemble legend className="max-w-xl" markClassName="w-48" />`,
   }),
   item("glyph", "components/lsl/brand/glyph.jsx", {
     title: "Glyph, LayerTag, LayerLegend, FounderMonogram",
@@ -41,7 +57,7 @@ export default [
     exports: [
       { name: "Glyph", props: [p("layer", "'loy' | 'studio' | 'lab'", "", "Which layer.", true), p("size", "number", "14", ""), CLASS] },
       { name: "LayerTag", props: [p("layer", "'loy' | 'studio' | 'lab'", "", "", true), p("children", "node", "layer name", "Label, e.g. \"Studio · Website\"."), CLASS] },
-      { name: "LayerLegend", props: [p("layers", "object", "LAYERS", "Override copy per layer. LAYERS is canonical brand copy and the one allowed exception to W6; pass content.js copy here when a page explains the layers in its own words."), p("detail", "'short' | 'line'", "short", "Short label or full sentence. A compact key: for a full section explaining the layers, compose Glyph + Heading in RuledCells instead."), CLASS] },
+      { name: "LayerLegend", props: [p("layers", "object", "LAYERS", "Override copy per layer. LAYERS is canonical brand copy and the one allowed exception to W6; pass content.js copy here when a page explains the layers in its own words."), p("detail", "'short' | 'line'", "short", "Short label or full sentence. A compact key: for a full section explaining the layers, compose Glyph + Heading in RuledCells instead."), p("order", "string[]", "loy, studio, lab", "Row order. LogoAssemble uses loy, lab, studio (the build order)."), p("active", "'loy' | 'studio' | 'lab' | null", "null", "Highlights one row and dims the others."), p("onActiveChange", "(layer | null) => void", "", "Hovering a row reports its layer, so a mark can highlight the matching shape."), CLASS] },
       { name: "FounderMonogram", props: [p("initials", "string", "", "", true), p("name", "string", "", "Accessible name; omit when the name is printed next to it."), p("size", "number", "56", ""), CLASS] },
       { name: "LAYERS", kind: "constant", props: [] },
     ],

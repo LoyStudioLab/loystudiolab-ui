@@ -346,11 +346,13 @@
     {
       "name": "mark",
       "type": "registry:component",
-      "title": "Mark, AssemblingMark, Logo",
-      "description": "The LoyStudioLab mark and wordmark lockups. INTERIM geometry until the final logo is delivered.",
+      "title": "Logo, Lockup, Mark, LogoAssemble",
+      "description": "The final LoyStudioLab logo: lockup (mark + LOY / STUDIO / LAB), mark alone, mono, and the animated LogoAssemble. Geometry traced from the master file; colors are the logo's own (tokens.logo), and it turns reversed by itself on ink surfaces.",
       "dependencies": [],
       "registryDependencies": [
-        "@lsl/foundation"
+        "@lsl/foundation",
+        "@lsl/glyph",
+        "@lsl/use-reduced-motion"
       ],
       "files": [
         {

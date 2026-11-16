@@ -3,6 +3,35 @@
 All notable changes to loystudiolab-ui. Versions follow SemVer; `0.x` until 1.0.
 Breaking changes get a **Migration** note.
 
+## 0.2.0 · 2026-11-16
+
+The final LoyStudioLab logo replaces the interim mark.
+
+- **Logo (@lsl/mark):** geometry traced from Mariana's master file (edges fitted to the
+  pixels; the mark matches the 512px icon with no visible difference). Three separate,
+  animatable shapes: `lsl-circle` (Loy), `lsl-triangle` (Lab, a cut that shows the
+  surface: an equilateral triangle rotated 1.52deg), `lsl-square` (Studio, rotated
+  16.46deg). Wordmark outlined: LOY STUDIO in Jost Black, LAB custom letterforms.
+- New exports: `Lockup`, `LogoAssemble` (circle, then the Lab cut as a wipe, then the Studio
+  square; reports each step and can highlight a LayerLegend; final state under reduced
+  motion and before its observer runs), `LOCKUP_GEOMETRY`, `LOGO_COLORS`, `LOGO_MIN`.
+  `Mark` and `Logo` take `tone="color" | "mono"`; size floors 16px (mark) and 40px (lockup).
+- **Migration:** `Logo` now renders the lockup (mark + LOY / STUDIO / LAB). `variant`
+  "horizontal" and "stacked" still work and render the lockup; use `variant="mark"` for the
+  mark alone. `AssemblingMark` is deprecated: use `LogoAssemble`. Inside a link with its
+  own `aria-label`, pass `title=""`. Update with
+  `npx shadcn@latest add @lsl/foundation @lsl/glyph @lsl/mark --overwrite --yes`.
+- Tokens: new `logo` group with the file's exact colors (circle #161512, cream #F3EFE5,
+  yellow #F5B640, LAB #1B1A17), kept out of the Tailwind palette. Surfaces set
+  `--lsl-logo-circle` and `--lsl-logo-lab`, so the logo reverses by itself on ink. The
+  butter accent (#FFB400) is unchanged.
+- Rules L1 to L5 (use as delivered, lockup vs mark, minimum size, clearspace, logo colors).
+- LayerLegend: `order`, `active` and `onActiveChange` props.
+- Brand files published with the docs at `/brand/` (SVG mark and lockup in color, reversed,
+  mono, mono-reversed; favicon.svg/.ico, 16/32/180/192/512 PNGs, social avatar, OG image).
+  Masters live in `studio/brand/logo/`.
+- SiteHeader passes `title=""` to the logo (the home link carries the name).
+
 ## 0.1.2 · 2026-11-12
 
 Tested on a real Base44 app (shadcn CLI in the sandbox, and file writes over MCP).

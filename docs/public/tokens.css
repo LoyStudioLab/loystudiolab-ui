@@ -1,4 +1,4 @@
-/* LoyStudioLab tokens 0.1.2. GENERATED from tokens/tokens.json. */
+/* LoyStudioLab tokens 0.2.0. GENERATED from tokens/tokens.json. */
 :root {
   --paper: #F4EFE4;
   --paper-alt: #EDE6D6;
@@ -15,6 +15,10 @@
   --ochre: #C99A3B;
   --signal: #17B8A6;
   --signal-ink: #0E6E64;
+  --logo-ink: #161512;
+  --logo-lab: #1B1A17;
+  --logo-cream: #F3EFE5;
+  --logo-yellow: #F5B640;
   --font-display: "Jost", ui-sans-serif, system-ui, sans-serif;
   --font-body: "Archivo", ui-sans-serif, system-ui, sans-serif;
   --type-display: clamp(2.5rem, 1.25rem + 3.75vw, 4rem);
